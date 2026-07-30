@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://mpkd14oolkg6"]
+
+[ext_resource type="Script" uid="uid://bibnmimajptl3" path="res://Scripts/Match/MatchBackground.gd" id="1_6mm4n"]
+[ext_resource type="Texture2D" uid="uid://de0gkf82q38o6" path="res://Textures/Match/light_64.png" id="2_6mm4n"]
+[ext_resource type="Texture2D" uid="uid://d3o1yjht3k5vy" path="res://Textures/Match/match_bg_ext.png" id="2_tfwge"]
+[ext_resource type="PackedScene" uid="uid://diri3cw6vroak" path="res://Scenes/UI/MockCoin.tscn" id="3_3p8na"]
+[ext_resource type="Texture2D" uid="uid://dqgqxqwnrhxub" path="res://Textures/Match/match_bg_mid.png" id="3_6aihp"]
+[ext_resource type="Texture2D" uid="uid://bddie31jpg0wu" path="res://Textures/Match/match_bg_table.png" id="4_3et5o"]
+[ext_resource type="Shader" uid="uid://puxoytymjt06" path="res://Shaders/posterization_shader.gdshader" id="4_tfwge"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p01km"]
+shader = ExtResource("4_tfwge")
+
+[node name="MatchBackground" type="SubViewportContainer" unique_id=30279248]
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+script = ExtResource("1_6mm4n")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2088009254]
+handle_input_locally = false
+anisotropic_filtering_level = 2
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="CenterControl" type="Control" parent="SubViewport" unique_id=1705591468]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundHolder" type="Node2D" parent="SubViewport/CenterControl" unique_id=2046089428]
+unique_name_in_owner = true
+scale = Vector2(0.125, 0.125)
+
+[node name="ExtSprite" type="Sprite2D" parent="SubViewport/CenterControl/BackgroundHolder" unique_id=1979998887]
+scale = Vector2(4, 4)
+texture = ExtResource("2_tfwge")
+
+[node name="MidSprite" type="Sprite2D" parent="SubViewport/CenterControl/BackgroundHolder" unique_id=2035101708]
+scale = Vector2(2, 2)
+texture = ExtResource("3_6aihp")
+
+[node name="TableSprite" type="Sprite2D" parent="SubViewport/CenterControl/BackgroundHolder" unique_id=888540967]
+texture = ExtResource("4_3et5o")
+
+[node name="LightSprite" type="Sprite2D" parent="SubViewport/CenterControl/BackgroundHolder" unique_id=1571625823]
+position = Vector2(0, -80)
+texture = ExtResource("2_6mm4n")
+
+[node name="MockCoin" parent="SubViewport/CenterControl" unique_id=852428049 instance=ExtResource("3_3p8na")]
+visible = false
+
+[node name="PosterizeRect" type="ColorRect" parent="SubViewport" unique_id=1073816090]
+material = SubResource("ShaderMaterial_p01km")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

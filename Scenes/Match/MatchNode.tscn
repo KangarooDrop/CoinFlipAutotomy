@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://clq7dutxgje0y"]
+
+[ext_resource type="Script" uid="uid://bksijqq4g4c30" path="res://Scripts/Match/MatchNode.gd" id="1_r8xjo"]
+[ext_resource type="PackedScene" uid="uid://mpkd14oolkg6" path="res://Scenes/Match/MatchBackground.tscn" id="2_p01km"]
+[ext_resource type="PackedScene" uid="uid://dk3e2678opqm6" path="res://Scenes/Views/CoinFaceNode.tscn" id="6_5lemm"]
+[ext_resource type="PackedScene" uid="uid://ctr6k4c7u8ysf" path="res://Scenes/Match/FaceOffNode.tscn" id="6_jlhuo"]
+[ext_resource type="PackedScene" uid="uid://bws3wfos56qdt" path="res://Scenes/Match/TurnTimer.tscn" id="6_nro54"]
+[ext_resource type="PackedScene" uid="uid://ywle6hs714l6" path="res://Scenes/Views/CoinNode.tscn" id="7_5lemm"]
+[ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="7_nro54"]
+[ext_resource type="PackedScene" uid="uid://dxo4rnecva8s6" path="res://Scenes/Match/AdvantageBar.tscn" id="9_in2ev"]
+
+[node name="MatchNode" type="Node2D" unique_id=1366073690]
+script = ExtResource("1_r8xjo")
+
+[node name="MatchBackground" parent="." unique_id=30279248 instance=ExtResource("2_p01km")]
+unique_name_in_owner = true
+isTurning = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2123756173]
+
+[node name="ScreenSize" type="Control" parent="CanvasLayer" unique_id=1443969932]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AdvantageBar" parent="CanvasLayer/ScreenSize" unique_id=72185894 instance=ExtResource("9_in2ev")]
+unique_name_in_owner = true
+layout_mode = 1
+mouse_filter = 2
+
+[node name="GearHolderUser" type="Control" parent="CanvasLayer/ScreenSize" unique_id=1485662724]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 128.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HandNode" parent="CanvasLayer/ScreenSize/GearHolderUser" unique_id=1522124850 instance=ExtResource("7_nro54")]
+position = Vector2(65, 267)
+
+[node name="CoinFaceNode" parent="CanvasLayer/ScreenSize/GearHolderUser" unique_id=1660564807 instance=ExtResource("6_5lemm")]
+position = Vector2(65, 144)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/ScreenSize/GearHolderUser" unique_id=1382337713]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GearHolderOpponent" type="Control" parent="CanvasLayer/ScreenSize" unique_id=1434842032]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HandNode" parent="CanvasLayer/ScreenSize/GearHolderOpponent" unique_id=1984855441 instance=ExtResource("7_nro54")]
+position = Vector2(65, 267)
+flipH = true
+
+[node name="CoinFaceNode" parent="CanvasLayer/ScreenSize/GearHolderOpponent" unique_id=1931035846 instance=ExtResource("6_5lemm")]
+position = Vector2(65, 144)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/ScreenSize/GearHolderOpponent" unique_id=573148271]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TurnTimer" parent="CanvasLayer/ScreenSize" unique_id=23381049 instance=ExtResource("6_nro54")]
+unique_name_in_owner = true
+layout_mode = 1
+mouse_filter = 2
+
+[node name="CoinNodeHolder" type="Control" parent="CanvasLayer/ScreenSize" unique_id=1490765873]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CoinNode" parent="CanvasLayer/ScreenSize/CoinNodeHolder" unique_id=1582215865 instance=ExtResource("7_5lemm")]
+unique_name_in_owner = true
+
+[node name="InvalidTargetsOverlay" type="Node2D" parent="CanvasLayer/ScreenSize" unique_id=368556974]
+unique_name_in_owner = true
+visible = false
+z_index = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/ScreenSize/InvalidTargetsOverlay" unique_id=1150268613]
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="FaceOffNode" parent="CanvasLayer" unique_id=885277060 instance=ExtResource("6_jlhuo")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+mouse_filter = 2

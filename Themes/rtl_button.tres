@@ -1,0 +1,14 @@
+[gd_resource type="Theme" format=3 uid="uid://b4u74isw3p86t"]
+
+[ext_resource type="FontVariation" uid="uid://5f7ridceiqfg" path="res://Themes/default_font_variation.tres" id="1_nnwks"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb81u"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(1, 1, 1, 0)
+
+[resource]
+RichTextLabel/colors/default_color = Color(0.45490196, 0.68235296, 1, 1)
+RichTextLabel/font_sizes/normal_font_size = 10
+RichTextLabel/fonts/normal_font = ExtResource("1_nnwks")
+RichTextLabel/styles/normal = SubResource("StyleBoxFlat_rb81u")

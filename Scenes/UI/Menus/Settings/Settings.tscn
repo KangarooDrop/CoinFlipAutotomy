@@ -1,0 +1,275 @@
+[gd_scene format=3 uid="uid://bd6vr65dc844a"]
+
+[ext_resource type="Script" uid="uid://bxfu4pmpelc7v" path="res://Scripts/UI/Menus/Settings/Settings.gd" id="1_p7cfv"]
+[ext_resource type="Texture2D" uid="uid://ds6ft4e2fovt8" path="res://Textures/UI/background_dark.png" id="2_key7q"]
+[ext_resource type="PackedScene" uid="uid://cx737f5rhesa" path="res://Scenes/UI/Menus/Settings/SettingsTab.tscn" id="3_jq2bj"]
+[ext_resource type="Texture2D" uid="uid://db0n8yn7brist" path="res://Textures/UI/background_light.png" id="4_key7q"]
+[ext_resource type="Texture2D" uid="uid://bpugaf4q68moi" path="res://Textures/UI/background_normal.png" id="6_13e3h"]
+[ext_resource type="Theme" uid="uid://domns0ab573dx" path="res://Themes/label_theme.tres" id="7_2kjhw"]
+[ext_resource type="PackedScene" uid="uid://u01xnu8yrvdx" path="res://Scenes/UI/ButtonNine.tscn" id="7_o5577"]
+
+[node name="Settings" type="CanvasLayer" unique_id=996157971]
+script = ExtResource("1_p7cfv")
+
+[node name="BackInputBlocker" type="Control" parent="." unique_id=1557091712]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsWindow" type="Control" parent="." unique_id=1367221512]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -128.0
+offset_right = 192.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="NinePatchRect" parent="SettingsWindow" unique_id=1366790085]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_key7q")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="TabsHolder" type="HBoxContainer" parent="SettingsWindow" unique_id=1118947401]
+layout_mode = 0
+offset_top = -14.0
+offset_right = 180.0
+offset_bottom = 3.0
+theme_override_constants/separation = -1
+
+[node name="GameplayTab" parent="SettingsWindow/TabsHolder" unique_id=756325726 instance=ExtResource("3_jq2bj")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[center]Gameplay[/center]"
+
+[node name="VolumeTab" parent="SettingsWindow/TabsHolder" unique_id=1381915694 instance=ExtResource("3_jq2bj")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[center]Volume[/center]"
+
+[node name="ControlsTab" parent="SettingsWindow/TabsHolder" unique_id=1562359697 instance=ExtResource("3_jq2bj")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PageBackground" type="NinePatchRect" parent="SettingsWindow" unique_id=1527219782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_key7q")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsWindow/PageBackground" unique_id=771954667]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsWindow/PageBackground/ScrollContainer" unique_id=144193566]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="GameplayPage" type="VBoxContainer" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer" unique_id=679362951]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/GameplayPage" unique_id=1728399349]
+layout_mode = 2
+text = "This is text that appeas on page 1 and extends past the bounds. Does the scroll work properly?
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A"
+autowrap_mode = 2
+
+[node name="VolumePage" type="VBoxContainer" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer" unique_id=565140111]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/VolumePage" unique_id=562527328]
+layout_mode = 2
+text = "This is also text but it appeas on page 2. Does this work as well?"
+autowrap_mode = 2
+
+[node name="ControlsPage" type="VBoxContainer" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer" unique_id=1332694325]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Header" type="Control" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/ControlsPage" unique_id=46710698]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/ControlsPage/Header" unique_id=275565302]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_13e3h")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Label" type="Label" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/ControlsPage/Header" unique_id=703784770]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -8.5
+offset_right = 51.0
+offset_bottom = 8.5
+grow_vertical = 2
+theme = ExtResource("7_2kjhw")
+theme_override_font_sizes/font_size = 10
+text = "Control"
+
+[node name="Label2" type="Label" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/ControlsPage/Header" unique_id=133050524]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 123.0
+offset_top = -8.5
+offset_right = 170.0
+offset_bottom = 8.5
+grow_vertical = 2
+theme = ExtResource("7_2kjhw")
+theme_override_font_sizes/font_size = 10
+text = "Primary"
+
+[node name="Label3" type="Label" parent="SettingsWindow/PageBackground/ScrollContainer/MarginContainer/ControlsPage/Header" unique_id=1513966587]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 244.0
+offset_top = -8.5
+offset_right = 304.0
+offset_bottom = 8.5
+grow_vertical = 2
+theme = ExtResource("7_2kjhw")
+theme_override_font_sizes/font_size = 10
+text = "Secondary"
+
+[node name="BackButtonNine" parent="SettingsWindow" unique_id=2072782635 instance=ExtResource("7_o5577")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = 107.0
+offset_right = 36.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "[center]Back[/center]"
+
+[node name="ListenerWindow" type="Control" parent="." unique_id=453350632]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -58.0
+offset_right = 80.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ListenerWindow" unique_id=1569439364]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_key7q")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Label" type="Label" parent="ListenerWindow" unique_id=1299657352]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_2kjhw")
+text = "Listening...
+Press a Key"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ListenerInputBlocker" type="Control" parent="." unique_id=1481104139]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="SettingsWindow/TabsHolder/GameplayTab" to="." method="onGameplayTabPressed"]
+[connection signal="pressed" from="SettingsWindow/TabsHolder/VolumeTab" to="." method="onVolumeTabPressed"]
+[connection signal="pressed" from="SettingsWindow/TabsHolder/ControlsTab" to="." method="onControlsTabPressed"]
+[connection signal="pressed" from="SettingsWindow/BackButtonNine" to="." method="onBackPressed"]

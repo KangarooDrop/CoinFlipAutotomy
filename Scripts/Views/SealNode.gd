@@ -1,0 +1,31 @@
+extends Node
+
+class_name SealNode
+
+var _sealModel : SealModel = null
+
+@onready var _backgroundSprite : Sprite2D = get_node("%BackgroundSprite2D")
+@onready var _sigilSprite : Sprite2D = get_node("%SigilSprite2D")
+
+####################################################################################################
+
+func _attachModel(sealModel : SealModel) -> void:
+	pass
+
+func _unattachModel(sealModel : SealModel) -> void:
+	pass
+
+####################################################################################################
+
+func setModel(newSealModel : SealModel) -> void:
+	if self._sealModel != null:
+		_unattachModel(_sealModel)
+	self._sealModel = newSealModel
+	var shaderParamData : Dictionary = Entities.SealBackgroundScript.entityToShaderData(_sealModel.getBackgroundType())
+	for paramName : String in shaderParamData.keys():
+		_backgroundSprite.material.set_shader_parameter(paramName, shaderParamData[paramName])
+	_sigilSprite.texture = _sealModel.getTexture()
+	_attachModel(_sealModel)
+
+func getModel() -> SealModel:
+	return _sealModel

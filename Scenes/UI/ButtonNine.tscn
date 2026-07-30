@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://u01xnu8yrvdx"]
+
+[ext_resource type="Theme" uid="uid://b4u74isw3p86t" path="res://Themes/rtl_button.tres" id="1_0d60y"]
+[ext_resource type="Script" uid="uid://c8xdd8wecfhwl" path="res://Scripts/UI/ButtonNine.gd" id="2_3otv7"]
+[ext_resource type="Theme" uid="uid://bqieva60vr34m" path="res://Themes/button_theme.theme" id="3_e7hsy"]
+
+[node name="ButtonNine" type="RichTextLabel" unique_id=756325726]
+offset_right = 72.0
+offset_bottom = 17.0
+theme = ExtResource("1_0d60y")
+bbcode_enabled = true
+text = "Test Text"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("2_3otv7")
+
+[node name="ButtonNode" type="Button" parent="." unique_id=967397237]
+unique_name_in_owner = true
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_e7hsy")
+
+[connection signal="button_down" from="ButtonNode" to="." method="onButtonDown"]
+[connection signal="button_up" from="ButtonNode" to="." method="onButtonUp"]
+[connection signal="pressed" from="ButtonNode" to="." method="onPressed"]

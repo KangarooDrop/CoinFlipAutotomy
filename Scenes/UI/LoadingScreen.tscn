@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b21y42sccbanf"]
+
+[ext_resource type="Shader" uid="uid://wroedsrlhhnw" path="res://Shaders/loading_shader.gdshader" id="1_1hssg"]
+[ext_resource type="Script" uid="uid://dq8pv2j48lxph" path="res://Scripts/UI/LoadingScreen.gd" id="2_ov1jk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nxngd"]
+shader = ExtResource("1_1hssg")
+shader_parameter/t = 0.0
+
+[node name="LoadingScreen" type="ColorRect" unique_id=199532784]
+material = SubResource("ShaderMaterial_nxngd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_ov1jk")

@@ -1,0 +1,115 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[accessibility]
+
+general/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[application]
+
+config/name="Coin Flip Autotomy"
+config/version="0.01.00"
+run/main_scene="uid://d0nnr7vplu62v"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+config/icon="res://icon.svg"
+config/windows_native_icon="res://Textures/icon.ico"
+
+[autoload]
+
+Coloration="*uid://ctrl0sowcjquh"
+Entities="*uid://dhe0f7b8ugohu"
+Util="*uid://5byf6pqr87pw"
+Localization="*uid://iuaj73eh8tru"
+ModelDB="*uid://dlllqfdy5cu6y"
+Preloader="*uid://dshxsy0nu4jyw"
+Settings="*uid://bd6vr65dc844a"
+TooltipHandler="*uid://rc5k5r3o58sy"
+TriggerHandler="*uid://m5a8rwpbqsqu"
+RNG="*uid://bl1i2xt8c5fx5"
+RunManager="*uid://coub06pqiah6k"
+CmdMatch="*uid://cmjdogt56j65a"
+CmdCoinPiece="*uid://dvhdb33aeukng"
+CmdFinger="*uid://dq38oyesusij5"
+CmdSeal="*uid://c11i7gtg1onk7"
+CmdAction="*uid://cos8j45cq2jcy"
+CmdSpin="*uid://beqgh88a38p7g"
+
+[debug]
+
+gdscript/warnings/integer_division=0
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/stretch/mode="canvas_items"
+
+[input]
+
+action_1={
+"deadzone": 0.2,
+"events": []
+}
+action_2={
+"deadzone": 0.2,
+"events": []
+}
+action_3={
+"deadzone": 0.2,
+"events": []
+}
+action_4={
+"deadzone": 0.2,
+"events": []
+}
+action_5={
+"deadzone": 0.2,
+"events": []
+}
+action_6={
+"deadzone": 0.2,
+"events": []
+}
+action_7={
+"deadzone": 0.2,
+"events": []
+}
+action_8={
+"deadzone": 0.2,
+"events": []
+}
+action_9={
+"deadzone": 0.2,
+"events": []
+}
+escape={
+"deadzone": 0.2,
+"events": []
+}
+skip={
+"deadzone": 0.2,
+"events": []
+}
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/anisotropic_filtering_level=0
+textures/decals/filter=0
+textures/light_projectors/filter=0

@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://cx737f5rhesa"]
+
+[ext_resource type="PackedScene" uid="uid://u01xnu8yrvdx" path="res://Scenes/UI/ButtonNine.tscn" id="1_xtmlu"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xtmlu"]
+load_path = "res://.godot/imported/button_purple.png-a054c106c35d0d03804f35e9da110287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jjjrf"]
+texture = SubResource("CompressedTexture2D_xtmlu")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+region_rect = Rect2(0, 32, 32, 24)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nnvc3"]
+load_path = "res://.godot/imported/button_purple.png-a054c106c35d0d03804f35e9da110287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_20iwg"]
+texture = SubResource("CompressedTexture2D_nnvc3")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+region_rect = Rect2(0, 96, 32, 24)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7q05a"]
+load_path = "res://.godot/imported/button_purple.png-a054c106c35d0d03804f35e9da110287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e7ud4"]
+texture = SubResource("CompressedTexture2D_7q05a")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+region_rect = Rect2(0, 96, 32, 24)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i4ob4"]
+load_path = "res://.godot/imported/button_purple.png-a054c106c35d0d03804f35e9da110287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hrisg"]
+texture = SubResource("CompressedTexture2D_i4ob4")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+region_rect = Rect2(0, 64, 32, 24)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2aefu"]
+load_path = "res://.godot/imported/button_purple.png-a054c106c35d0d03804f35e9da110287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x673a"]
+texture = SubResource("CompressedTexture2D_2aefu")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+region_rect = Rect2(0, 0, 32, 24)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k4s8e"]
+load_path = "res://.godot/imported/button_purple.png-a054c106c35d0d03804f35e9da110287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtexd"]
+texture = SubResource("CompressedTexture2D_k4s8e")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+region_rect = Rect2(0, 64, 32, 24)
+
+[sub_resource type="Theme" id="Theme_woe73"]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 16
+Button/fonts/font = null
+Button/styles/disabled = SubResource("StyleBoxTexture_jjjrf")
+Button/styles/focus = SubResource("StyleBoxTexture_20iwg")
+Button/styles/hover = SubResource("StyleBoxTexture_e7ud4")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_hrisg")
+Button/styles/normal = SubResource("StyleBoxTexture_x673a")
+Button/styles/pressed = SubResource("StyleBoxTexture_gtexd")
+
+[node name="SettingsTab" unique_id=756325726 instance=ExtResource("1_xtmlu")]
+text = "[center]Controls[/center]"
+
+[node name="ButtonNode" parent="." index="2" unique_id=967397237]
+theme = SubResource("Theme_woe73")

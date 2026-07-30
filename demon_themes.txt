@@ -1,0 +1,88 @@
+Gluttony:
+	--Art
+	Pose:
+		Spirited Away: No Face (big boi version)
+		Slightly emaciated torso
+		Almost curled up, like a snake about to strike
+			w/ a large gaping maw
+	Gameplay:
+		NUMBER GO UP!
+	Themes: ??
+
+Envy
+	--Art
+	--Pose:
+	Gameplay:
+		Copying opponents abilities
+		Negatives for both players but yours are avoided/advantageous
+	Themes: ??
+
+Sloth:
+	Art
+		Large, hulking figure
+			Large oversized upper body, limited lower body
+		Wrapped in bandages that bind movement
+		Egg shell body/covering top of head
+		Stone plated skin
+		Hearthstone Rumbling Elemental
+		Curled up, facing away (sitting fetal position)
+	Pose:
+		??
+	Gameplay:
+		Passing your turn
+		Countering abilities
+	Themes: Avoidance of responsibility, they let bad things happen rather
+			than doing something about them
+
+Lust:
+	Art:
+		??
+	Pose:
+		??
+	Gameplay:
+		??
+	Themes: Viewing people as a means of attaining what you want rather
+			than as people, Obsession (Hunchback: Judge Frollo)
+
+Wrath:
+	Art:
+		Dio pose but w/ weapons for limbs (and extra weapons too)
+			Chainsaw Man: Weapon Devils
+	Pose:
+		??
+	Gameplay:
+		Revenge? - Buff for each loss
+	Themes: ??
+
+Pride:
+	Art:
+		MtG: Cosmic Larva
+		Large cosmic egg (the original sin)
+		Viewing itself as perfect despite grotesque features
+	Pose:
+		??
+	Gameplay:
+		??
+		Core: The Fall
+	Epithet: The Progenitor Sin
+	Themes: ??
+
+Greed:
+	Art:
+		??
+	Pose:
+		??
+	Gameplay:
+		Taking opponents rings on loss (too similar to wrath)??
+	Themes: Control, Taking simply to have, 
+
+
+
+Ring Naming Convention:
+	Types: 
+		Trigger-independent (e.g. Start of turn), 
+		Trigger-dependent (e.g. Gain spin on your turn)
+		Passive
+
+	Loop, Circlet, Ring, Band, Annulet
+		Collar, Girdle, Spiral, Curle

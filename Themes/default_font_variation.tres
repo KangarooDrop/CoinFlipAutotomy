@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" format=3 uid="uid://5f7ridceiqfg"]
+
+[ext_resource type="FontFile" uid="uid://bdwwr2751owx5" path="res://Fonts/PixeloidMono.ttf" id="1_xviff"]
+
+[resource]
+base_font = ExtResource("1_xviff")
+spacing_top = 2
+spacing_bottom = 2

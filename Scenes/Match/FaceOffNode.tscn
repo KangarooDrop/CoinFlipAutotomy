@@ -1,0 +1,302 @@
+[gd_scene format=3 uid="uid://ctr6k4c7u8ysf"]
+
+[ext_resource type="Script" uid="uid://bnbm00wapsnsi" path="res://Scripts/Match/FaceOffNode.gd" id="1_8y2ew"]
+[ext_resource type="Texture2D" uid="uid://csi20y6a46e70" path="res://Textures/Demons/gluttony/pose.png" id="1_q82mg"]
+[ext_resource type="Texture2D" uid="uid://ceb3gdw06af78" path="res://Textures/Demons/envy/pose.png" id="2_nbyvy"]
+[ext_resource type="Theme" uid="uid://domns0ab573dx" path="res://Themes/label_theme.tres" id="3_nbyvy"]
+
+[node name="FaceOffNode" type="Control" unique_id=885277060]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8y2ew")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=34031099]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="PoseHBox" type="HBoxContainer" parent="." unique_id=2073671073]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -484.0
+offset_top = -98.0
+offset_right = 484.0
+offset_bottom = 158.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="PoseHolderUser" type="Control" parent="PoseHBox" unique_id=1406984706]
+custom_minimum_size = Vector2(192, 256)
+layout_mode = 2
+
+[node name="PoseCenterUser" type="Control" parent="PoseHBox/PoseHolderUser" unique_id=1689333525]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PoseScalerUser" type="Node2D" parent="PoseHBox/PoseHolderUser/PoseCenterUser" unique_id=380118053]
+unique_name_in_owner = true
+
+[node name="PoseRectUser" type="TextureRect" parent="PoseHBox/PoseHolderUser/PoseCenterUser/PoseScalerUser" unique_id=1882620664]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -128.0
+offset_right = 96.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_q82mg")
+flip_h = true
+
+[node name="PoseBuffer" type="Control" parent="PoseHBox" unique_id=624358084]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(576, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PoseHolderOpponent" type="Control" parent="PoseHBox" unique_id=1397470895]
+custom_minimum_size = Vector2(192, 256)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PoseCenterOpponent" type="Control" parent="PoseHBox/PoseHolderOpponent" unique_id=2023167675]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PoseScalerOpponent" type="Node2D" parent="PoseHBox/PoseHolderOpponent/PoseCenterOpponent" unique_id=1155420526]
+unique_name_in_owner = true
+
+[node name="PoseRectOpponent" type="TextureRect" parent="PoseHBox/PoseHolderOpponent/PoseCenterOpponent/PoseScalerOpponent" unique_id=355203523]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -128.0
+offset_right = 96.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_nbyvy")
+
+[node name="LabelHolder" type="Control" parent="." unique_id=1768795600]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NameplateHolderUser" type="Control" parent="LabelHolder" unique_id=819570551]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -288.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LabelHolder" type="Control" parent="LabelHolder/NameplateHolderUser" unique_id=1146090329]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -98.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NameLabelUser" type="Label" parent="LabelHolder/NameplateHolderUser/LabelHolder" unique_id=2008723715]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -32.0
+offset_right = 96.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nbyvy")
+theme_override_font_sizes/font_size = 20
+text = "Gluttony"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EpithetLabelUser" type="Label" parent="LabelHolder/NameplateHolderUser/LabelHolder" unique_id=1214789788]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nbyvy")
+theme_override_font_sizes/font_size = 12
+text = "The Everstarved"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameplateHolderOpponent" type="Control" parent="LabelHolder" unique_id=1362004437]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LabelHolder" type="Control" parent="LabelHolder/NameplateHolderOpponent" unique_id=181227925]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -98.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NameLabelOpponent" type="Label" parent="LabelHolder/NameplateHolderOpponent/LabelHolder" unique_id=479913476]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -32.0
+offset_right = 96.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nbyvy")
+theme_override_font_sizes/font_size = 20
+text = "Envy"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EpithetLabelOpponent" type="Label" parent="LabelHolder/NameplateHolderOpponent/LabelHolder" unique_id=2147018460]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nbyvy")
+theme_override_font_sizes/font_size = 12
+text = "The Grasping Covet"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSHolder" type="Control" parent="LabelHolder" unique_id=270340666]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -98.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="LabelHolder/VSHolder" unique_id=181148505]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nbyvy")
+theme_override_font_sizes/font_size = 32
+text = "VS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinnerSplashLabel" type="Label" parent="LabelHolder" unique_id=1104694085]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = -128.0
+offset_right = 160.0
+grow_horizontal = 2
+theme = ExtResource("3_nbyvy")
+theme_override_font_sizes/font_size = 20
+text = "Gluttony Consumes All"
+horizontal_alignment = 1
+autowrap_mode = 2

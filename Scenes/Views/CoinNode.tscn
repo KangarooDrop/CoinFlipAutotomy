@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ywle6hs714l6"]
+
+[ext_resource type="Script" uid="uid://dkkg1pr51fnf7" path="res://Scripts/Views/CoinNode.gd" id="1_3s45a"]
+[ext_resource type="PackedScene" uid="uid://dk3e2678opqm6" path="res://Scenes/Views/CoinFaceNode.tscn" id="1_80d3n"]
+
+[node name="CoinNode" type="Node2D" unique_id=1582215865]
+script = ExtResource("1_3s45a")
+
+[node name="CoinFaceNodeUser" parent="." unique_id=1660564807 instance=ExtResource("1_80d3n")]
+unique_name_in_owner = true
+
+[node name="CoinFaceNodeOpponent" parent="." unique_id=991194975 instance=ExtResource("1_80d3n")]
+unique_name_in_owner = true
+visible = false

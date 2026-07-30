@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://d0nnr7vplu62v"]
+
+[ext_resource type="Script" uid="uid://bl5cuicudcqg5" path="res://Scripts/UI/Menus/MainMenu/MainMenu.gd" id="1_pkgqi"]
+[ext_resource type="PackedScene" uid="uid://mpkd14oolkg6" path="res://Scenes/Match/MatchBackground.tscn" id="3_4gkdv"]
+[ext_resource type="PackedScene" uid="uid://u01xnu8yrvdx" path="res://Scenes/UI/ButtonNine.tscn" id="4_gp1rt"]
+[ext_resource type="PackedScene" uid="uid://ywle6hs714l6" path="res://Scenes/Views/CoinNode.tscn" id="5_gp1rt"]
+
+[node name="MainMenu" type="Control" unique_id=1458671715]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pkgqi")
+
+[node name="MatchBackground" parent="." unique_id=30279248 instance=ExtResource("3_4gkdv")]
+unique_name_in_owner = true
+layout_mode = 0
+
+[node name="OptionsHolder" type="Control" parent="." unique_id=2079031375]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsHolder" unique_id=1485016568]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.5
+offset_top = -47.5
+offset_right = 59.5
+offset_bottom = 47.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButtonNine" parent="OptionsHolder/VBoxContainer" unique_id=756325726 instance=ExtResource("4_gp1rt")]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "[center]Play[/center]"
+
+[node name="SettingsButtonNine" parent="OptionsHolder/VBoxContainer" unique_id=362618664 instance=ExtResource("4_gp1rt")]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "[center]Settings[/center]"
+
+[node name="ExitButtonNine" parent="OptionsHolder/VBoxContainer" unique_id=192555737 instance=ExtResource("4_gp1rt")]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "[center]Exit[/center]"
+
+[node name="CoinHolder" type="Control" parent="." unique_id=398321066]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -96.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CoinNode" parent="CoinHolder" unique_id=1582215865 instance=ExtResource("5_gp1rt")]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="OptionsHolder/VBoxContainer/PlayButtonNine" to="." method="onPlayPressed"]
+[connection signal="pressed" from="OptionsHolder/VBoxContainer/SettingsButtonNine" to="." method="onSettingsPressed"]
+[connection signal="pressed" from="OptionsHolder/VBoxContainer/ExitButtonNine" to="." method="onExitPressed"]

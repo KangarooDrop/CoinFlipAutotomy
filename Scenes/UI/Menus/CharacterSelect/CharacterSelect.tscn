@@ -1,0 +1,228 @@
+[gd_scene format=3 uid="uid://d2hcpnfh26wff"]
+
+[ext_resource type="Script" uid="uid://eosvi2abxqf" path="res://Scripts/UI/Menus/CharacterSelect/CharacterSelect.gd" id="1_6f6kx"]
+[ext_resource type="PackedScene" uid="uid://u01xnu8yrvdx" path="res://Scenes/UI/ButtonNine.tscn" id="2_vcbhj"]
+[ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="3_3hcbw"]
+[ext_resource type="PackedScene" uid="uid://dk3e2678opqm6" path="res://Scenes/Views/CoinFaceNode.tscn" id="4_pvxt1"]
+[ext_resource type="Texture2D" uid="uid://ds6ft4e2fovt8" path="res://Textures/UI/background_dark.png" id="5_gb0qv"]
+[ext_resource type="Texture2D" uid="uid://csi20y6a46e70" path="res://Textures/Demons/gluttony/pose.png" id="6_uswbb"]
+
+[node name="CharacterSelect" type="Control" unique_id=1792126101]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_6f6kx")
+
+[node name="PortraitHolder" type="Control" parent="." unique_id=525812300]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GearHolder" type="Control" parent="." unique_id=1185327942]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_right = -128.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GearOffset" type="Control" parent="GearHolder" unique_id=1915798343]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = 44.0
+offset_right = 64.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HandHolder" type="Control" parent="GearHolder/GearOffset" unique_id=1025105064]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HandNode" parent="GearHolder/GearOffset/HandHolder" unique_id=1522124850 instance=ExtResource("3_3hcbw")]
+unique_name_in_owner = true
+
+[node name="CoinFaceHolder" type="Control" parent="GearHolder/GearOffset" unique_id=707072981]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -80.0
+offset_bottom = -80.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CoinFaceNode" parent="GearHolder/GearOffset/CoinFaceHolder" unique_id=1681672531 instance=ExtResource("4_pvxt1")]
+unique_name_in_owner = true
+
+[node name="PoseHolder" type="Control" parent="." unique_id=1612603811]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PoseOffset" type="Control" parent="PoseHolder" unique_id=298352466]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -152.0
+offset_bottom = 152.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PoseWindow" type="Control" parent="PoseHolder/PoseOffset" unique_id=1578327634]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -152.0
+offset_right = 240.0
+offset_bottom = 152.0
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PoseHolder/PoseOffset/PoseWindow" unique_id=232122921]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_gb0qv")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="ColorRect" type="ColorRect" parent="PoseHolder/PoseOffset/PoseWindow/NinePatchRect" unique_id=76320914]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Center" type="Control" parent="PoseHolder/PoseOffset/PoseWindow" unique_id=1947488172]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PoseSprite" type="Sprite2D" parent="PoseHolder/PoseOffset/PoseWindow/Center" unique_id=594399520]
+unique_name_in_owner = true
+texture = ExtResource("6_uswbb")
+
+[node name="ButtonOffset" type="Control" parent="." unique_id=1431838521]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 78.0
+offset_right = -96.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ButtonHolder" type="VBoxContainer" parent="ButtonOffset" unique_id=1926246256]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 64.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="PlayButtonHolder" type="Control" parent="ButtonOffset/ButtonHolder" unique_id=1782122578]
+layout_mode = 2
+
+[node name="PlayButtonNine" parent="ButtonOffset/ButtonHolder/PlayButtonHolder" unique_id=1952311468 instance=ExtResource("2_vcbhj")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -14.5
+offset_right = 32.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "Play"
+
+[node name="BackButtonHolder" type="Control" parent="ButtonOffset/ButtonHolder" unique_id=261720658]
+layout_mode = 2
+
+[node name="BackButtonNine" parent="ButtonOffset/ButtonHolder/BackButtonHolder" unique_id=756325726 instance=ExtResource("2_vcbhj")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.5
+offset_top = -8.5
+offset_right = 19.5
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "Back"
+
+[connection signal="pressed" from="ButtonOffset/ButtonHolder/PlayButtonHolder/PlayButtonNine" to="." method="onPlayPressed"]
+[connection signal="pressed" from="ButtonOffset/ButtonHolder/BackButtonHolder/BackButtonNine" to="." method="onBackPressed"]

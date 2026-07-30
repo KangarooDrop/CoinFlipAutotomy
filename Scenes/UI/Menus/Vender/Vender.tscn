@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://db2pm4pfbxhe5"]
+
+[ext_resource type="Script" uid="uid://oonoxjxw4026" path="res://Scripts/UI/Menus/Vender/Vender.gd" id="1_xt8eu"]
+[ext_resource type="PackedScene" uid="uid://u01xnu8yrvdx" path="res://Scenes/UI/ButtonNine.tscn" id="2_qumqh"]
+[ext_resource type="PackedScene" uid="uid://c6ija0nvjbxjw" path="res://Scenes/UI/Menus/Vender/VenderItemHolder.tscn" id="2_ucop5"]
+[ext_resource type="Texture2D" uid="uid://bpugaf4q68moi" path="res://Textures/UI/background_normal.png" id="2_xkvmb"]
+[ext_resource type="PackedScene" uid="uid://vujl1wgx0sov" path="res://Scenes/UI/Menus/Vender/VenderRefreshButton.tscn" id="3_qumqh"]
+[ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="6_1fbem"]
+[ext_resource type="Texture2D" uid="uid://bm4aiajlygkig" path="res://Textures/FingerRings/vanity_ring_finger.png" id="7_j3vb4"]
+
+[node name="Vender" type="Node2D" unique_id=723774995]
+script = ExtResource("1_xt8eu")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1086139433]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -128.0
+offset_right = 192.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xkvmb")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="CoreHolder" parent="." unique_id=948295923 instance=ExtResource("2_ucop5")]
+unique_name_in_owner = true
+position = Vector2(-128, 0)
+itemType = 1
+numItems = 1
+
+[node name="CoinPieceHolder" parent="." unique_id=509127146 instance=ExtResource("2_ucop5")]
+unique_name_in_owner = true
+position = Vector2(0, -64)
+itemType = 2
+numItems = 5
+
+[node name="RingHolder" parent="." unique_id=1276722248 instance=ExtResource("2_ucop5")]
+unique_name_in_owner = true
+
+[node name="VenderRefreshButton" parent="." unique_id=1983548745 instance=ExtResource("3_qumqh")]
+offset_left = -132.0
+offset_top = -87.0
+offset_right = -116.0
+offset_bottom = -71.0
+
+[node name="ButtonHolder" type="Node2D" parent="." unique_id=645836029]
+position = Vector2(0, 96)
+
+[node name="SkipButton" parent="ButtonHolder" unique_id=756325726 instance=ExtResource("2_qumqh")]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -8.5
+offset_right = 36.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Skip (+_)"
+
+[node name="NextButton" parent="ButtonHolder" unique_id=94421174 instance=ExtResource("2_qumqh")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -8.5
+offset_right = 36.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Go Next"
+
+[node name="HandNode" parent="." unique_id=1522124850 instance=ExtResource("6_1fbem")]
+position = Vector2(-209, 73)
+
+[node name="VanityRingFinger" type="Sprite2D" parent="HandNode" unique_id=1010320406]
+position = Vector2(17, -16)
+rotation = 1.5707964
+texture = ExtResource("7_j3vb4")
+
+[node name="VanityRingFinger2" type="Sprite2D" parent="HandNode" unique_id=1046820692]
+position = Vector2(21, 2)
+rotation = 1.5707964
+texture = ExtResource("7_j3vb4")
+
+[node name="VanityRingFinger3" type="Sprite2D" parent="HandNode" unique_id=713059700]
+position = Vector2(17, 17)
+rotation = 1.5707964
+texture = ExtResource("7_j3vb4")
+
+[node name="VanityRingFinger4" type="Sprite2D" parent="HandNode" unique_id=2016010567]
+position = Vector2(12, 32)
+rotation = 1.5707964
+texture = ExtResource("7_j3vb4")
+
+[node name="VanityRingFinger5" type="Sprite2D" parent="HandNode" unique_id=762008809]
+position = Vector2(-28, -30)
+texture = ExtResource("7_j3vb4")
+
+[connection signal="item_node_pressed" from="CoreHolder" to="." method="onItemNodePressed"]
+[connection signal="item_node_pressed" from="CoinPieceHolder" to="." method="onItemNodePressed"]
+[connection signal="item_node_pressed" from="RingHolder" to="." method="onItemNodePressed"]
+[connection signal="pressed" from="VenderRefreshButton" to="." method="onRefreshPressed"]

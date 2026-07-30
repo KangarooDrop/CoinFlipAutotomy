@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bi0dyvligs32g"]
+
+[ext_resource type="Script" uid="uid://b788l486vxk4l" path="res://Scripts/Views/FingerNode.gd" id="1_jd4dm"]
+[ext_resource type="Texture2D" uid="uid://ctvnba02vwsi8" path="res://Textures/Demons/gluttony/hand_atlas.png" id="2_faovk"]
+
+[node name="FingerNode" type="Node2D" unique_id=1708261731]
+script = ExtResource("1_jd4dm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1226602771]
+unique_name_in_owner = true
+texture = ExtResource("2_faovk")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 128)
+
+[node name="RingHolder" type="Node2D" parent="." unique_id=463475844]
+unique_name_in_owner = true

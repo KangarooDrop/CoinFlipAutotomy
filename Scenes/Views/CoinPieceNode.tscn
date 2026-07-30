@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bkt5858p1p3lh"]
+
+[ext_resource type="Script" uid="uid://c22tei2rr11r8" path="res://Scripts/Views/CoinPieceNode.gd" id="1_vu44t"]
+[ext_resource type="Texture2D" uid="uid://dgd3y7hpovx0w" path="res://Textures/CoinParts/counterweight_exterior.png" id="2_vullg"]
+[ext_resource type="PackedScene" uid="uid://c383t3ts5by6c" path="res://Scenes/UI/TooltipViewer.tscn" id="3_vxif4"]
+
+[node name="CoinPieceNode" type="Node2D" unique_id=878804811]
+script = ExtResource("1_vu44t")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1131125095]
+unique_name_in_owner = true
+texture = ExtResource("2_vullg")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="TooltipViewer" parent="." unique_id=681736428 instance=ExtResource("3_vxif4")]
+unique_name_in_owner = true

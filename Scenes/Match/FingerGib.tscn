@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://g2bqlsxk6fmx"]
+
+[ext_resource type="Texture2D" uid="uid://ctvnba02vwsi8" path="res://Textures/Demons/gluttony/hand_atlas.png" id="1_el8ts"]
+[ext_resource type="Script" uid="uid://d2npppsxlhy2m" path="res://Scripts/Match/FingerGib.gd" id="1_pilv0"]
+
+[node name="FingerGib" type="Sprite2D" unique_id=250464211]
+z_index = 5
+texture = ExtResource("1_el8ts")
+region_enabled = true
+region_rect = Rect2(0, 256, 128, 128)
+script = ExtResource("1_pilv0")

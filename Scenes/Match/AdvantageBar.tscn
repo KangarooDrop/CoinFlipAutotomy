@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://dxo4rnecva8s6"]
+
+[ext_resource type="Script" uid="uid://hkvvdtfcwts5" path="res://Scripts/Match/AdvantageBar.gd" id="1_hid0u"]
+[ext_resource type="Texture2D" uid="uid://cjhgngx3y646k" path="res://Textures/Match/advantage_bar.png" id="1_ta6vh"]
+[ext_resource type="Texture2D" uid="uid://bkbnng6xce1ma" path="res://Textures/CoinParts/counterweight_core.png" id="2_68y07"]
+[ext_resource type="Texture2D" uid="uid://dgd3y7hpovx0w" path="res://Textures/CoinParts/counterweight_exterior.png" id="3_iaf06"]
+[ext_resource type="Theme" uid="uid://domns0ab573dx" path="res://Themes/label_theme.tres" id="3_srpxl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc7fx"]
+atlas = ExtResource("1_ta6vh")
+region = Rect2(32, 0, 16, 16)
+
+[node name="AdvantageBar" type="Control" unique_id=72185894]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 48.0
+grow_horizontal = 2
+script = ExtResource("1_hid0u")
+
+[node name="MarkerCenter" type="Control" parent="." unique_id=1738053783]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MarkerCenter" unique_id=566620072]
+texture = ExtResource("2_68y07")
+
+[node name="MarkerLeft" type="Control" parent="." unique_id=217572262]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_right = 6.0
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MarkerLeft" unique_id=1415480629]
+rotation = -1.5707964
+texture = ExtResource("3_iaf06")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="MarkerRight" type="Control" parent="." unique_id=1079423394]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_right = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MarkerRight" unique_id=394704706]
+rotation = 1.5707964
+texture = ExtResource("3_iaf06")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="RightRect" type="NinePatchRect" parent="." unique_id=448328559]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ta6vh")
+region_rect = Rect2(48, 0, 32, 16)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="LeftRect" type="NinePatchRect" parent="." unique_id=309935887]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 268.50113
+offset_bottom = 8.0
+grow_vertical = 2
+texture = ExtResource("1_ta6vh")
+region_rect = Rect2(0, 0, 32, 16)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="MidSection" type="TextureRect" parent="LeftRect" unique_id=2132768924]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_rc7fx")
+
+[node name="NumberOffset" type="Control" parent="." unique_id=248542203]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NumberHolder0" type="Control" parent="NumberOffset" unique_id=271490235]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 16.0
+offset_right = 16.0
+
+[node name="PlayerNumberLabel0" type="Label" parent="NumberOffset/NumberHolder0" unique_id=52358993]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 44.0
+theme = ExtResource("3_srpxl")
+theme_override_font_sizes/font_size = 32
+text = "433"
+
+[node name="NumberHolder1" type="Control" parent="NumberOffset" unique_id=258700864]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -16.0
+offset_right = -16.0
+grow_horizontal = 0
+
+[node name="PlayerNumberLabel1" type="Label" parent="NumberOffset/NumberHolder1" unique_id=1278142977]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -96.0
+offset_bottom = 44.0
+theme = ExtResource("3_srpxl")
+theme_override_font_sizes/font_size = 32
+text = "445"
+horizontal_alignment = 2

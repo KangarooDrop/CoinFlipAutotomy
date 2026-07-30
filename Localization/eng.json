@@ -1,0 +1,185 @@
+{
+	"COIN_PIECE":{
+	
+		"COUNTERWEIGHT_CORE":{
+			"name" : "Counterweight Core",
+			"flavor" : ""
+		},
+		
+		"ABYSSAL_MAW":{
+			"name" : "Abyssal Maw",
+			"flavor" : ""
+		},
+		
+		"COUNTERWEIGHT_EXTERIOR":{
+			"name" : "Counterweight Exterior",
+			"flavor" : ""
+		},
+		
+		"ATROPHY":{
+			"name" : "Atrophy",
+			"flavor" : "As the body wanes, thoughts becomes heavy."
+		},
+		
+		"OCEANS_DESCENT":{
+			"name" : "Oceans' Descent",
+			"flavor" : "All will be crushed beneath the tides."
+		},
+		
+		"DEVOURING_SICKNESS":{
+			"name" : "Devouring Sickness",
+			"flavor" : ""
+		},
+		
+		"DISMAY":{
+			"name" : "Dismay",
+			"flavor" : ""
+		},
+	},
+	
+	
+	
+	"FINGER_RING":{
+		
+		"VANITY_RING":{
+			"name" : "Vanity Ring",
+			"desc" : "Neat"
+		},
+		
+		"TWIN_HEADED_OUROBOROS":{
+			"name" : "Twin-Headed Ouroboros",
+			"desc" : "On Your First Turn, when you activate an ability, Copy it. You may choose new targets for the copy.\nOn Your Last Turn, when you activate an ability, Counter it."
+		},
+		
+		"BOW_OF_BELLS_END":{
+			"name" : "Bow of Bell's End",
+			"desc" : "On Your First Turn, Skip that turn.\nOn Your Last Turn, take and Additional Turn after that."
+		},
+		
+		"BUCKET_BRIM_CRUSTACEAN":{
+			"name" : "Bucket Brim Crustacean",
+			"desc" : "When you would lose Spin on your Turn, %d%% chance to gain that much instead."
+		},
+		
+		"PREOWNED_LOOP":{
+			"name" : "Preowned Loop",
+			"desc" : "At the start each Round, Choose an Opponent's Coin Piece and activate a Copy of its ability."
+		},
+		
+		"CIRCLE_OF_LEECHES":{
+			"name" : "Circle of Leeches",
+			"desc" : "After an ability of a Coin Piece you own is activated, Add a %s to it.\nAfter a %s is removed from a Coin Piece you own, add a %s to it."
+		},
+	},
+	
+	
+	
+	"SEAL":{
+		
+		"BLACK_SULFUR":{
+			"name" : "Black Sulfur Seal",
+			"desc" : "At the start of your turn, lose %d Spin."
+		},
+		
+		"LEAD":{
+			"name" : "Lead Seal",
+			"desc" : "The next time an ability of this Coin Piece would be activated, Counter that activation and Remove this Seal."
+		},
+		
+		"CLEANSING":{
+			"name" : "Cleansing Seal",
+			"desc" : "At the end of your turn, remove this and all adjacent Seals."
+		},
+		
+		"QUICKSILVER":{
+			"name" : "Quicksilver Seal",
+			"desc" : "After an ability of this Coin Piece is activated, lose %d Spin."
+		},
+	},
+	
+	
+	
+	"ABILITY":{
+		
+		"MOCK":{
+			"name" : "Mock Ability",
+			"desc" : "Add a %s to target Coin Piece."
+		},
+		
+		"MOCK_SEAL":{
+			"name" : "Mock Seal",
+			"desc" : "Remove the Seal from target Coin Piece."
+		},
+		
+		"STOPPAGE":{
+			"name" : "Stoppage",
+			"desc" : "Add a %s to target Coin Piece."
+		},
+		
+		"CONSUMPTION":{
+			"name" : "Consume",
+			"desc" : "Gain %d Spin."
+		},
+		
+		"DRAG_UNDER":{
+			"name" : "Drag Under",
+			"desc" : "Opponent loses Spin equal to half the difference between yours'."
+		},
+		
+		"OBLITERATE":{
+			"name" : "Obliterate",
+			"desc" : "Destroy target Finger."
+		},
+		
+		"HESITANCE":{
+			"name" : "Hesitance",
+			"desc" : "Add a %s to target Coin Piece."
+		},
+	},
+	
+	
+	
+	"DEMON":{
+		"GLUTTONY":{
+			"name" : "Gluttony",
+			"epithet" : "The Everstarved",
+			"win_splash" : "Gluttony Consumes All"
+		},
+		
+		"LUST":{
+			"name" : "Lust",
+			"epithet" : "The Dollmaker",
+			"win_splash" : "You Are Mine"
+		},
+		
+		"GREED":{
+			"name" : "Greed",
+			"epithet" : "",
+			"win_splash" : ""
+		},
+		
+		"WRATH":{
+			"name" : "Wrath",
+			"epithet" : "",
+			"win_splash" : ""
+		},
+		
+		"PRIDE":{
+			"name" : "Pride",
+			"epithet" : "The Mother of Sin",
+			"win_splash" : ""
+		},
+		
+		"SLOTH":{
+			"name" : "Sloth",
+			"epithet" : "The Hollow Miasma",
+			"win_splash" : "Time Begets Emptiness"
+		},
+		
+		"ENVY":{
+			"name" : "Envy",
+			"epithet" : "The Grasping Covet",
+			"win_splash" : ""
+		},
+	},
+}

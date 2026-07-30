@@ -1,0 +1,50 @@
+{
+	"COIN_PIECE":{
+	
+		"COUNTERWEIGHT_CORE":{
+			"name" : "Núcleo de Contrapeso",
+			"desc" : ""
+		},
+		
+		"ABYSSAL_MAW":{
+			"name" : "Fauces Abisales",
+			"desc" : ""
+		},
+		
+		"COUNTERWEIGHT_EXTERIOR":{
+			"name" : "Arco de Contrapeso",
+			"desc" : ""
+		},
+	},
+	
+	
+	"FINGER_RING":{
+		
+		"VANITY_RING":{
+			"name" : "Anillo de Vanidad",
+			"desc" : "Genial"
+		},
+	},
+	
+	
+	
+	"DEMON":{
+		"GLUTTONY":{
+			"name" : "Gula",
+			"epithet" : "Siempre hambriento",
+			"win_splash" : "Spanish nom"
+		},
+		
+		"GREED":{
+			"name" : "Codicia",
+			"epithet" : "",
+			"win_splash" : ""
+		},
+		
+		"ENVY":{
+			"name" : "Nvidia",
+			"epithet" : "",
+			"win_splash" : ""
+		},
+	},
+}

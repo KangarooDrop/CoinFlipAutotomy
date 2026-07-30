@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://diri3cw6vroak"]
+
+[ext_resource type="Texture2D" uid="uid://1l76q2qbdf44" path="res://Textures/CoinParts/none_back.png" id="1_3awok"]
+[ext_resource type="Texture2D" uid="uid://bkbnng6xce1ma" path="res://Textures/CoinParts/counterweight_core.png" id="2_s8o35"]
+[ext_resource type="Texture2D" uid="uid://dgd3y7hpovx0w" path="res://Textures/CoinParts/counterweight_exterior.png" id="3_3v6x8"]
+
+[node name="MockCoin" type="Sprite2D" unique_id=852428049]
+scale = Vector2(-0.9870426, 1)
+texture = ExtResource("1_3awok")
+
+[node name="CounterweightCore" type="Sprite2D" parent="." unique_id=843768858]
+texture = ExtResource("2_s8o35")
+
+[node name="CounterweightExterior" type="Sprite2D" parent="." unique_id=1504370229]
+position = Vector2(0, -32)
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="CounterweightExterior2" type="Sprite2D" parent="." unique_id=415842682]
+position = Vector2(32, 0)
+rotation = 1.5707964
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="CounterweightExterior3" type="Sprite2D" parent="." unique_id=1093606335]
+position = Vector2(0, 32)
+rotation = -3.1415925
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="CounterweightExterior4" type="Sprite2D" parent="." unique_id=324934712]
+position = Vector2(-32, 0)
+rotation = -1.5707964
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="CounterweightExterior5" type="Sprite2D" parent="." unique_id=1205233169]
+position = Vector2(26, -26)
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 64, 64, 64)
+
+[node name="CounterweightExterior6" type="Sprite2D" parent="." unique_id=187702274]
+position = Vector2(26, 26)
+rotation = 1.5707964
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 64, 64, 64)
+
+[node name="CounterweightExterior7" type="Sprite2D" parent="." unique_id=1562543281]
+position = Vector2(-26, 26)
+rotation = -3.1415925
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 64, 64, 64)
+
+[node name="CounterweightExterior8" type="Sprite2D" parent="." unique_id=2113995110]
+position = Vector2(-26, -26)
+rotation = -1.5707964
+texture = ExtResource("3_3v6x8")
+region_enabled = true
+region_rect = Rect2(0, 64, 64, 64)
