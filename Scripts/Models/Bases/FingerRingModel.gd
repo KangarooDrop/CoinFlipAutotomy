@@ -3,7 +3,7 @@ extends ItemModel
 
 class_name FingerRingModel
 
-var _fingerModel : FingerModel = null
+var _fingerModelRef : WeakRef = null
 
 ####################################################################################################
 
@@ -37,17 +37,19 @@ func getTooltipString() -> String:
 ####################################################################################################
 
 func setFingerModel(newFingerModel : FingerModel) -> void:
-	_fingerModel = newFingerModel
+	_fingerModelRef = weakref(newFingerModel)
 
 func getFingerModel() -> FingerModel:
-	return _fingerModel
+	if not _fingerModelRef:
+		return null
+	return _fingerModelRef.get_ref()
 
 func getHandModel() -> HandModel:
-	if _fingerModel == null:
+	if not _fingerModelRef:
 		return null
-	return _fingerModel.getHandModel()
+	return getFingerModel().getHandModel()
 
 func getPlayerModel() -> PlayerModel:
-	if _fingerModel == null:
+	if not _fingerModelRef:
 		return null
-	return _fingerModel.getPlayerModel()
+	return getFingerModel().getPlayerModel()

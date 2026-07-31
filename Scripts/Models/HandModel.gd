@@ -5,7 +5,7 @@ class_name HandModel
 var _demon : DemonModel = null
 var _fingerModels : Array[FingerModel] = []
 
-var _playerModel : PlayerModel = null
+var _playerModelRef : WeakRef = null
 
 ####################################################################################################
 
@@ -32,7 +32,7 @@ func _hasIndex(index : int) -> bool:
 
 func clone() -> HandModel:
 	var cloneModel : HandModel = get_script().new(_demon)
-	cloneModel.setPlayerModel(_playerModel)
+	cloneModel.setPlayerModel(getPlayerModel())
 	for i in range(_fingerModels.size()):
 		if _fingerModels[i] == null:
 			continue
@@ -41,10 +41,13 @@ func clone() -> HandModel:
 
 ####################################################################################################
 
-func getPlayerModel() -> PlayerModel:
-	return _playerModel
 func setPlayerModel(newPlayerModel : PlayerModel) -> void:
-	_playerModel = newPlayerModel
+	_playerModelRef = weakref(newPlayerModel)
+
+func getPlayerModel() -> PlayerModel:
+	if not _playerModelRef:
+		return null
+	return _playerModelRef.get_ref()
 
 func getTextureAtlas() -> Texture2D:
 	return _demon.handAtlas

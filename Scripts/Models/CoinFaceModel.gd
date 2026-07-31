@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name CoinFaceModel
 
-var _playerModel : PlayerModel = null
+var _playerModelRef : WeakRef = null
 
 var _socketIndexToPiece : Dictionary[Entities.CoinPieceSocketIndex, CoinPieceModel] = {}
 
@@ -31,7 +31,7 @@ func _hasSocket(socketIndex : Entities.CoinPieceSocketIndex) -> bool:
 
 func clone() -> CoinFaceModel:
 	var cloneModel : CoinFaceModel = get_script().new()
-	cloneModel.setPlayerModel(_playerModel)
+	cloneModel.setPlayerModel(getPlayerModel())
 	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
 		if _socketIndexToPiece[socketIndex] == null:
 			continue
@@ -40,10 +40,13 @@ func clone() -> CoinFaceModel:
 
 ####################################################################################################
 
-func getPlayerModel() -> PlayerModel:
-	return _playerModel
 func setPlayerModel(newPlayerModel : PlayerModel) -> void:
-	_playerModel = newPlayerModel
+	_playerModelRef = weakref(newPlayerModel)
+
+func getPlayerModel() -> PlayerModel:
+	if not _playerModelRef:
+		return null
+	return _playerModelRef.get_ref()
 
 func getNextIndex(coinPieceType : Entities.CoinPieceType) -> Entities.CoinPieceSocketIndex:
 	if coinPieceType == Entities.CoinPieceType.NONE:

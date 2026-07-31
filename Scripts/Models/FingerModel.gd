@@ -3,7 +3,7 @@ extends RefCounted
 class_name FingerModel
 
 var _fingerRingModel : FingerRingModel = null
-var _handModel : HandModel = null
+var _handModelRef : WeakRef = null
 
 var destroyed : bool = false
 
@@ -15,13 +15,12 @@ signal ring_replaced(newFingerRingModel : FingerRingModel, oldFingerRingModel : 
 
 ####################################################################################################
 
-func setHandModel(newHandModel : HandModel) -> void:
-	self._handModel = newHandModel
-
 func setFingerRingModel(newFingerRingModel : FingerRingModel) -> void:
 	if newFingerRingModel == _fingerRingModel:
 		return
 	var oldFingerRingModel : FingerRingModel = _fingerRingModel
+	if oldFingerRingModel != null:
+		oldFingerRingModel.setFingerModel(null)
 	_fingerRingModel = newFingerRingModel
 	_fingerRingModel.setFingerModel(self)
 	if oldFingerRingModel == null:
@@ -34,13 +33,18 @@ func setFingerRingModel(newFingerRingModel : FingerRingModel) -> void:
 func getFingerRingModel() -> FingerRingModel:
 	return _fingerRingModel
 
+func setHandModel(newHandModel : HandModel) -> void:
+	_handModelRef = weakref(newHandModel)
+
 func getHandModel() -> HandModel:
-	return _handModel
+	if not _handModelRef:
+		return null
+	return _handModelRef.get_ref()
 
 func getPlayerModel() -> PlayerModel:
-	if _handModel == null:
+	if not _handModelRef:
 		return null
-	return _handModel.getPlayerModel()
+	return getHandModel().getPlayerModel()
 
 func destroyFinger() -> void:
 	before_finger_destroyed.emit()

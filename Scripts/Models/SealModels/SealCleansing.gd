@@ -18,15 +18,17 @@ func getBaseData() -> Dictionary:
 func onBeforeTurnEnd(matchState : MatchState) -> void:
 	if matchState.getActivePlayerModel() != getPlayerModel():
 		return
-	if _coinPieceModel == null:
+	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
+	if coinPieceModel == null:
 		return
-	var coinFaceModel : CoinFaceModel = _coinPieceModel.getCoinFaceModel()
+	var coinFaceModel : CoinFaceModel = coinPieceModel.getCoinFaceModel()
 	if coinFaceModel == null:
 		return
-	var coinPieceSocketIndex : Entities.CoinPieceSocketIndex = getCoinPieceModel().getSocketIndex()
+	
+	var coinPieceSocketIndex : Entities.CoinPieceSocketIndex = coinPieceModel.getSocketIndex()
 	for adjacentSocketIndex : Entities.CoinPieceSocketIndex in Entities.CoinPieceSocketScript.getAllAdjacent(coinPieceSocketIndex):
 		var adjacentCoinPieceModel : CoinPieceModel = coinFaceModel.getCoinPieceAtSocket(adjacentSocketIndex)
 		if adjacentCoinPieceModel == null:
 			continue
 		await CmdSeal.removeSeal(matchState, adjacentCoinPieceModel)
-	await CmdSeal.removeSeal(matchState, _coinPieceModel)
+	await CmdSeal.removeSeal(matchState, coinPieceModel)

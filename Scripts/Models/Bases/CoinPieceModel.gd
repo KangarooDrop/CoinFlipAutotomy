@@ -10,7 +10,7 @@ var coinPieceType : Entities.CoinPieceType = Entities.CoinPieceType.NONE
 var abilityScript : Script = null
 
 var _sealModel : SealModel = null
-var _coinFaceModel : CoinFaceModel = null
+var _coinFaceModelRef : WeakRef = null
 
 var seal_added : CFSignal = CFSignal.new() #(sealModel : SealModel)
 var seal_removed : CFSignal = CFSignal.new() #(sealModel : SealModel)
@@ -69,16 +69,18 @@ func getTooltipString() -> String:
 func getSealModel() -> SealModel:
 	return _sealModel
 
-func getCoinFaceModel() -> CoinFaceModel:
-	return _coinFaceModel
-
 func setCoinFaceModel(newCoinFaceModel : CoinFaceModel) -> void:
-	_coinFaceModel = newCoinFaceModel
+	_coinFaceModelRef = weakref(newCoinFaceModel)
+
+func getCoinFaceModel() -> CoinFaceModel:
+	if not _coinFaceModelRef:
+		return null
+	return _coinFaceModelRef.get_ref()
 
 func getPlayerModel() -> PlayerModel:
-	if _coinFaceModel == null:
+	if not _coinFaceModelRef:
 		return null
-	return _coinFaceModel.getPlayerModel()
+	return getCoinFaceModel().getPlayerModel()
 
 func setSealModel(newSealModel : SealModel) -> SealModel:
 	var oldSealModel : SealModel = _sealModel
@@ -104,6 +106,6 @@ func hasSeal() -> bool:
 	return _sealModel != null
 
 func getSocketIndex() -> Entities.CoinPieceSocketIndex:
-	if _coinFaceModel != null:
-		return _coinFaceModel.getSocketIndexFromCoinPieceModel(self)
-	return Entities.CoinPieceSocketIndex.NONE
+	if not _coinFaceModelRef:
+		return Entities.CoinPieceSocketIndex.NONE
+	return getCoinFaceModel().getSocketIndexFromCoinPieceModel(self)

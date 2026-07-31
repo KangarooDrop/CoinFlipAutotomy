@@ -11,7 +11,7 @@ var _texture : Texture2D = null
 var texPath : String = getTexturePath()
 var _bgType : Entities.SealBackgroundType = Entities.SealBackgroundType.PINK
 
-var _coinPieceModel : CoinPieceModel = null
+var _coinPieceModelRef : WeakRef = null
 
 ####################################################################################################
 
@@ -57,15 +57,17 @@ func getTooltipString() -> String:
 ####################################################################################################
 
 func setCoinPieceModel(newCoinPieceModel : CoinPieceModel) -> void:
-	_coinPieceModel = newCoinPieceModel
+	_coinPieceModelRef = weakref(newCoinPieceModel)
 
 func getCoinPieceModel() -> CoinPieceModel:
-	return _coinPieceModel
+	if not _coinPieceModelRef:
+		return null
+	return _coinPieceModelRef.get_ref()
 
 func getPlayerModel() -> PlayerModel:
-	if _coinPieceModel == null:
+	if not _coinPieceModelRef:
 		return null
-	return _coinPieceModel.getPlayerModel()
+	return getCoinPieceModel().getPlayerModel()
 
 func getTexture() -> Texture2D:
 	if _texture == null:
