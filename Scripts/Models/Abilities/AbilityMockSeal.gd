@@ -24,4 +24,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Coin Node without a seal given to AbilityMockSeal.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.removeSeal(abilityContext.targets[0])
+	await CmdSeal.removeSeal(matchState, abilityContext.targets[0])

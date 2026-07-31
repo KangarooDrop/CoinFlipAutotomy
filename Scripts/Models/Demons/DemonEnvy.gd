@@ -12,4 +12,4 @@ func getStartingCoinPieceTypes() -> Array[Script]:
 		CPOceansDescent, CPDismay, CPCounterweightExterior]
 
 func getStartingFingerRingTypes() -> Array[Script]: 
-	return [RingBucketBrimCrustacean, RingPreownedLoop, RingCircleOfLeeches]
+	return [RingBucketBrimCrustacean, RingCrownOfPrimaeNoctis, RingCircleOfLeeches]

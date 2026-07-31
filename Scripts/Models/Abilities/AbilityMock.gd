@@ -24,4 +24,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Invalid target given to AbilityMock.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.setSeal(ModelDB.getSeal(SealBlackSulfur), abilityContext.targets[0])
+	await CmdSeal.setSeal(matchState, ModelDB.getSeal(SealBlackSulfur), abilityContext.targets[0])

@@ -32,19 +32,17 @@ func freeFingerRingNode(fingerRingNode : FingerRingNode) -> void:
 	#fingerRingNode.setModel(null)
 	fingerRingNode.queue_free()
 
-func destroyFinger(fingerModel : FingerModel) -> void:
-	var matchState : MatchState = CmdMatch.getMatchState()
-	if matchState == null:
-		return
-	
-	await TriggerHandler.onBeforeFingerDestroyed(matchState, fingerModel)
-	fingerModel.destroyFinger()
-	await TriggerHandler.onAfterFingerDestroyed(matchState, fingerModel)
-	matchState.onFingerDestroyed()
-
 func createGib(fingerNode : FingerNode) -> FingerGib:
 	var fingerGib : FingerGib = Preloader.fingerGibNode.instantiate()
 	add_child(fingerGib)
 	fingerGib.global_position = fingerNode.global_position
 	fingerGib.setFromFingerNode(fingerNode)
 	return fingerGib
+
+####################################################################################################
+
+func destroyFinger(matchState : MatchState, fingerModel : FingerModel) -> void:
+	await TriggerHandler.onBeforeFingerDestroyed(matchState, fingerModel)
+	await fingerModel.destroyFinger()
+	await TriggerHandler.onAfterFingerDestroyed(matchState, fingerModel)
+	matchState.onFingerDestroyed()

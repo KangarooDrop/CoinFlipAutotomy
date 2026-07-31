@@ -30,3 +30,5 @@ func freeCoinPieceNode(coinPieceNode : CoinPieceNode) -> void:
 	coinPieceNode.get_parent().remove_child(coinPieceNode)
 	#coinPieceNode.setModel(null)
 	coinPieceNode.queue_free()
+
+####################################################################################################

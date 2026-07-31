@@ -15,8 +15,9 @@ func getBaseData() -> Dictionary:
 	}, true)
 	return baseData
 
-func onBeforeAbilityCheck(_matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
-	if context.source == getCoinPieceModel():
+func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
+	if context.source == coinPieceModel:
 		if not context.isCountered:
 			context.isCountered = true
-			getCoinPieceModel().removeSealModel()
+			CmdSeal.removeSeal(matchState, coinPieceModel)

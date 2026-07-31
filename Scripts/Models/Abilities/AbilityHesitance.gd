@@ -24,4 +24,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Invalid target given to AbilityStoppage.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.addSeal(ModelDB.getSeal(SealQuicksliver), abilityContext.targets[0])
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealQuicksliver), abilityContext.targets[0])

@@ -16,19 +16,11 @@ func _init() -> void:
 	for socketIndex : Entities.CoinPieceSocketIndex in Entities.getAllNonNone(Entities.CoinPieceSocketIndex):
 		_socketIndexToPiece[socketIndex] = null
 
-func _attachModel(coinPiece : CoinPieceModel) -> void:
-	pass
-
-func _unattachModel(coinPiece : CoinPieceModel) -> void:
-	pass
-
 func _setCoinPieceInternal(socketIndex : Entities.CoinPieceSocketIndex, coinPieceModel : CoinPieceModel) -> CoinPieceModel:
 	var oldCoinPieceModel = getCoinPieceAtSocket(socketIndex)
 	if oldCoinPieceModel != null:
-		_unattachModel(oldCoinPieceModel)
 		oldCoinPieceModel.setCoinFaceModel(null)
 	_socketIndexToPiece[socketIndex] = coinPieceModel
-	_attachModel(coinPieceModel)
 	coinPieceModel.setCoinFaceModel(self)
 	return oldCoinPieceModel
 

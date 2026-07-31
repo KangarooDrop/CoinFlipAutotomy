@@ -6,6 +6,7 @@ var _sealModel : SealModel = null
 
 @onready var _backgroundSprite : Sprite2D = get_node("%BackgroundSprite2D")
 @onready var _sigilSprite : Sprite2D = get_node("%SigilSprite2D")
+@onready var popperNode : PopperNode = get_node("%PopperNode")
 
 ####################################################################################################
 

@@ -21,4 +21,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		return
 	
 	var fingerModel : FingerModel = abilityContext.targets[0]
-	await CmdFinger.destroyFinger(fingerModel)
+	await CmdFinger.destroyFinger(matchState, fingerModel)

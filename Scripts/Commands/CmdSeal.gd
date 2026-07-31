@@ -1,20 +1,16 @@
 extends Node
 
-func addSeal(sealModel : SealModel, coinPieceModel : CoinPieceModel) -> void:
+func addSeal(matchState : MatchState, sealModel : SealModel, coinPieceModel : CoinPieceModel) -> void:
 	if coinPieceModel.hasSeal():
 		return
-	await setSeal(sealModel, coinPieceModel)
+	await setSeal(matchState, sealModel, coinPieceModel)
 
-func removeSeal(coinPieceModel : CoinPieceModel) -> void:
+func removeSeal(matchState : MatchState, coinPieceModel : CoinPieceModel) -> void:
 	if not coinPieceModel.hasSeal():
 		return
-	await setSeal(null, coinPieceModel)
+	await setSeal(matchState, null, coinPieceModel)
 
-func setSeal(sealModel : SealModel, coinPieceModel : CoinPieceModel) -> void:
-	var matchState : MatchState = CmdMatch.getMatchState()
-	if matchState == null:
-		return
-	
+func setSeal(matchState : MatchState, sealModel : SealModel, coinPieceModel : CoinPieceModel) -> void:
 	var oldSealModel : SealModel = coinPieceModel.getSealModel()
 	var newSealModelPointer : Pointer = Pointer.new(sealModel)
 	await TriggerHandler.onBeforeSealChanged(matchState, coinPieceModel, newSealModelPointer)

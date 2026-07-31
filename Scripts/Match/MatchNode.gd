@@ -163,7 +163,7 @@ func _onRoundEndInternal() -> void:
 	await get_tree().create_timer(2.0).timeout
 	
 	var fingerToDestroy : FingerModel = await _getFingerToDestroyInternal(_matchState.winnerLastRound)
-	CmdFinger.destroyFinger(fingerToDestroy)
+	await CmdFinger.destroyFinger(_matchState, fingerToDestroy)
 	
 	background.isTurning = true
 	_onResetRoundInternal()

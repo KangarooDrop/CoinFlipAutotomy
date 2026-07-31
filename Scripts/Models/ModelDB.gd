@@ -45,7 +45,7 @@ func _ready() -> void:
 	_fingerRingDB.add(RingTwinHeadedOuroboros)
 	_fingerRingDB.add(RingBowOfBellsEnd)
 	_fingerRingDB.add(RingBucketBrimCrustacean)
-	_fingerRingDB.add(RingPreownedLoop)
+	_fingerRingDB.add(RingCrownOfPrimaeNoctis)
 	_fingerRingDB.add(RingCircleOfLeeches)
 	
 	_demonDB.add(DemonEnvy)

@@ -6,8 +6,11 @@ func getMatchNode() -> MatchNode:
 			return c
 	return null
 
-func getMatchState() -> MatchState:
-	var matchNode : MatchNode = getMatchNode()
-	if matchNode == null:
-		return null
-	return matchNode.getMatchState()
+func addAdditionalTurn(matchState : MatchState, playerModel : PlayerModel) -> void:
+	matchState.addAdditionalTurn(playerModel)
+
+#func getMatchState() -> MatchState:
+#	var matchNode : MatchNode = getMatchNode()
+#	if matchNode == null:
+#		return null
+#	return matchNode.getMatchState()

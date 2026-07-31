@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://dtuqwx2aw85hf" path="res://Shaders/seal_shader.gdshader" id="2_l3vh4"]
 [ext_resource type="Texture2D" uid="uid://bb03g78qogkob" path="res://Textures/Seals/seal_background_greyscale.png" id="3_44132"]
 [ext_resource type="Texture2D" uid="uid://phx3hu5bv5nr" path="res://Textures/Seals/sigil_black_sulfur.png" id="4_4e0rh"]
+[ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="5_44132"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_07w8e"]
 resource_local_to_scene = true
@@ -15,11 +16,16 @@ shader_parameter/offsetY = 0
 [node name="SealNode" type="Node2D" unique_id=768487196]
 script = ExtResource("1_wvale")
 
-[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=421873937]
+[node name="GraphicsHolder" type="Node2D" parent="." unique_id=878681495]
+
+[node name="BackgroundSprite2D" type="Sprite2D" parent="GraphicsHolder" unique_id=421873937]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_07w8e")
 texture = ExtResource("3_44132")
 
-[node name="SigilSprite2D" type="Sprite2D" parent="." unique_id=719136840]
+[node name="SigilSprite2D" type="Sprite2D" parent="GraphicsHolder" unique_id=719136840]
 unique_name_in_owner = true
 texture = ExtResource("4_4e0rh")
+
+[node name="PopperNode" parent="GraphicsHolder" unique_id=1113026430 instance=ExtResource("5_44132")]
+unique_name_in_owner = true

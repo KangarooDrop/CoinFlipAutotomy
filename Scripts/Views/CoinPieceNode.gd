@@ -29,13 +29,14 @@ func _onSealAdded(sealModel : SealModel) -> void:
 	add_child(_sealNode)
 	_sealNode.setModel(sealModel)
 	if visible:
-		#var popTween : Tween = get_tree().create_tween().bind_node(_sealNode)
-		await get_tree().create_timer(1.0).timeout
+		await _sealNode.popperNode.popNode()
 
 func _onSealRemoved(_sealModel : SealModel) -> void:
 	if _sealNode == null:
 		push_error("ERROR: Attempting to remove Seal from CoinPieceNode while it currently does not have one.")
 		return
+	if visible:
+		await _sealNode.popperNode.popNode()
 	_sealNode.queue_free()
 	_sealNode = null
 

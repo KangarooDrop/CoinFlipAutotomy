@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bpagw5yyns6fr"]
+
+[ext_resource type="Script" uid="uid://cq3vlq0egljv5" path="res://Scripts/UI/PopperNode.gd" id="1_hlsek"]
+
+[node name="PopperNode" type="Node" unique_id=1113026430]
+script = ExtResource("1_hlsek")

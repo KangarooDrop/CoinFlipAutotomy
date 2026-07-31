@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://domns0ab573dx" path="res://Themes/label_theme.tres" id="1_p8ti7"]
 [ext_resource type="Script" uid="uid://b6dh52qbeclox" path="res://Scripts/Match/TurnTimer.gd" id="1_rc4tg"]
+[ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="3_rprqx"]
 
 [node name="TurnTimer" type="Control" unique_id=23381049]
 layout_mode = 3
@@ -34,3 +35,6 @@ text = " "
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="PopperNode" parent="TurnTimerLabel" unique_id=1113026430 instance=ExtResource("3_rprqx")]
+unique_name_in_owner = true

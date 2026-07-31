@@ -24,7 +24,7 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
 	if context.source.getPlayerModel() != getPlayerModel():
 		return
 	if not context.source is CoinPieceModel:
@@ -33,9 +33,9 @@ func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, conte
 	if sourceCoinPieceModel.getSealModel() != null:
 		return
 	
-	await CmdSeal.addSeal(ModelDB.getSeal(SealCleansing), sourceCoinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCleansing), sourceCoinPieceModel)
 
-func onAfterSealChanged(_matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> void:
+func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> void:
 	if coinPieceModel.getPlayerModel() != getPlayerModel():
 		return
 	if not oldSealModel is SealCleansing:
@@ -43,4 +43,4 @@ func onAfterSealChanged(_matchState : MatchState, coinPieceModel : CoinPieceMode
 	if coinPieceModel.getSealModel() != null:
 		return
 	
-	await CmdSeal.addSeal(ModelDB.getSeal(SealLead), coinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)

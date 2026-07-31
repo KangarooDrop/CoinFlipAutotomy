@@ -38,10 +38,12 @@ func onTurnStart(matchState : MatchState) -> void:
 func onBeforeTurnEnd(matchState : MatchState) -> void:
 	if not _canActivate:
 		return
-	if getPlayerModel() != matchState.getActivePlayerModel():
+	var playerModel : PlayerModel = getPlayerModel()
+	if playerModel != matchState.getActivePlayerModel():
 		return
 	if matchState.currentTurnNumber <= matchState.NUM_TURNS_MAX - 2:
 		return
 	
 	_canActivate = false
+	CmdMatch.addAdditionalTurn(matchState, playerModel)
 	matchState.addAdditionalTurn(getPlayerModel())

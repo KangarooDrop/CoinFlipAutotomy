@@ -61,9 +61,9 @@
 			"desc" : "When you would lose Spin on your Turn, %d%% chance to gain that much instead."
 		},
 		
-		"PREOWNED_LOOP":{
-			"name" : "Preowned Loop",
-			"desc" : "At the start each Round, Choose an Opponent's Coin Piece and activate a Copy of its ability."
+		"CROWN_OF_PRIMAE_NOCTIS":{
+			"name" : "Crown of Primae Noctis",
+			"desc" : "At the start of each Round, Choose an Opponent's Coin Piece and activate a Copy of its ability."
 		},
 		
 		"CIRCLE_OF_LEECHES":{

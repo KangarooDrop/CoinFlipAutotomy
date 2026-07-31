@@ -28,5 +28,5 @@ func onBeforeTurnEnd(matchState : MatchState) -> void:
 		var adjacentCoinPieceModel : CoinPieceModel = coinFaceModel.getCoinPieceAtSocket(adjacentSocketIndex)
 		if adjacentCoinPieceModel == null:
 			continue
-		await CmdSeal.removeSeal(adjacentCoinPieceModel)
-	await CmdSeal.removeSeal(_coinPieceModel)
+		await CmdSeal.removeSeal(matchState, adjacentCoinPieceModel)
+	await CmdSeal.removeSeal(matchState, _coinPieceModel)

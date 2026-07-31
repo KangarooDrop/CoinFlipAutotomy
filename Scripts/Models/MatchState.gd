@@ -52,16 +52,16 @@ func setPlayerModelOpponent(playerModel : PlayerModel) -> void:
 	_playerModelOpponent.resetMatchCoinFaceModel()
 	_playerModelOpponent.resetMatchHandModel()
 
-func onMatchStart() -> void:
-	matchStarted = true
-	activePlayerOnStart = _playerModelUser if RNG.getRandi()%2 == 0 else _playerModelOpponent
-	await TriggerHandler.onMatchStart(self)
-
 func onResetRound() -> void:
 	_playerModelUser.resetMatchCoinFaceModel()
 	_playerModelOpponent.resetMatchCoinFaceModel()
 	_setSpinUserInternal(STARTING_SPIN)
 	_setSpinOpponentInternal(STARTING_SPIN)
+
+func onMatchStart() -> void:
+	matchStarted = true
+	activePlayerOnStart = _playerModelUser if RNG.getRandi()%2 == 0 else _playerModelOpponent
+	await TriggerHandler.onMatchStart(self)
 
 func onRoundStart() -> void:
 	roundNumber += 1
