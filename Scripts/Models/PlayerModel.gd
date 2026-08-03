@@ -2,6 +2,7 @@ extends RefCounted
 
 class_name PlayerModel
 
+var isHuman : bool = false
 var _demon : DemonModel = null
 var _handModelOriginal : HandModel = null
 var _coinFaceModelOriginal : CoinFaceModel = null

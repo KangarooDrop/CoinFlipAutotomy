@@ -12,9 +12,9 @@ var abilityScript : Script = null
 var _sealModel : SealModel = null
 var _coinFaceModelRef : WeakRef = null
 
-var seal_added : CFSignal = CFSignal.new() #(sealModel : SealModel)
-var seal_removed : CFSignal = CFSignal.new() #(sealModel : SealModel)
-var seal_replaced : CFSignal = CFSignal.new() #(newSealModel : SealModel, oldSealModel : SealModel)
+var seal_added : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(sealModel : SealModel)
+var seal_removed : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(sealModel : SealModel)
+var seal_replaced : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(newSealModel : SealModel, oldSealModel : SealModel)
 
 #signal seal_added(sealModel : SealModel)
 #signal seal_removed(sealModel : SealModel)

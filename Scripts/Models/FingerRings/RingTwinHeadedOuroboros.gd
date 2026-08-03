@@ -36,6 +36,7 @@ func onAfterAbilityActivated(matchState : MatchState, ability : Ability, _contex
 	if getPlayerModel() != matchState.getActivePlayerModel():
 		return
 	
+	popNode()
 	_canActivate = false
 	var matchNode : MatchNode = CmdMatch.getMatchNode()
 	await matchNode.activateAbilityScript(ability.get_script(), self)
@@ -46,4 +47,5 @@ func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context :
 	if getPlayerModel() != matchState.getActivePlayerModel():
 		return
 	
+	popNode()
 	context.isCountered = true

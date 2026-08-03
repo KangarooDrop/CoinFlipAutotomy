@@ -5,7 +5,7 @@ class_name Ability
 
 const TARGET_TYPE_KEY : String = "target_type"
 
-var targetType : Entities.AbilityTargetType = Entities.AbilityTargetType.NONE
+var targetType : Entities.TargetType = Entities.TargetType.NONE
 
 ####################################################################################################
 
@@ -30,7 +30,7 @@ func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
-		TARGET_TYPE_KEY : Entities.AbilityTargetType.NONE,
+		TARGET_TYPE_KEY : Entities.TargetType.NONE,
 	}, true)
 	return baseData
 

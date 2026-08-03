@@ -33,4 +33,5 @@ func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amo
 	if RNG.getRandf() > PERCENT_CHANCE:
 		return
 	
+	popNode()
 	amountPointer.val = abs(amountPointer.val)

@@ -3,7 +3,8 @@ extends Node
 const CoinPieceType = preload("res://Scripts/Entities/CoinPieceType.gd").CoinPieceType
 const CoinPieceSocketScript : Script = preload("res://Scripts/Entities/CoinPieceSocketIndex.gd")
 const CoinPieceSocketIndex = CoinPieceSocketScript.CoinPieceSocketIndex
-const AbilityTargetType = preload("res://Scripts/Entities/AbilityTargetType.gd").AbilityTargetType
+const TargetScript = preload("res://Scripts/Entities/TargetType.gd")
+const TargetType = TargetScript.TargetType
 const SealBackgroundScript = preload("res://Scripts/Entities/SealBackgroundType.gd")
 const SealBackgroundType = SealBackgroundScript.SealBackgroundType
 

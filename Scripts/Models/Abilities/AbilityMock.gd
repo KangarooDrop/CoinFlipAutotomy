@@ -9,7 +9,7 @@ func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
-		TARGET_TYPE_KEY : Entities.AbilityTargetType.COIN_PIECE_ENEMY,
+		TARGET_TYPE_KEY : Entities.TargetType.COIN_PIECE_ENEMY,
 	}, true)
 	return baseData
 

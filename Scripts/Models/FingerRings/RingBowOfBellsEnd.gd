@@ -32,6 +32,7 @@ func onTurnStart(matchState : MatchState) -> void:
 	if _hasSkipped:
 		return
 	
+	popNode()
 	_hasSkipped = true
 	CmdAction.skipTurn()
 
@@ -44,6 +45,6 @@ func onBeforeTurnEnd(matchState : MatchState) -> void:
 	if matchState.currentTurnNumber <= matchState.NUM_TURNS_MAX - 2:
 		return
 	
+	popNode()
 	_canActivate = false
 	CmdMatch.addAdditionalTurn(matchState, playerModel)
-	matchState.addAdditionalTurn(getPlayerModel())

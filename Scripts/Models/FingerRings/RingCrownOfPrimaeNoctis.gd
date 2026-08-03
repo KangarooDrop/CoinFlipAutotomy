@@ -19,10 +19,11 @@ func getTexturePath() -> String:
 
 ####################################################################################################
 
-func onRoundStart(_matchState : MatchState) -> void:
-	var targetCoinPiece : CoinPieceModel = await CmdAction.getAbilityTarget(Entities.AbilityTargetType.COIN_PIECE_ENEMY, getPlayerModel())
+func onRoundStart(matchState : MatchState) -> void:
+	popNode()
+	var targetCoinPiece : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.ABILITY_PIECE_ENEMY, getPlayerModel())
 	var abilityScript : Script = targetCoinPiece.abilityScript
 	if abilityScript == null:
 		return
-	var matchNode : MatchNode = CmdMatch.getMatchNode()
-	await matchNode.activateAbilityScript(abilityScript, self)
+	
+	await CmdMatch.activateAbilityScript(matchState, abilityScript, self)

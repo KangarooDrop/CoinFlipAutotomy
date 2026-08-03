@@ -3,6 +3,11 @@ extends LocalizedModel
 
 class_name Triggerable
 
+var pop_node : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL)
+
+func popNode() -> void:
+	await pop_node.emitSignal()
+
 ####################################################################################################
 #	Match Time Triggers	#
 func onMatchStart(_matchState : MatchState) -> void:

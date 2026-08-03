@@ -36,6 +36,7 @@ func _ready() -> void:
 
 func _initMatch():
 	_matchState = MatchState.new()
+	_matchState.setMatchNode(self)
 	advantageBar.setMatchState(_matchState)
 	gearHolderUser.position.x = -gearHolderUser.size.x
 	gearHolderOpponent.position.x = opponentGearEndPosX+gearHolderOpponent.size.x
@@ -75,6 +76,16 @@ func _updateBackgroundScale(duration : float = BG_SCALE_UPDATE_DURATION) -> void
 	background.lerpScale(lerp(MatchBackground.BG_SCALE_MAX, MatchBackground.BG_SCALE_MIN, t), duration)
 
 func _process(delta: float) -> void:
+	if not _matchState.pregameStarted:
+		return
+	if _matchState.pregameTime > 0:
+		_matchState.pregameTime -= delta
+		var ceilVal : int = Util.betterFloor(_matchState.pregameTime)
+		if ceilVal != turnTimer.getTime():
+			turnTimer.setTime(ceilVal)
+		if _matchState.pregameTime <= 0.0:
+			_onRoundStartInternal()
+	
 	if not _matchState.roundStarted:
 		return
 	if _flippingCoinToNextPlayer:
@@ -115,22 +126,26 @@ func _onResetRoundInternal() -> void:
 	else:
 		coinNode.setObverseModel(_matchState.winnerLastRound.getCoinFaceModel())
 	
-	_onRoundStartInternal()
-
-func _onRoundStartInternal() -> void:
 	_updateBackgroundScale(1.0)
 	await coinNode.rapidFlip(_matchState.activePlayerOnStart.getCoinFaceModel(), 1.0)
-	await get_tree().create_timer(5.0).timeout
+	_matchState.pregameStarted = true
+
+func _onRoundStartInternal() -> void:
 	await _matchState.onRoundStart()
 	_onTurnStartInternal()
 
 func _onTurnStartInternal() -> void:
+	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	await _matchState.onTurnStart()
+	if (activePlayer == _matchState.getActivePlayerModel()) and not activePlayer.isHuman:
+		var targetToActivate : CoinPieceModel = await _matchState.getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, activePlayer)
+		await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
+		_onTurnEndInternal()
 	_updateBackgroundScale()
 
 func _onTurnEndInternal() -> void:
 	if choosingTarget:
-		_cancelAbilityTarget()
+		_cancelTargeting()
 	
 	await _matchState.onTurnEnd()
 	
@@ -172,7 +187,7 @@ func _onRoundEndInternal() -> void:
 
 func _userActivateAbility(coinPieceModel : CoinPieceModel) -> void:
 	canCancelTargetChoice = true
-	var successfullyActivated : bool = await activateAbilityOfCoinPieceModel(coinPieceModel)
+	var successfullyActivated : bool = await _matchState.activateAbilityOfCoinPieceModel(coinPieceModel)
 	canCancelTargetChoice = false
 	if successfullyActivated:
 		await _onTurnEndInternal()
@@ -183,7 +198,7 @@ func _input(event: InputEvent) -> void:
 			if not _matchState.isMyTurn():
 				return
 			if choosingTarget and canCancelTargetChoice:
-				_cancelAbilityTarget()
+				_cancelTargeting()
 				return
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			if not _matchState.isMyTurn() and not choosingTarget:
@@ -211,7 +226,7 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		if choosingTarget and canCancelTargetChoice and _matchState.isMyTurn():
-			_cancelAbilityTarget()
+			_cancelTargeting()
 		else:
 			print("ESCAPING")
 		return
@@ -272,121 +287,36 @@ func getMatchState() -> MatchState:
 func skipTurn() -> void:
 	await _onTurnSkippedInternal()
 
-func activateAbilityScript(abilityScript : Script, source : Variant) -> bool:
-	var targetType : Entities.AbilityTargetType = ModelDB.getAbilitySingleton(abilityScript).targetType
-	var context : AbilityContext = null
-	if targetType == Entities.AbilityTargetType.NONE:
-		context = AbilityContext.new(source, [])
-	else:
-		var target = await getAbilityTarget(targetType, source.getPlayerModel())
-		if target == null:
-			return false
-		context = AbilityContext.new(source, [target])
-	await _matchState.activateAbilityScript(abilityScript, context)
-	return true
-
-func activateAbilityOfCoinPieceModel(coinPieceModel : CoinPieceModel) -> bool:
-	if not _matchState.hasTriggerable(coinPieceModel):
-		push_error("ERROR: Could not find Coin Piece Model given to /activateAbilityOfCoinPieceModel")
-		return false
-	if coinPieceModel.abilityScript == null:
-		return false
-	return await activateAbilityScript(coinPieceModel.abilityScript, coinPieceModel)
-
-func activateAbilityByCoinFaceIndex(coinFaceModel : CoinFaceModel, socketIndex : Entities.CoinPieceSocketIndex) -> bool:
-	var coinPieceModel : CoinPieceModel = coinFaceModel.getCoinPieceAtSocket(socketIndex)
-	if coinPieceModel == null:
-		return false
-	return await activateAbilityOfCoinPieceModel(coinPieceModel)
-
-func getAbilityTarget(abilityTargetType : Entities.AbilityTargetType, playerModel : PlayerModel) -> Variant:
-	return await _getAbilityTargetInternal(abilityTargetType, playerModel)
+func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
+	return await _getUserTarget(targetType, playerModel)
 
 signal target_node_chosen_or_forced_skip
 var choosingTarget : bool = false
 var canCancelTargetChoice : bool = false
-func isValidTargetNode(abilityTargetType : Entities.AbilityTargetType, playerModel : PlayerModel, targetNode : Variant) -> bool:
-	#Targets a coin piece and the target is a coin piece node
-	if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.COIN_PIECE) and targetNode is CoinPieceNode:
-		if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.ANY):
-			return true
-		elif (playerModel == targetNode.getModel().getPlayerModel()) == Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FRIENDLY):
-			return true
-	#Targets a seal and the target is a coin piece node
-	if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.SEAL) and targetNode is CoinPieceNode and targetNode.getModel().getSealModel() != null:
-		#If targets not friendly or target is friendly
-		if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.ANY):
-			return true
-		elif playerModel.getCoinFaceModel().getAllPieces().has(targetNode.getModel()) == Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FRIENDLY):
-			return true
-	#Targets a non-seal coin piece
-	if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.NON_SEAL) and targetNode is CoinPieceNode and targetNode.getModel().getSealModel() == null:
-		#If targets not friendly or target is friendly
-		if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.ANY):
-			return true
-		elif playerModel.getCoinFaceModel().getAllPieces().has(targetNode.getModel()) == Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FRIENDLY):
-			return true
-	#Targets a finger ring and the target is a finger ring node
-	if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FINGER_RING) and targetNode is FingerRingNode:
-		if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.ANY):
-			return true
-		elif playerModel.getHandModel().getFingerRings().has(targetNode.getModel()) == Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FRIENDLY):
-			return true
-	#Targets a finger and the target is a finger node
-	if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FINGER) and targetNode is FingerNode:
-		if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.ANY):
-			return true
-		elif playerModel.getHandModel().getFingers().has(targetNode.getModel()) == Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FRIENDLY):
-			return true
-	#Targets a finger and the target is a finger ring node
-	if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FINGER) and targetNode is FingerRingNode:
-		if Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.ANY):
-			return true
-		elif (playerModel == targetNode.getModel().getPlayerModel()) == Util.hasBitVal(abilityTargetType, Entities.AbilityTargetType.FRIENDLY):
-			return true
-	return false
 
-func getTargetNodeToModel(node : Node, targetType : Entities.AbilityTargetType) -> Variant:
-	if Util.hasBitVal(targetType, Entities.AbilityTargetType.SEAL) and node is CoinPieceNode:
-		return node.getModel().getSealModel()
-	elif Util.hasBitVal(targetType, Entities.AbilityTargetType.FINGER) and node is FingerRingNode:
-		return node.getModel().getFingerModel()
-	else:
-		return node.getModel()
-
-func _getAbilityTargetInternal(abilityTargetType : Entities.AbilityTargetType, playerModel : PlayerModel) -> Variant:
-	var targetNode = null
-	choosingTarget = true
-	invalidTargetsOverlay.show()
-	_setTargetingZIndices(abilityTargetType, playerModel)
-	while targetNode == null or not isValidTargetNode(abilityTargetType, playerModel, targetNode):
-		targetNode = await target_node_chosen_or_forced_skip
-		if targetNode == null:
-			break
-	choosingTarget = false
-	canCancelTargetChoice = false
-	_resetTargetingZIndices()
-	return getTargetNodeToModel(targetNode, abilityTargetType) if targetNode != null else targetNode
-func _setTargetingZIndices(abilityTargetType : Entities.AbilityTargetType, playerModel : PlayerModel) -> void:
-	var targetableNodes : Array = coinFaceNodeUser.getAllCoinPieceNodes() + coinFaceNodeOpponent.getAllCoinPieceNodes() + coinNode.getAllCoinPieceNodes() \
-			+ handNodeUser.getAllFingerRingNodes() + handNodeOpponent.getAllFingerRingNodes() + handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
-	for targetNode : Node2D in targetableNodes:
-		targetNode.z_index = 2 if isValidTargetNode(abilityTargetType, playerModel, targetNode) else 0
-func _resetTargetingZIndices() -> void:
-	invalidTargetsOverlay.hide()
-	
-
-func _getFingerToDestroyInternal(playerModel : PlayerModel) -> FingerModel:
-	var targetNode = null
-	var targetType : Entities.AbilityTargetType = Entities.AbilityTargetType.FINGER_FRIENDLY
+func _getUserTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
 	choosingTarget = true
 	invalidTargetsOverlay.show()
 	_setTargetingZIndices(targetType, playerModel)
-	while targetNode == null or not isValidTargetNode(targetType, playerModel, targetNode):
-		targetNode = await target_node_chosen_or_forced_skip
+	var targetNode = await target_node_chosen_or_forced_skip
 	choosingTarget = false
+	canCancelTargetChoice = false
 	_resetTargetingZIndices()
-	return getTargetNodeToModel(targetNode, targetType)
+	var target : RefCounted = null
+	if targetNode != null:
+		target = Entities.TargetScript.getTargetNodeToModel(targetType, targetNode)
+	return target
 
-func _cancelAbilityTarget() -> void:
+func _setTargetingZIndices(targetType : Entities.TargetType, playerModel : PlayerModel) -> void:
+	var targetableNodes : Array = coinFaceNodeUser.getAllCoinPieceNodes() + coinFaceNodeOpponent.getAllCoinPieceNodes() + coinNode.getAllCoinPieceNodes() \
+			+ handNodeUser.getAllFingerRingNodes() + handNodeOpponent.getAllFingerRingNodes() + handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
+	for targetNode : Node2D in targetableNodes:
+		targetNode.z_index = 2 if Entities.TargetScript.isValidNode(targetType, playerModel, targetNode) else 0
+func _resetTargetingZIndices() -> void:
+	invalidTargetsOverlay.hide()
+
+func _getFingerToDestroyInternal(playerModel : PlayerModel) -> FingerModel:
+	return await _matchState.getTarget(Entities.TargetType.FINGER_FRIENDLY, playerModel)
+
+func _cancelTargeting() -> void:
 	target_node_chosen_or_forced_skip.emit(null)

@@ -8,7 +8,7 @@ func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
-		TARGET_TYPE_KEY : Entities.AbilityTargetType.FINGER_FRIENDLY,
+		TARGET_TYPE_KEY : Entities.TargetType.FINGER_FRIENDLY,
 	}, true)
 	return baseData
 

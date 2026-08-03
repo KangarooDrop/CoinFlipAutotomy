@@ -4,6 +4,7 @@ class_name CoinPieceNode
 
 @onready var sprite : Sprite2D = get_node("%Sprite2D")
 @onready var tooltipViewer : TooltipViewer = get_node("%TooltipViewer")
+@onready var popperNode : PopperNode = get_node("%PopperNode")
 
 var _sealNode : SealNode = null
 
@@ -15,11 +16,13 @@ func _attachModel() -> void:
 	_coinPieceModel.seal_added.connectSignal(_onSealAdded)
 	_coinPieceModel.seal_removed.connectSignal(_onSealRemoved)
 	_coinPieceModel.seal_replaced.connectSignal(_onSealReplaced)
+	_coinPieceModel.pop_node.connectSignal(popNode)
 
 func _unattachModel() -> void:
 	_coinPieceModel.seal_added.disconnectSignal(_onSealAdded)
 	_coinPieceModel.seal_removed.disconnectSignal(_onSealRemoved)
 	_coinPieceModel.seal_replaced.disconnectSignal(_onSealReplaced)
+	_coinPieceModel.pop_node.disconnectSignal(popNode)
 
 func _onSealAdded(sealModel : SealModel) -> void:
 	if _sealNode != null:
@@ -29,14 +32,14 @@ func _onSealAdded(sealModel : SealModel) -> void:
 	add_child(_sealNode)
 	_sealNode.setModel(sealModel)
 	if visible:
-		await _sealNode.popperNode.popNode()
+		await _sealNode.popNode()
 
 func _onSealRemoved(_sealModel : SealModel) -> void:
 	if _sealNode == null:
 		push_error("ERROR: Attempting to remove Seal from CoinPieceNode while it currently does not have one.")
 		return
 	if visible:
-		await _sealNode.popperNode.popNode()
+		await _sealNode.popNode()
 	_sealNode.queue_free()
 	_sealNode = null
 
@@ -80,3 +83,6 @@ func getModel() -> CoinPieceModel:
 func setRotationData(rotData : CoinPieceRotData) -> void:
 	sprite.rotation = rotData.getRotation()
 	sprite.region_rect.position.y = sprite.region_rect.size.x * rotData.getAtlasIndex()
+
+func popNode() -> void:
+	await popperNode.popNode()

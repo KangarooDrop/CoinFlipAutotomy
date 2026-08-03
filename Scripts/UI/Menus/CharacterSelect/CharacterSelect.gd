@@ -117,6 +117,7 @@ func onPlayPressed() -> void:
 	if waitingForTweens:
 		return
 	var playerModelUser : PlayerModel = characterPortraits[selectedIndex].demon.getStarterData().createPlayerModel()
+	playerModelUser.isHuman = true
 	changeSceneAndInitMatch(playerModelUser)
 
 static func changeSceneAndInitMatch(playerModelUser : PlayerModel) -> void:

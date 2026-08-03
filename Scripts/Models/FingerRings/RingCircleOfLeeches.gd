@@ -33,6 +33,7 @@ func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, contex
 	if sourceCoinPieceModel.getSealModel() != null:
 		return
 	
+	popNode()
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCleansing), sourceCoinPieceModel)
 
 func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> void:
@@ -43,4 +44,5 @@ func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel
 	if coinPieceModel.getSealModel() != null:
 		return
 	
+	popNode()
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)

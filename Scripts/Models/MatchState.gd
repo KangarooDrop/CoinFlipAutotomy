@@ -4,12 +4,15 @@ class_name MatchState
 
 #Gameplay variants and constants
 const STARTING_SPIN : int = 100
+const PREGAME_MAX_TIME : float = 10.0
 const TURN_MAX_TIME : float = 10.0
 const NUM_TURNS_MAX : int = 20
 
 var roundNumber : int = 0
+var pregameStarted : bool = false
 var matchStarted : bool = false
 var roundStarted : bool = false
+var pregameTime : float = 0.0
 var currentTurnTime : float = 0.0
 var currentTurnNumber : int = 0
 var currentTurnsRemaining : int = 0
@@ -18,6 +21,7 @@ var winnerLastRound : PlayerModel = null
 var isActionable : bool = false
 
 var _isDebug : bool = true
+var _matchNode : MatchNode = null
 var _activePlayer : PlayerModel = null
 var _playerModelUser : PlayerModel
 var _playerModelOpponent : PlayerModel
@@ -38,6 +42,9 @@ func _setSpinOpponentInternal(amount : int) -> void:
 
 ####################################################################################################
 
+func setMatchNode(newMatchNode : MatchNode) -> void:
+	_matchNode = newMatchNode
+
 func setPlayerModels(playerModelUser : PlayerModel, playerModelOpponent : PlayerModel) -> void:
 	setPlayerModelUser(playerModelUser)
 	setPlayerModelOpponent(playerModelOpponent)
@@ -57,6 +64,8 @@ func onResetRound() -> void:
 	_playerModelOpponent.resetMatchCoinFaceModel()
 	_setSpinUserInternal(STARTING_SPIN)
 	_setSpinOpponentInternal(STARTING_SPIN)
+	pregameTime = PREGAME_MAX_TIME
+	pregameStarted = false
 
 func onMatchStart() -> void:
 	matchStarted = true
@@ -118,19 +127,6 @@ func onFingerDestroyed() -> void:
 	elif deadPlayers.size() == 1:
 		print("WINNER is ", "YOU!" if deadPlayers[0] == _playerModelOpponent else "OPPONENT!")
 	print("MatchState: AAAAAAAAAAAAAA")
-
-func activateAbilityScript(abilityScript : Script, context : AbilityContext) -> void:
-	isActionable = false
-	var ability : Ability = ModelDB.getAbility(abilityScript)
-	await TriggerHandler.onBeforeAbilityCheck(self, ability, context)
-	if context.isCountered:
-		await TriggerHandler.onBeforeAbilityCountered(self, ability, context)
-	if not context.isCountered:
-		await TriggerHandler.onBeforeAbilityActivated(self, ability, context)
-		await ability.activate(self, context)
-		await TriggerHandler.onAfterAbilityActivated(self, ability, context)
-	else:
-		await TriggerHandler.onAfterAbilityCountered(self, ability, context)
 
 ####################################################################################################
 
@@ -207,3 +203,68 @@ func getSpinOpponent() -> int: return _spinOpponent
 
 func addAdditionalTurn(playerModel : PlayerModel) -> void:
 	_additionalTurnQueue.append(playerModel)
+
+func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel) -> Array:
+	var allTargets : Array[RefCounted] = []
+	for currentPlayerModel : PlayerModel in getAllPlayerModels():
+		allTargets.append_array(currentPlayerModel.getCoinFaceModel().getAllPieces())
+		allTargets.append_array(currentPlayerModel.getHandModel().getFingers())
+		allTargets.append_array(currentPlayerModel.getHandModel().getFingerRings())
+	for i in range(allTargets.size()-1, -1, -1):
+		if not Entities.TargetScript.isValidModel(targetType, playerModel, allTargets[i]):
+			allTargets.remove_at(i)
+	return allTargets
+
+func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
+	var target : RefCounted = null
+	if _matchNode != null and playerModel.isHuman:
+		while target == null or not Entities.TargetScript.isValidModel(targetType, playerModel, target):
+			target = await _matchNode.getTarget(targetType, playerModel)
+			if target == null:
+				break
+	else:
+		var validTargets : Array = getValidTargets(targetType, playerModel)
+		target = validTargets[RNG.getRandi() % validTargets.size()]
+	if target != null and target.has_method("popNode"):
+		target.popNode()
+	return target
+
+func activateAbilityScript(abilityScript : Script, context : AbilityContext) -> void:
+	isActionable = false
+	var ability : Ability = ModelDB.getAbility(abilityScript)
+	await TriggerHandler.onBeforeAbilityCheck(self, ability, context)
+	if context.isCountered:
+		await TriggerHandler.onBeforeAbilityCountered(self, ability, context)
+	if not context.isCountered:
+		await TriggerHandler.onBeforeAbilityActivated(self, ability, context)
+		await ability.activate(self, context)
+		await TriggerHandler.onAfterAbilityActivated(self, ability, context)
+	else:
+		await TriggerHandler.onAfterAbilityCountered(self, ability, context)
+
+func activateAbilityScriptFromSource(abilityScript : Script, source : Variant) -> bool:
+	var targetType : Entities.TargetType = ModelDB.getAbilitySingleton(abilityScript).targetType
+	var context : AbilityContext = null
+	if targetType == Entities.TargetType.NONE:
+		context = AbilityContext.new(source, [])
+	else:
+		var target = await getTarget(targetType, source.getPlayerModel())
+		if target == null:
+			return false
+		context = AbilityContext.new(source, [target])
+	await activateAbilityScript(abilityScript, context)
+	return true
+
+func activateAbilityOfCoinPieceModel(coinPieceModel : CoinPieceModel) -> bool:
+	if not hasTriggerable(coinPieceModel):
+		push_error("ERROR: Could not find Coin Piece Model given to /activateAbilityOfCoinPieceModel")
+		return false
+	if coinPieceModel.abilityScript == null:
+		return false
+	return await activateAbilityScriptFromSource(coinPieceModel.abilityScript, coinPieceModel)
+
+func activateAbilityByCoinFaceIndex(coinFaceModel : CoinFaceModel, socketIndex : Entities.CoinPieceSocketIndex) -> bool:
+	var coinPieceModel : CoinPieceModel = coinFaceModel.getCoinPieceAtSocket(socketIndex)
+	if coinPieceModel == null:
+		return false
+	return await activateAbilityOfCoinPieceModel(coinPieceModel)
