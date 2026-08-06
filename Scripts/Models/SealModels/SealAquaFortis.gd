@@ -1,13 +1,13 @@
 extends SealModel
 
-class_name SealBlackSulfur
+class_name SealAquaFortis
 
 const SPIN_LOSS_BASE : int = 8
 
-func getLocID() -> String: return super.getLocID() + "BLACK_SULFUR"
+func getLocID() -> String: return super.getLocID() + "AQUA_FORTIS"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "sigil_black_sulfur.png"
+	return super.getTexturePath() + "sigil_aqua_fortis.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

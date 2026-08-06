@@ -1,5 +1,4 @@
 extends Ability
-
 class_name AbilityMockSeal
 
 func getLocID() -> String: 

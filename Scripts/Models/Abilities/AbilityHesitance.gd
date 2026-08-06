@@ -1,5 +1,4 @@
 extends Ability
-
 class_name AbilityHesitance
 
 func getLocID() -> String: 

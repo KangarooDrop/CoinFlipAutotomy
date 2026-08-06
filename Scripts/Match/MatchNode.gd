@@ -48,7 +48,7 @@ func _initMatch():
 	_showGearUser()
 	_showGearOpponent()
 	
-	_onMatchStartInternal()
+	await _onMatchStartInternal()
 
 func _attachPlayerModel(playerModel : PlayerModel, isUser : bool) -> void:
 	pass
@@ -106,7 +106,7 @@ func _process(delta: float) -> void:
 func _onMatchStartInternal() -> void:
 	await _matchState.onMatchStart()
 	background.isTurning = true
-	_onResetRoundInternal()
+	await _onResetRoundInternal()
 
 func _onResetRoundInternal() -> void:
 	await _matchState.onResetRound()
@@ -132,15 +132,19 @@ func _onResetRoundInternal() -> void:
 
 func _onRoundStartInternal() -> void:
 	await _matchState.onRoundStart()
-	_onTurnStartInternal()
+	await _onTurnStartInternal()
 
 func _onTurnStartInternal() -> void:
 	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	await _matchState.onTurnStart()
 	if (activePlayer == _matchState.getActivePlayerModel()) and not activePlayer.isHuman:
-		var targetToActivate : CoinPieceModel = await _matchState.getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, activePlayer)
-		await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
-		_onTurnEndInternal()
+		var coinPiecesThatCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
+		if coinPiecesThatCanActivate.size() == 0:
+			await skipTurn()
+		else:
+			var targetToActivate : CoinPieceModel = coinPiecesThatCanActivate[RNG.getRandi() % coinPiecesThatCanActivate.size()]
+			await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
+			await _onTurnEndInternal()
 	_updateBackgroundScale()
 
 func _onTurnEndInternal() -> void:
@@ -153,13 +157,13 @@ func _onTurnEndInternal() -> void:
 		_flippingCoinToNextPlayer = true
 		await coinNode.flipToModel(_matchState.getActivePlayerModel().getCoinFaceModel())
 		_flippingCoinToNextPlayer = false
-		_onTurnStartInternal()
+		await _onTurnStartInternal()
 	else:
-		_onRoundEndInternal()
+		await _onRoundEndInternal()
 
 func _onTurnSkippedInternal() -> void:
 	await _matchState.onTurnSkipped()
-	_onTurnEndInternal()
+	await _onTurnEndInternal()
 
 func _onRoundEndInternal() -> void:
 	_matchState.onRoundEnd()
@@ -181,7 +185,7 @@ func _onRoundEndInternal() -> void:
 	await CmdFinger.destroyFinger(_matchState, fingerToDestroy)
 	
 	background.isTurning = true
-	_onResetRoundInternal()
+	await _onResetRoundInternal()
 
 ####################################################################################################
 

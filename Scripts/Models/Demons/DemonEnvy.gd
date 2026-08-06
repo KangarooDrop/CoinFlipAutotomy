@@ -8,8 +8,8 @@ func getDirName() -> String:
 	return "envy"
 
 func getStartingCoinPieceTypes() -> Array[Script]: 
-	return [CPCounterweightCore, 
+	return [CPDrownardsVictim, 
 		CPOceansDescent, CPDismay, CPCounterweightExterior]
 
 func getStartingFingerRingTypes() -> Array[Script]: 
-	return [RingBucketBrimCrustacean, RingCrownOfPrimaeNoctis, RingCircleOfLeeches]
+	return [RingPreserverOfTheDrowned]

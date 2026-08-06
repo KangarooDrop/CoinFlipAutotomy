@@ -26,20 +26,25 @@ func _ready() -> void:
 	_abilityDB.add(AbilityConsumption)
 	_abilityDB.add(AbilityObliterate)
 	_abilityDB.add(AbilityHesitance)
+	_abilityDB.add(AbilityRipTide)
+	_abilityDB.add(AbilityUntouchableHeat)
 	
-	_sealDB.add(SealBlackSulfur)
+	_sealDB.add(SealAquaFortis)
 	_sealDB.add(SealLead)
 	_sealDB.add(SealQuicksliver)
 	_sealDB.add(SealCleansing)
+	_sealDB.add(SealCopper)
 	
 	_coinPieceCoreDB.add(CPCounterweightCore)
 	_coinPieceCoreDB.add(CPAbyssalMaw)
+	_coinPieceCoreDB.add(CPDrownardsVictim)
 	
 	_coinPieceExteriorDB.add(CPCounterweightExterior)
 	_coinPieceExteriorDB.add(CPAtrophy)
 	_coinPieceExteriorDB.add(CPOceansDescent)
 	_coinPieceExteriorDB.add(CPDevouringSickness)
 	_coinPieceExteriorDB.add(CPDismay)
+	_coinPieceExteriorDB.add(CPAllureOfFlame)
 	
 	_fingerRingDB.add(RingVanityRing)
 	_fingerRingDB.add(RingTwinHeadedOuroboros)
@@ -47,6 +52,7 @@ func _ready() -> void:
 	_fingerRingDB.add(RingBucketBrimCrustacean)
 	_fingerRingDB.add(RingCrownOfPrimaeNoctis)
 	_fingerRingDB.add(RingCircleOfLeeches)
+	_fingerRingDB.add(RingPreserverOfTheDrowned)
 	
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)

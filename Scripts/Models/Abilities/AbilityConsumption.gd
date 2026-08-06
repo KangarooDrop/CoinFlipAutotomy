@@ -1,5 +1,4 @@
 extends Ability
-
 class_name AbilityConsumption
 
 const SPIN_INC : int = 20

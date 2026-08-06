@@ -42,6 +42,8 @@ func _onSealRemoved(_sealModel : SealModel) -> void:
 		await _sealNode.popNode()
 	_sealNode.queue_free()
 	_sealNode = null
+	if visible:
+		await get_tree().create_timer(0.25).timeout
 
 func _onSealReplaced(newSealModel : SealModel, oldSealModel : SealModel) -> void:
 	if _sealNode == null:
@@ -85,4 +87,6 @@ func setRotationData(rotData : CoinPieceRotData) -> void:
 	sprite.region_rect.position.y = sprite.region_rect.size.x * rotData.getAtlasIndex()
 
 func popNode() -> void:
+	if _sealNode != null:
+		_sealNode.popNode()
 	await popperNode.popNode()

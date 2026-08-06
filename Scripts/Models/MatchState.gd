@@ -20,7 +20,6 @@ var activePlayerOnStart : PlayerModel = null
 var winnerLastRound : PlayerModel = null
 var isActionable : bool = false
 
-var _isDebug : bool = true
 var _matchNode : MatchNode = null
 var _activePlayer : PlayerModel = null
 var _playerModelUser : PlayerModel
@@ -138,8 +137,6 @@ func isPlayerTurn(playerModel : PlayerModel) -> bool:
 func isMyTurn() -> bool:
 	if _activePlayer == null:
 		return false
-	if _isDebug:
-		return true
 	return isPlayerTurn(_playerModelUser)
 
 func getAllPlayerModels() -> Array[PlayerModel]:
@@ -214,6 +211,18 @@ func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel
 		if not Entities.TargetScript.isValidModel(targetType, playerModel, allTargets[i]):
 			allTargets.remove_at(i)
 	return allTargets
+
+func getCoinPiecesThatCanActivate(playerModel : PlayerModel) -> Array[CoinPieceModel]:
+	var allCoinPieces : Array[CoinPieceModel] = playerModel.getCoinFaceModel().getAllPieces()
+	for i in range(allCoinPieces.size()-1, -1, -1):
+		if allCoinPieces[i].abilityScript == null:
+			allCoinPieces.remove_at(i)
+			continue
+		var abilitySingleton : Ability = ModelDB.getAbility(allCoinPieces[i].abilityScript)
+		if getValidTargets(abilitySingleton.targetType, playerModel).size() == 0:
+			allCoinPieces.remove_at(i)
+			continue
+	return allCoinPieces
 
 func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
 	var target : RefCounted = null
