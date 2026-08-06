@@ -6,7 +6,7 @@ class_name DemonModel
 var handAtlas : Texture2D = null
 var portraitTexture : Texture2D = null
 var poseTexture : Texture2D = null
-var rotDataArr : Array[FingerRingRotData] = []
+var rotDataArr : Array[RingRotData] = []
 
 ####################################################################################################
 
@@ -24,15 +24,15 @@ func getLocID() -> String: return "DEMON."
 
 func getStartingCoinPieceTypes() -> Array[Script]: return []
 
-func getStartingFingerRingTypes() -> Array[Script]: return []
+func getStartingRingTypes() -> Array[Script]: return []
 
-func getRotData() -> Array[FingerRingRotData]:
+func getRotData() -> Array[RingRotData]:
 	return [
-		FingerRingRotData.new(Vector2i(-28, -30), 0),
-		FingerRingRotData.new(Vector2i(17, -16), 1),
-		FingerRingRotData.new(Vector2i(21, 2), 1),
-		FingerRingRotData.new(Vector2i(17, 17), 1),
-		FingerRingRotData.new(Vector2i(12, 32), 1),
+		RingRotData.new(Vector2i(-28, -30), 0),
+		RingRotData.new(Vector2i(17, -16), 1),
+		RingRotData.new(Vector2i(21, 2), 1),
+		RingRotData.new(Vector2i(17, 17), 1),
+		RingRotData.new(Vector2i(12, 32), 1),
 	]
 
 ####################################################################################################
@@ -50,7 +50,7 @@ func getNumFingers() -> int:
 	return rotDataArr.size()
 
 func getStarterData() -> StarterData:
-	return StarterData.new(self, getStartingCoinPieceTypes(), getStartingFingerRingTypes())
+	return StarterData.new(self, getStartingCoinPieceTypes(), getStartingRingTypes())
 
 func getName() -> String:
 	return getLocalizedString("name")

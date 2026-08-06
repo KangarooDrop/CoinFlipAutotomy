@@ -137,11 +137,11 @@ func onCoinPieceModelRemoved(socketIndex : Entities.CoinPieceSocketIndex, coinPi
 
 func onCoinPieceModelReplaced(socketIndex : Entities.CoinPieceSocketIndex, newCoinPieceModel : CoinPieceModel, oldCoinPieceModel : CoinPieceModel) -> bool:
 	if not _socketIndexToNodes.has(socketIndex):
-		push_error("ERROR: Invalid index given to onFingerRingModelReplaced")
+		push_error("ERROR: Invalid index given to onCoinPieceModelReplaced")
 		return false
 	var coinPieceNode : CoinPieceNode = _socketIndexToNodes[socketIndex]
 	if coinPieceNode == null:
-		push_error("ERROR: Index given to onFingerRingModelReplaced was empty")
+		push_error("ERROR: Index given to onCoinPieceModelReplaced was empty")
 		return false
 	
 	_modelToNode.erase(oldCoinPieceModel)

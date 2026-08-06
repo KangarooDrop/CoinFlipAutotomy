@@ -4,17 +4,17 @@ class_name StarterData
 
 var sourceDemon = null
 var startingCoinPieceTypes : Array[Script] = []
-var startingFingerRingTypes : Array[Script] = []
+var startingRingTypes : Array[Script] = []
 
-func _init(demon, coinPieceTypes : Array[Script], fingerRingTypes : Array[Script]) -> void:
+func _init(demon, coinPieceTypes : Array[Script], ringTypes : Array[Script]) -> void:
 	sourceDemon = demon
 	startingCoinPieceTypes = coinPieceTypes
-	startingFingerRingTypes = fingerRingTypes
+	startingRingTypes = ringTypes
 
 func createHandModel() -> HandModel:
 	var handModel : HandModel = HandModel.new(sourceDemon)
-	for ringType : Script in startingFingerRingTypes:
-		handModel.addFingerRing(ModelDB.getFingerRing(ringType))
+	for ringType : Script in startingRingTypes:
+		handModel.addRing(ModelDB.getRing(ringType))
 	return handModel
 
 func createCoinFaceModel() -> CoinFaceModel:

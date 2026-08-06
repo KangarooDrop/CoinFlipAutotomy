@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cu5h00buikwxv"
-path="res://.godot/imported/vanity_ring.png-79e763e9e9ac65242d14e7745614f6ab.ctex"
+uid="uid://dd3fpbdarstim"
+path="res://.godot/imported/crown_of_primae_noctis.png-7e158be1cc1eab257a89c6b03c129579.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/FingerRings/vanity_ring.png"
-dest_files=["res://.godot/imported/vanity_ring.png-79e763e9e9ac65242d14e7745614f6ab.ctex"]
+source_file="res://Textures/Rings/crown_of_primae_noctis.png"
+dest_files=["res://.godot/imported/crown_of_primae_noctis.png-7e158be1cc1eab257a89c6b03c129579.ctex"]
 
 [params]
 

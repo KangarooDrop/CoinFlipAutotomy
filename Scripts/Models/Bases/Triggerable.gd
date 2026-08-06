@@ -53,7 +53,7 @@ func onAfterSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceMod
 	pass
 
 #	Finger Ring Triggers	#
-func onBeforeFingerDestroyed(_matchState : MatchState, _fingerRingModel : FingerModel) -> void:
+func onBeforeFingerDestroyed(_matchState : MatchState, _fingerModel : FingerModel) -> void:
 	pass
-func onAfterFingerDestroyed(_matchState : MatchState, _fingerRingModel : FingerModel) -> void:
+func onAfterFingerDestroyed(_matchState : MatchState, _fingerodel : FingerModel) -> void:
 	pass

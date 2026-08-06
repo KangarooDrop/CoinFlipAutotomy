@@ -1,6 +1,6 @@
 extends RefCounted
 
-class_name FingerRingRotData
+class_name RingRotData
 
 var _rotDir : int = 0
 var _offset : Vector2i = Vector2i.ZERO

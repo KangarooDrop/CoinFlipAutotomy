@@ -5,14 +5,14 @@ var _sealDB : SubDB = SubDB.new()
 var _coinPieceDB : SubDB = SubDB.new()
 var _coinPieceExteriorDB : SubDB = SubDB.new()
 var _coinPieceCoreDB : SubDB = SubDB.new()
-var _fingerRingDB : SubDB = SubDB.new()
+var _ringDB : SubDB = SubDB.new()
 var _demonDB : SubDB = SubDB.new()
 
 var _scriptToSubDB : Dictionary = {
 	Ability : _abilityDB,
 	SealModel : _sealDB,
 	CoinPieceModel : _coinPieceDB,
-	FingerRingModel : _fingerRingDB,
+	RingModel : _ringDB,
 	DemonModel : _demonDB,
 }
 
@@ -46,13 +46,13 @@ func _ready() -> void:
 	_coinPieceExteriorDB.add(CPDismay)
 	_coinPieceExteriorDB.add(CPAllureOfFlame)
 	
-	_fingerRingDB.add(RingVanityRing)
-	_fingerRingDB.add(RingTwinHeadedOuroboros)
-	_fingerRingDB.add(RingBowOfBellsEnd)
-	_fingerRingDB.add(RingBucketBrimCrustacean)
-	_fingerRingDB.add(RingCrownOfPrimaeNoctis)
-	_fingerRingDB.add(RingCircleOfLeeches)
-	_fingerRingDB.add(RingPreserverOfTheDrowned)
+	_ringDB.add(RingVanityRing)
+	_ringDB.add(RingTwinHeadedOuroboros)
+	_ringDB.add(RingBowOfBellsEnd)
+	_ringDB.add(RingBucketBrimCrustacean)
+	_ringDB.add(RingCrownOfPrimaeNoctis)
+	_ringDB.add(RingCircleOfLeeches)
+	_ringDB.add(RingPreserverOfTheDrowned)
 	
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)
@@ -99,11 +99,11 @@ func getCoinPiece(coinPieceScript : Script) -> CoinPieceModel:
 func getCoinPieceSingleton(coinPieceScript : Script) -> CoinPieceModel:
 	return _getFromSubByScriptSingleton(_coinPieceDB, coinPieceScript)
 
-func getFingerRing(fingerRingScript : Script) -> FingerRingModel:
-	return _getFromSubByScript(_fingerRingDB, fingerRingScript)
+func getRing(ringScript : Script) -> RingModel:
+	return _getFromSubByScript(_ringDB, ringScript)
 
-func getFingerRingSingleton(fingerRingScript : Script) -> FingerRingModel:
-	return _getFromSubByScriptSingleton(_fingerRingDB, fingerRingScript)
+func getRingSingleton(ringScript : Script) -> RingModel:
+	return _getFromSubByScriptSingleton(_ringDB, ringScript)
 
 func getDemon(demonScript : Script) -> DemonModel:
 	return _getFromSubByScript(_demonDB, demonScript)
@@ -117,8 +117,8 @@ func getRandomCoinPieceCoreScript() -> Script:
 func getRandomCoinPieceExteriorScript() -> Script:
 	return _coinPieceExteriorDB.getRandomScript()
 
-func getRandomFingerRingScript() -> Script:
-	return _fingerRingDB.getRandomScript()
+func getRandomRingScript() -> Script:
+	return _ringDB.getRandomScript()
 
 func getRandomDemonScript() -> Script:
 	return _demonDB.getRandomScript()

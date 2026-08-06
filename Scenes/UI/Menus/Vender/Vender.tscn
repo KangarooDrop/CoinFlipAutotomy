@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bpugaf4q68moi" path="res://Textures/UI/background_normal.png" id="2_xkvmb"]
 [ext_resource type="PackedScene" uid="uid://vujl1wgx0sov" path="res://Scenes/UI/Menus/Vender/VenderRefreshButton.tscn" id="3_qumqh"]
 [ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="6_1fbem"]
-[ext_resource type="Texture2D" uid="uid://bm4aiajlygkig" path="res://Textures/FingerRings/vanity_ring_finger.png" id="7_j3vb4"]
+[ext_resource type="Texture2D" uid="uid://bm4aiajlygkig" path="res://Textures/Rings/vanity_ring_finger.png" id="7_j3vb4"]
 
 [node name="Vender" type="Node2D" unique_id=723774995]
 script = ExtResource("1_xt8eu")

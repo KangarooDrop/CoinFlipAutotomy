@@ -13,7 +13,7 @@ const characterPortrait : PackedScene = preload("res://Scenes/UI/Menus/Character
 const sealNode : PackedScene = preload("res://Scenes/Views/SealNode.tscn")
 const coinPieceNode : PackedScene = preload("res://Scenes/Views/CoinPieceNode.tscn")
 const fingerNode : PackedScene = preload("res://Scenes/Views/FingerNode.tscn")
-const fingerRingNode : PackedScene = preload("res://Scenes/Views/FingerRingNode.tscn")
+const ringNode : PackedScene = preload("res://Scenes/Views/RingNode.tscn")
 
 const fingerGibNode : PackedScene = preload("res://Scenes/Match/FingerGib.tscn")
 

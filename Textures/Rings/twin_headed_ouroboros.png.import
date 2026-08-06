@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyc7gsctsw7gu"
-path="res://.godot/imported/vanity_ring_item.png-cce5e06f2b8dac39a3956c9a616492db.ctex"
+uid="uid://cdo3gnp1npe3j"
+path="res://.godot/imported/twin_headed_ouroboros.png-8f6d9edf83217bee9b9768e452e14a9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/FingerRings/vanity_ring_item.png"
-dest_files=["res://.godot/imported/vanity_ring_item.png-cce5e06f2b8dac39a3956c9a616492db.ctex"]
+source_file="res://Textures/Rings/twin_headed_ouroboros.png"
+dest_files=["res://.godot/imported/twin_headed_ouroboros.png-8f6d9edf83217bee9b9768e452e14a9b.ctex"]
 
 [params]
 

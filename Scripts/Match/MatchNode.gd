@@ -216,9 +216,9 @@ func _input(event: InputEvent) -> void:
 					return
 			if not choosingTarget:
 				return
-			for fingerRingNode : FingerRingNode in getAllFingerRingNodes():
-				if fingerRingNode.tooltipViewer.isMouseHovering():
-					target_node_chosen_or_forced_skip.emit(fingerRingNode)
+			for ringNode : RingNode in getAllRingNodes():
+				if ringNode.tooltipViewer.isMouseHovering():
+					target_node_chosen_or_forced_skip.emit(ringNode)
 					return
 			if not choosingTarget:
 				return
@@ -249,8 +249,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func getAllCoinPieceNodes() -> Array[CoinPieceNode]:
 	return coinFaceNodeUser.getAllCoinPieceNodes() + coinFaceNodeOpponent.getAllCoinPieceNodes() + coinNode.getAllCoinPieceNodes()
-func getAllFingerRingNodes() -> Array[FingerRingNode]:
-	return handNodeUser.getAllFingerRingNodes() + handNodeOpponent.getAllFingerRingNodes()
+func getAllRingNodes() -> Array[RingNode]:
+	return handNodeUser.getAllRingNodes() + handNodeOpponent.getAllRingNodes()
 func getAllFingerNodes() -> Array[FingerNode]:
 	return handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
 
@@ -313,7 +313,7 @@ func _getUserTarget(targetType : Entities.TargetType, playerModel : PlayerModel)
 
 func _setTargetingZIndices(targetType : Entities.TargetType, playerModel : PlayerModel) -> void:
 	var targetableNodes : Array = coinFaceNodeUser.getAllCoinPieceNodes() + coinFaceNodeOpponent.getAllCoinPieceNodes() + coinNode.getAllCoinPieceNodes() \
-			+ handNodeUser.getAllFingerRingNodes() + handNodeOpponent.getAllFingerRingNodes() + handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
+			+ handNodeUser.getAllRingNodes() + handNodeOpponent.getAllRingNodes() + handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
 	for targetNode : Node2D in targetableNodes:
 		targetNode.z_index = 2 if Entities.TargetScript.isValidNode(targetType, playerModel, targetNode) else 0
 func _resetTargetingZIndices() -> void:

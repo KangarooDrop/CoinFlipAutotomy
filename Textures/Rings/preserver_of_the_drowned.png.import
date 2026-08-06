@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd3fpbdarstim"
-path="res://.godot/imported/crown_of_primae_noctis.png-42740aefa214072191ba4b30808ec7e9.ctex"
+uid="uid://c176yp6x4dxqi"
+path="res://.godot/imported/preserver_of_the_drowned.png-741935d3dd0f705845eaf992b48534af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/FingerRings/crown_of_primae_noctis.png"
-dest_files=["res://.godot/imported/crown_of_primae_noctis.png-42740aefa214072191ba4b30808ec7e9.ctex"]
+source_file="res://Textures/Rings/preserver_of_the_drowned.png"
+dest_files=["res://.godot/imported/preserver_of_the_drowned.png-741935d3dd0f705845eaf992b48534af.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

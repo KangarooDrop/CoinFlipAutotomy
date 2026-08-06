@@ -148,7 +148,7 @@ func getAllTriggerables() -> Array[Triggerable]:
 	for playerModel : PlayerModel in getAllPlayerModels():
 		rtn.append_array(playerModel.getCoinFaceModel().getAllPieces())
 		rtn.append_array(playerModel.getCoinFaceModel().getAllSeals())
-		rtn.append_array(playerModel.getHandModel().getFingerRings())
+		rtn.append_array(playerModel.getHandModel().getRings())
 	return rtn
 
 func hasTriggerable(triggerable : Triggerable) -> bool:
@@ -206,7 +206,7 @@ func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel
 	for currentPlayerModel : PlayerModel in getAllPlayerModels():
 		allTargets.append_array(currentPlayerModel.getCoinFaceModel().getAllPieces())
 		allTargets.append_array(currentPlayerModel.getHandModel().getFingers())
-		allTargets.append_array(currentPlayerModel.getHandModel().getFingerRings())
+		allTargets.append_array(currentPlayerModel.getHandModel().getRings())
 	for i in range(allTargets.size()-1, -1, -1):
 		if not Entities.TargetScript.isValidModel(targetType, playerModel, allTargets[i]):
 			allTargets.remove_at(i)

@@ -2,36 +2,36 @@ extends RefCounted
 
 class_name FingerModel
 
-var _fingerRingModel : FingerRingModel = null
+var _ringModel : RingModel = null
 var _handModelRef : WeakRef = null
 
 var destroyed : bool = false
 
 signal before_finger_destroyed()
 signal after_finger_destroyed()
-signal ring_added(fingerRingModel : FingerRingModel)
-signal ring_removed(fingerRingModel : FingerRingModel)
-signal ring_replaced(newFingerRingModel : FingerRingModel, oldFingerRingModel : FingerRingModel)
+signal ring_added(ringModel : RingModel)
+signal ring_removed(ringModel : RingModel)
+signal ring_replaced(newRingModel : RingModel, oldRingModel : RingModel)
 
 ####################################################################################################
 
-func setFingerRingModel(newFingerRingModel : FingerRingModel) -> void:
-	if newFingerRingModel == _fingerRingModel:
+func setRingModel(newRingModel : RingModel) -> void:
+	if newRingModel == _ringModel:
 		return
-	var oldFingerRingModel : FingerRingModel = _fingerRingModel
-	if oldFingerRingModel != null:
-		oldFingerRingModel.setFingerModel(null)
-	_fingerRingModel = newFingerRingModel
-	_fingerRingModel.setFingerModel(self)
-	if oldFingerRingModel == null:
-		ring_added.emit(newFingerRingModel)
-	elif newFingerRingModel == null:
-		ring_removed.emit(oldFingerRingModel)
+	var oldRingModel : RingModel = _ringModel
+	if oldRingModel != null:
+		oldRingModel.setFingerModel(null)
+	_ringModel = newRingModel
+	_ringModel.setFingerModel(self)
+	if oldRingModel == null:
+		ring_added.emit(newRingModel)
+	elif newRingModel == null:
+		ring_removed.emit(oldRingModel)
 	else:
-		ring_replaced.emit(newFingerRingModel, oldFingerRingModel)
+		ring_replaced.emit(newRingModel, oldRingModel)
 
-func getFingerRingModel() -> FingerRingModel:
-	return _fingerRingModel
+func getRingModel() -> RingModel:
+	return _ringModel
 
 func setHandModel(newHandModel : HandModel) -> void:
 	_handModelRef = weakref(newHandModel)
@@ -53,7 +53,7 @@ func destroyFinger() -> void:
 
 func clone() -> FingerModel:
 	var copy : FingerModel = get_script().new()
-	if _fingerRingModel != null:
-		copy.setFingerRingModel(_fingerRingModel.clone())
+	if _ringModel != null:
+		copy.setRingModel(_ringModel.clone())
 	copy.destroyed = destroyed
 	return copy

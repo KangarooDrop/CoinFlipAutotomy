@@ -11,5 +11,5 @@ func getStartingCoinPieceTypes() -> Array[Script]:
 	return [CPDrownardsVictim, 
 		CPOceansDescent, CPDismay, CPCounterweightExterior]
 
-func getStartingFingerRingTypes() -> Array[Script]: 
+func getStartingRingTypes() -> Array[Script]: 
 	return [RingPreserverOfTheDrowned]

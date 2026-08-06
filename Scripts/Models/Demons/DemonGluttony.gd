@@ -10,5 +10,5 @@ func getDirName() -> String:
 func getStartingCoinPieceTypes() -> Array[Script]: 
 	return [CPAbyssalMaw, CPDevouringSickness, CPCounterweightExterior, CPCounterweightExterior]
 
-func getStartingFingerRingTypes() -> Array[Script]: 
+func getStartingRingTypes() -> Array[Script]: 
 	return [RingVanityRing, RingVanityRing, RingVanityRing]

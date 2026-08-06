@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://xemxvck24ibp"]
+
+[ext_resource type="Script" uid="uid://bdcav4jp67slg" path="res://Scripts/Views/RingNode.gd" id="1_l6yih"]
+[ext_resource type="Texture2D" uid="uid://cu5h00buikwxv" path="res://Textures/Rings/vanity_ring.png" id="2_eumnx"]
+[ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="3_1dx47"]
+[ext_resource type="PackedScene" uid="uid://c383t3ts5by6c" path="res://Scenes/UI/TooltipViewer.tscn" id="4_di45e"]
+
+[node name="RingNode" type="Node2D" unique_id=521209297]
+script = ExtResource("1_l6yih")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2025358214]
+texture = ExtResource("2_eumnx")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="PopperNode" parent="Sprite2D" unique_id=1113026430 instance=ExtResource("3_1dx47")]
+unique_name_in_owner = true
+
+[node name="TooltipViewer" parent="." unique_id=681736428 instance=ExtResource("4_di45e")]
+unique_name_in_owner = true

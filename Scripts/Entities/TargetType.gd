@@ -8,7 +8,7 @@ enum TargetType {
 	SEAL = 					1 << 2,
 	NON_SEAL = 				1 << 3,
 	COIN_PIECE = 			1 << 4,
-	FINGER_RING = 			1 << 5,
+	RING = 					1 << 5,
 	FINGER = 				1 << 6,
 	ABILITY_PIECE = 		1 << 7,
 	
@@ -28,9 +28,9 @@ enum TargetType {
 	COIN_PIECE_ENEMY = COIN_PIECE | ENEMY,
 	COIN_PIECE_ANY = COIN_PIECE | ANY,
 	
-	FINGER_RING_FRIENDLY = FINGER_RING | FRIENDLY,
-	FINGER_RING_ENEMY = FINGER_RING | ENEMY,
-	FINGER_RING_ANY = FINGER_RING | ANY,
+	RING_FRIENDLY = FINGER | FRIENDLY,
+	RING_ENEMY = FINGER | ENEMY,
+	RING_ANY = FINGER | ANY,
 	
 	FINGER_FRIENDLY = FINGER | FRIENDLY,
 	FINGER_ENEMY = FINGER | ENEMY,
@@ -72,44 +72,16 @@ static func isValidModel(targetType : TargetType, playerModel : PlayerModel, tar
 	
 	if Util.hasBitVal(targetType, TargetType.FINGER) and (not targetModel is FingerModel):
 		return false
-	if Util.hasBitVal(targetType, TargetType.FINGER_RING) and (not targetModel is FingerModel or targetModel.getFingerRingModel() == null):
+	if Util.hasBitVal(targetType, TargetType.RING) and (not targetModel is FingerModel or targetModel.getRingModel() == null):
 		return false
 	
 	return true
-	
-"""
-#Targets a coin piece and the target is a coin piece model
-if Util.hasBitVal(targetType, TargetType.COIN_PIECE) and targetModel is CoinPieceModel:
-	if isValidFriendliness(targetType, playerModel, targetModel):
-		return true
-#Targets a seal and the target is a coin piece model
-if Util.hasBitVal(targetType, TargetType.SEAL) and targetModel is CoinPieceModel and targetModel.getSealModel() != null:
-	if isValidFriendliness(targetType, playerModel, targetModel):
-		return true
-#Targets a non-seal coin piece model
-if Util.hasBitVal(targetType, TargetType.NON_SEAL) and targetModel is CoinPieceModel and targetModel.getSealModel() == null:
-	if isValidFriendliness(targetType, playerModel, targetModel):
-		return true
-#Targets a coin piece model with an ability
-if Util.hasBitVal(targetType, TargetType.ABILITY_PIECE) and targetModel is CoinPieceModel and targetModel.abilityScript != null:
-	if isValidFriendliness(targetType, playerModel, targetModel):
-		return true
-#Targets a finger ring and the target is a finger ring model
-if Util.hasBitVal(targetType, TargetType.FINGER_RING) and targetModel is FingerRingModel:
-	if isValidFriendliness(targetType, playerModel, targetModel):
-		return true
-#Targets a finger and the target is a finger model
-if Util.hasBitVal(targetType, TargetType.FINGER) and targetModel is FingerModel and not targetModel.destroyed:
-	if isValidFriendliness(targetType, playerModel, targetModel):
-		return true
-return false
-"""
 
 static func isValidNode(targetType : TargetType, playerModel : PlayerModel, targetNode : Node) -> bool:
 	return isValidModel(targetType, playerModel, getTargetNodeToModel(targetType, targetNode))
 
 static func getTargetNodeToModel(targetType : TargetType, viewNode : Node) -> Variant:
-	if Util.hasBitVal(targetType, Entities.TargetType.FINGER) and viewNode is FingerRingNode:
+	if Util.hasBitVal(targetType, Entities.TargetType.FINGER) and viewNode is RingNode:
 		return viewNode.getModel().getFingerModel()
 	else:
 		return viewNode.getModel()

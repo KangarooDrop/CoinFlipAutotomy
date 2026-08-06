@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ooqv0w6un4gu"
-path="res://.godot/imported/bucket_brim_crustacean.png-6dcfc1be4b3342ed37ed99e0409a08dd.ctex"
+path="res://.godot/imported/bucket_brim_crustacean.png-9fee9e9ad5e5659b8a5130dcd22781d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/FingerRings/bucket_brim_crustacean.png"
-dest_files=["res://.godot/imported/bucket_brim_crustacean.png-6dcfc1be4b3342ed37ed99e0409a08dd.ctex"]
+source_file="res://Textures/Rings/bucket_brim_crustacean.png"
+dest_files=["res://.godot/imported/bucket_brim_crustacean.png-9fee9e9ad5e5659b8a5130dcd22781d9.ctex"]
 
 [params]
 

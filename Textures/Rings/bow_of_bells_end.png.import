@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k7em4bme4w1c"
-path="res://.godot/imported/preowned_loop.png-40588d4c45445c4ee0ae2424a0e9cd07.ctex"
+uid="uid://dsddhdfv6pcax"
+path="res://.godot/imported/bow_of_bells_end.png-0029c8b99a4165abd30da557045c9397.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/FingerRings/preowned_loop.png"
-dest_files=["res://.godot/imported/preowned_loop.png-40588d4c45445c4ee0ae2424a0e9cd07.ctex"]
+source_file="res://Textures/Rings/bow_of_bells_end.png"
+dest_files=["res://.godot/imported/bow_of_bells_end.png-0029c8b99a4165abd30da557045c9397.ctex"]
 
 [params]
 

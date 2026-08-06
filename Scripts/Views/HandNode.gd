@@ -67,12 +67,12 @@ func getModel() -> HandModel:
 func getAllFingerNodes() -> Array[FingerNode]:
 	return _fingerNodes
 
-func getAllFingerRingNodes() -> Array[FingerRingNode]:
-	var rtn : Array[FingerRingNode] = []
+func getAllRingNodes() -> Array[RingNode]:
+	var rtn : Array[RingNode] = []
 	for i in range(_fingerNodes.size()):
-		var fingerRingNode : FingerRingNode = _fingerNodes[i].getFingerRingNode()
-		if fingerRingNode != null:
-			rtn.append(fingerRingNode)
+		var ringNode : RingNode = _fingerNodes[i].getRingNode()
+		if ringNode != null:
+			rtn.append(ringNode)
 	return rtn
 
 func onControlGUIInput(event: InputEvent = null) -> void:

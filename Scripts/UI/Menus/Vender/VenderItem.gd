@@ -10,7 +10,7 @@ const IDLE_SCALE_MIN : float = 1.0
 const HOVER_SCALE_INC : float = 0.2
 const HOVER_TIME_TO_MAX : float = 0.125
 
-enum ITEM_TYPE {FINGER_RING, COIN_PIECE_CORE, COIN_PIECE_EXTERIOR}
+enum ITEM_TYPE {RING, COIN_PIECE_CORE, COIN_PIECE_EXTERIOR}
 
 var itemModel : ItemModel = null
 var idleTimer : float = randf() * IDLE_PERIOD
@@ -44,16 +44,16 @@ func onPressed() -> void:
 	pressed.emit()
 
 func setItem(item : ItemModel) -> void:
-	if item is FingerRingModel:
-		setFingerRing(item)
+	if item is RingModel:
+		setRing(item)
 	else:
 		setCoinPiece(item)
 	itemModel = item
 
-func setFingerRing(fingerRing : FingerRingModel) -> void:
-	sprite.texture = fingerRing.getTextureAtlas()
+func setRing(ringModel : RingModel) -> void:
+	sprite.texture = ringModel.getTextureAtlas()
 	sprite.region_rect.size = Vector2.ONE * 32.0
-	tooltipViewer.setLocalizedModel(fingerRing)
+	tooltipViewer.setLocalizedModel(ringModel)
 
 func setCoinPiece(coinPiece : CoinPieceModel) -> void:
 	sprite.texture = coinPiece.getTextureAtlas()

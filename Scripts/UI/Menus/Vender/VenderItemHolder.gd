@@ -9,7 +9,7 @@ var nodeToItemModel : Dictionary = {}
 var offsetPerItem : int = 32
 const offsetBuffer : int = 0
 
-@export var itemType : VenderItem.ITEM_TYPE = VenderItem.ITEM_TYPE.FINGER_RING
+@export var itemType : VenderItem.ITEM_TYPE = VenderItem.ITEM_TYPE.RING
 @export var numItems : int = 3
 
 @onready var itemHBox : HBoxContainer = get_node("%ItemHBox")
@@ -46,8 +46,8 @@ func updateBackgroundSize() -> void:
 
 func getRandomItem() -> ItemModel:
 	var itemModel : ItemModel = null
-	if itemType == VenderItem.ITEM_TYPE.FINGER_RING:
-		itemModel = ModelDB.getFingerRing(ModelDB.getRandomFingerRingScript())
+	if itemType == VenderItem.ITEM_TYPE.RING:
+		itemModel = ModelDB.getRing(ModelDB.getRandomRingScript())
 	elif itemType == VenderItem.ITEM_TYPE.COIN_PIECE_CORE:
 		itemModel = ModelDB.getCoinPiece(ModelDB.getRandomCoinPieceCoreScript())
 	elif itemType == VenderItem.ITEM_TYPE.COIN_PIECE_EXTERIOR:

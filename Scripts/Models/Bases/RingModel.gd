@@ -1,16 +1,16 @@
 @abstract
 extends ItemModel
 
-class_name FingerRingModel
+class_name RingModel
 
 var _fingerModelRef : WeakRef = null
 
 ####################################################################################################
 
-func getLocID() -> String: return "FINGER_RING."
+func getLocID() -> String: return "RING."
 
 func getTexturePath() -> String:
-	return Preloader.texturePath + "FingerRings/"
+	return Preloader.texturePath + "Rings/"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

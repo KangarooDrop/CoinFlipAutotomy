@@ -55,17 +55,17 @@ func getTextureAtlas() -> Texture2D:
 func getFingers() -> Array[FingerModel]:
 	return _fingerModels
 
-func getFingerRings() -> Array[FingerRingModel]:
-	var rtn : Array[FingerRingModel] = []
+func getRings() -> Array[RingModel]:
+	var rtn : Array[RingModel] = []
 	for i in range(_fingerModels.size()):
 		if _fingerModels[i].destroyed:
 			continue
-		var fingerRingModel : FingerRingModel = _fingerModels[i].getFingerRingModel()
-		if fingerRingModel != null:
-			rtn.append(fingerRingModel)
+		var ringModel : RingModel = _fingerModels[i].getRingModel()
+		if ringModel != null:
+			rtn.append(ringModel)
 	return rtn
 
-func getRotData() -> Array[FingerRingRotData]:
+func getRotData() -> Array[RingRotData]:
 	return _demon.rotDataArr
 
 func getNumFingers() -> int:
@@ -73,14 +73,14 @@ func getNumFingers() -> int:
 
 func getNextRingIndex() -> int:
 	for i in range(getNumFingers()):
-		if _fingerModels[i].getFingerRingModel() == null and not _fingerModels[i].destroyed:
+		if _fingerModels[i].getRingModel() == null and not _fingerModels[i].destroyed:
 			return i
 	return -1
 
-func addFingerRing(fingerRing : FingerRingModel) -> bool:
+func addRing(ringModel : RingModel) -> bool:
 	var nextIndex : int = getNextRingIndex()
 	if nextIndex != -1:
-		getFinger(nextIndex).setFingerRingModel(fingerRing)
+		getFinger(nextIndex).setRingModel(ringModel)
 		return true
 	return false
 

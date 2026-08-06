@@ -1,4 +1,4 @@
-extends FingerRingModel
+extends RingModel
 
 class_name RingPreserverOfTheDrowned
 

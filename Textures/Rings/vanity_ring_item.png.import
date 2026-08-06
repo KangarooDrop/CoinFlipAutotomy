@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c176yp6x4dxqi"
-path="res://.godot/imported/preserver_of_the_drowned.png-b59ff0500eb922bbf7528f686068b2ac.ctex"
+uid="uid://cyc7gsctsw7gu"
+path="res://.godot/imported/vanity_ring_item.png-c7fe03e7e1e0a6062b10f16626d3e22f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/FingerRings/preserver_of_the_drowned.png"
-dest_files=["res://.godot/imported/preserver_of_the_drowned.png-b59ff0500eb922bbf7528f686068b2ac.ctex"]
+source_file="res://Textures/Rings/vanity_ring_item.png"
+dest_files=["res://.godot/imported/vanity_ring_item.png-c7fe03e7e1e0a6062b10f16626d3e22f.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
