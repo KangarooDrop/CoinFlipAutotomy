@@ -39,7 +39,7 @@ func onBeforeTurnEnd(matchState : MatchState) -> void:
 		return
 	
 	if not _wasAbilityActivated:
-		CmdSpin.addSpin(matchState, ownPlayerModel, SPIN_INC)
+		await CmdSpin.addSpin(matchState, ownPlayerModel, SPIN_INC)
 	else:
-		CmdSpin.addSpin(matchState, ownPlayerModel, -SPIN_DEC)
-		CmdSeal.removeSeal(matchState, getCoinPieceModel())
+		await CmdSpin.addSpin(matchState, ownPlayerModel, -SPIN_DEC)
+		await CmdSeal.removeSeal(matchState, getCoinPieceModel())

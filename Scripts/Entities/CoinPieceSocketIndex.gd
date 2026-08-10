@@ -21,4 +21,9 @@ static func getOpposite(socketIndex : CoinPieceSocketIndex) -> CoinPieceSocketIn
 	return getRotated(socketIndex, 4)
 
 static func getAllAdjacent(socketIndex : CoinPieceSocketIndex) -> Array[CoinPieceSocketIndex]:
-	return [CoinPieceSocketIndex.CORE, getRotated(socketIndex, -1), getRotated(socketIndex, 1)]
+	if socketIndex == CoinPieceSocketIndex.CORE:
+		var rtn : Array[CoinPieceSocketIndex] = []
+		rtn.assign(Entities.getAllExceptVals(CoinPieceSocketIndex, [CoinPieceSocketIndex.NONE, CoinPieceSocketIndex.CORE]))
+		return rtn
+	else:
+		return [CoinPieceSocketIndex.CORE, getRotated(socketIndex, -1), getRotated(socketIndex, 1)]

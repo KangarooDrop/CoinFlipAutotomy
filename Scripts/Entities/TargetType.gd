@@ -70,7 +70,7 @@ static func isValidModel(targetType : TargetType, playerModel : PlayerModel, tar
 	if Util.hasBitVal(targetType, TargetType.ABILITY_PIECE) and (not targetModel is CoinPieceModel or targetModel.abilityScript == null):
 		return false
 	
-	if Util.hasBitVal(targetType, TargetType.FINGER) and (not targetModel is FingerModel):
+	if Util.hasBitVal(targetType, TargetType.FINGER) and (not targetModel is FingerModel or targetModel.destroyed):
 		return false
 	if Util.hasBitVal(targetType, TargetType.RING) and (not targetModel is FingerModel or targetModel.getRingModel() == null):
 		return false

@@ -34,7 +34,7 @@ func onTurnStart(matchState : MatchState) -> void:
 	
 	popNode()
 	_hasSkipped = true
-	CmdAction.skipTurn()
+	CmdAction.skipTurn(matchState)
 
 func onBeforeTurnEnd(matchState : MatchState) -> void:
 	if not _canActivate:

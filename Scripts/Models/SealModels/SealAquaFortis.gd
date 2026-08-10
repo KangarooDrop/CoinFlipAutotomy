@@ -22,6 +22,7 @@ func getTooltipString() -> String:
 
 func onTurnStart(matchState : MatchState) -> void:
 	var playerModel : PlayerModel = getPlayerModel()
-	if playerModel == matchState.getActivePlayerModel():
-		var newSpin : int = matchState.getSpin(playerModel) - SPIN_LOSS_BASE
-		matchState.setSpin(playerModel, newSpin) 
+	if playerModel != matchState.getActivePlayerModel():
+		return
+	
+	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE)

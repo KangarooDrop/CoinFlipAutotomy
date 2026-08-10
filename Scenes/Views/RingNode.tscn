@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="3_1dx47"]
 [ext_resource type="PackedScene" uid="uid://c383t3ts5by6c" path="res://Scenes/UI/TooltipViewer.tscn" id="4_di45e"]
 
-[node name="RingNode" type="Node2D" unique_id=521209297]
+[node name="RingNode" type="Node2D" unique_id=521209297 groups=["RingNode"]]
 script = ExtResource("1_l6yih")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2025358214]

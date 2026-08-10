@@ -17,7 +17,10 @@ func getBaseData() -> Dictionary:
 
 func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
-	if context.source == coinPieceModel:
-		if not context.isCountered:
-			context.isCountered = true
-			CmdSeal.removeSeal(matchState, coinPieceModel)
+	if context.source != coinPieceModel:
+		return
+	if context.isCountered:
+		return
+	
+	context.isCountered = true
+	await CmdSeal.removeSeal(matchState, coinPieceModel)

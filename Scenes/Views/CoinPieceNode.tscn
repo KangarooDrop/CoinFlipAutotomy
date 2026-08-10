@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="3_kdc1x"]
 [ext_resource type="PackedScene" uid="uid://c383t3ts5by6c" path="res://Scenes/UI/TooltipViewer.tscn" id="3_vxif4"]
 
-[node name="CoinPieceNode" type="Node2D" unique_id=878804811]
+[node name="CoinPieceNode" type="Node2D" unique_id=878804811 groups=["CoinPieceNode"]]
 script = ExtResource("1_vu44t")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1131125095]

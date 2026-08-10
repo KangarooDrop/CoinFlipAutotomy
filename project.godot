@@ -35,12 +35,6 @@ TooltipHandler="*uid://rc5k5r3o58sy"
 TriggerHandler="*uid://m5a8rwpbqsqu"
 RNG="*uid://bl1i2xt8c5fx5"
 RunManager="*uid://coub06pqiah6k"
-CmdMatch="*uid://cmjdogt56j65a"
-CmdCoinPiece="*uid://dvhdb33aeukng"
-CmdFinger="*uid://dq38oyesusij5"
-CmdSeal="*uid://c11i7gtg1onk7"
-CmdAction="*uid://cos8j45cq2jcy"
-CmdSpin="*uid://beqgh88a38p7g"
 
 [debug]
 
@@ -56,6 +50,13 @@ window/stretch/mode="canvas_items"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[global_group]
+
+CoinPieceNode=""
+RingNode=""
+MatchNode=""
+VenderNode=""
 
 [input]
 

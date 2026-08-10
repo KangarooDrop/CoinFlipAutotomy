@@ -27,6 +27,7 @@ func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, contex
 	var playerModel : PlayerModel = coinPieceModel.getPlayerModel()
 	if playerModel == null:
 		return
+	if context.source != coinPieceModel:
+		return
 	
-	if context.source == coinPieceModel:
-		CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE)
+	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE)

@@ -38,8 +38,7 @@ func onAfterAbilityActivated(matchState : MatchState, ability : Ability, _contex
 	
 	popNode()
 	_canActivate = false
-	var matchNode : MatchNode = CmdMatch.getMatchNode()
-	await matchNode.activateAbilityScript(ability.get_script(), self)
+	await matchState.activateAbilityScriptFromSource(ability.get_script(), self)
 
 func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
 	if matchState.currentTurnNumber <= matchState.NUM_TURNS_MAX - 2:
