@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bgsaau51oianh"]
+
+[ext_resource type="Script" uid="uid://bn5tjrbprs6ie" path="res://Scripts/Builders/BuilderRenamer.gd" id="1_b24c3"]
+
+[node name="BuilderRenamer" type="Node2D" unique_id=735560264]
+script = ExtResource("1_b24c3")
+engLocPath = "res://Localization/eng.json"
+modelDBScript = "res://Scripts/Models/ModelDB.gd"
+ringScriptPath = "res://Scripts/Models/Rings"
+ringScriptBase = "res://Scripts/Models/Rings/RingVanity.gd"
+ringTexturePath = "res://Textures/Rings"
+fileToRename = "res://Scripts/Models/Abilities/AbilityClingToLife.gd"
+renamedPascaleCase = "AbilityClingToLife"
+renameDisplayName = "Cling to Life"

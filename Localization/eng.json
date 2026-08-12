@@ -1,217 +1,171 @@
 {
-	"COIN_PIECE":{
-	
-		"COUNTERWEIGHT_CORE":{
-			"name" : "Counterweight Core",
-			"flavor" : ""
+	"ABILITY": {
+		"CLING_TO_LIFE": {
+			"desc": "Opponent Loses Spin equal to half the difference between yours'.",
+			"name": "Cling to Life"
 		},
-		
-		"ABYSSAL_MAW":{
-			"name" : "Abyssal Maw",
-			"flavor" : ""
+		"CONSUMPTION": {
+			"desc": "Gain %d Spin.",
+			"name": "Consume"
 		},
-		
-		"DROWNARDS_VICTIM":{
-			"name" : "Drownard's Victim",
-			"flavor" : ""
+		"HESITANCE": {
+			"desc": "Add a %s to target Coin Piece.",
+			"name": "Hesitance"
 		},
-		
-		
-		
-		"COUNTERWEIGHT_EXTERIOR":{
-			"name" : "Counterweight Exterior",
-			"flavor" : ""
+		"MOCK": {
+			"desc": "Add a %s to target Coin Piece.",
+			"name": "Mock Ability"
 		},
-		
-		"ATROPHY":{
-			"name" : "Atrophy",
-			"flavor" : "As the body wanes, thoughts becomes heavy."
+		"MOCK_SEAL": {
+			"desc": "Remove the Seal from target Coin Piece.",
+			"name": "Mock Seal"
 		},
-		
-		"OCEANS_DESCENT":{
-			"name" : "Oceans' Descent",
-			"flavor" : "All will be crushed beneath the tides."
+		"OBLITERATE": {
+			"desc": "Destroy target Finger.",
+			"name": "Obliterate"
 		},
-		
-		"DEVOURING_SICKNESS":{
-			"name" : "Devouring Sickness",
-			"flavor" : ""
+		"RIP_TIDE": {
+			"desc": "Add a %s to target Coin Piece.",
+			"name": "Rip Tide"
 		},
-		
-		"DISMAY":{
-			"name" : "Dismay",
-			"flavor" : ""
+		"STOPPAGE": {
+			"desc": "Add a %s to target Coin Piece.",
+			"name": "Stoppage"
 		},
-		
-		"ALLURE_OF_FLAME":{
-			"name" : "Allure of Flame",
-			"flavor" : ""
-		},
+		"UNTOUCHABLE_HEAT": {
+			"desc": "Add a %s to target Coin Piece.",
+			"name": "Untouchable Heat"
+		}
 	},
-	
-	
-	
-	"RING":{
-		
-		"VANITY_RING":{
-			"name" : "Vanity Ring",
-			"desc" : "Neat"
+	"COIN_PIECE": {
+		"ABYSSAL_MAW": {
+			"flavor": "",
+			"name": "Abyssal Maw"
 		},
-		
-		"TWIN_HEADED_OUROBOROS":{
-			"name" : "Twin-Headed Ouroboros",
-			"desc" : "On Your First Turn, when you activate an ability, Copy it. You may choose new targets for the copy.\nOn Your Last Turn, when you activate an ability, Counter it."
+		"ALLURE_OF_FLAME": {
+			"flavor": "",
+			"name": "Allure of Flame"
 		},
-		
-		"BOW_OF_BELLS_END":{
-			"name" : "Bow of Bell's End",
-			"desc" : "On Your First Turn, Skip that turn.\nOn Your Last Turn, take and Additional Turn after that."
+		"ATROPHY": {
+			"flavor": "As the body wanes, thoughts becomes heavy.",
+			"name": "Atrophy"
 		},
-		
-		"BUCKET_BRIM_CRUSTACEAN":{
-			"name" : "Bucket Brim Crustacean",
-			"desc" : "When you would Lose Spin on your Turn, %d%% chance to gain that much instead."
+		"COUNTERWEIGHT_CORE": {
+			"flavor": "",
+			"name": "Counterweight Core"
 		},
-		
-		"CROWN_OF_PRIMAE_NOCTIS":{
-			"name" : "Crown of Primae Noctis",
-			"desc" : "At the start of each Round, Choose an Opponent's Coin Piece and activate a Copy of its ability."
+		"COUNTERWEIGHT_EXTERIOR": {
+			"flavor": "",
+			"name": "Counterweight Exterior"
 		},
-		
-		"CIRCLE_OF_LEECHES":{
-			"name" : "Circle of Leeches",
-			"desc" : "After an ability of a Coin Piece you own is activated, Add a %s to it.\nAfter a %s is removed from a Coin Piece you own, add a %s to it."
+		"DEVOURING_SICKNESS": {
+			"flavor": "",
+			"name": "Devouring Sickness"
 		},
-		
-		"PRESERVER_OF_THE_DROWNED":{
-			"name" : "Preserver of the Drowned",
-			"desc" : "The first time each Round your Spin becomes less than 0, gain %d Spin."
-			}
+		"DISMAY": {
+			"flavor": "",
+			"name": "Dismay"
+		},
+		"DROWNARDS_VICTIM": {
+			"flavor": "",
+			"name": "Drownard's Victim"
+		},
+		"OCEANS_DESCENT": {
+			"flavor": "All will be crushed beneath the tides.",
+			"name": "Oceans' Descent"
+		}
 	},
-	
-	
-	
-	"SEAL":{
-		
-		"AQUA_FORTIS":{
-			"name" : "Aqua Fortis Seal",
-			"desc" : "At the start of your turn, Lose %d Spin."
+	"DEMON": {
+		"ENVY": {
+			"epithet": "The Grasping Covet",
+			"name": "Envy",
+			"win_splash": ""
 		},
-		
-		"LEAD":{
-			"name" : "Lead Seal",
-			"desc" : "The next time an ability of this Coin Piece would be activated, Counter that activation and Remove this Seal."
+		"GLUTTONY": {
+			"epithet": "The Everstarved",
+			"name": "Gluttony",
+			"win_splash": "Gluttony Consumes All"
 		},
-		
-		"CLEANSING":{
-			"name" : "Cleansing Seal",
-			"desc" : "At the end of your turn, remove this and all adjacent Seals."
+		"GREED": {
+			"epithet": "",
+			"name": "Greed",
+			"win_splash": ""
 		},
-		
-		"QUICKSILVER":{
-			"name" : "Quicksilver Seal",
-			"desc" : "After an ability of this Coin Piece is activated, Lose %d Spin."
+		"LUST": {
+			"epithet": "The Dollmaker",
+			"name": "Lust",
+			"win_splash": "You Are Mine"
 		},
-		
-		"COPPER":{
-			"name" : "Copper Seal",
-			"desc" : "At the end of your turn, if an ability of this Coin Piece was activated, Lose %d Spin and Remove this Seal. Otherwise, gain %d Spin."
+		"PRIDE": {
+			"epithet": "The Mother of Sin",
+			"name": "Pride",
+			"win_splash": ""
 		},
+		"SLOTH": {
+			"epithet": "The Hollow Miasma",
+			"name": "Sloth",
+			"win_splash": "Time Begets Emptiness"
+		},
+		"WRATH": {
+			"epithet": "",
+			"name": "Wrath",
+			"win_splash": ""
+		}
 	},
-	
-	
-	
-	"ABILITY":{
-		
-		"MOCK":{
-			"name" : "Mock Ability",
-			"desc" : "Add a %s to target Coin Piece."
+	"RING": {
+		"BOW_OF_BELLS_END": {
+			"desc": "On Your First Turn, Skip that turn.\nOn Your Last Turn, take and Additional Turn after that.",
+			"name": "Bow of Bell's End"
 		},
-		
-		"MOCK_SEAL":{
-			"name" : "Mock Seal",
-			"desc" : "Remove the Seal from target Coin Piece."
+		"BUCKET_BRIM_CRUSTACEAN": {
+			"desc": "When you would Lose Spin on your Turn, %d%% chance to gain that much instead.",
+			"name": "Bucket Brim Crustacean"
 		},
-		
-		"STOPPAGE":{
-			"name" : "Stoppage",
-			"desc" : "Add a %s to target Coin Piece."
+		"CIRCLES_OF_HELL": {
+			"desc": "NOBODY LOOK!",
+			"name": "The Circles of Hell"
 		},
-		
-		"CONSUMPTION":{
-			"name" : "Consume",
-			"desc" : "Gain %d Spin."
+		"CIRCLE_OF_LEECHES": {
+			"desc": "After an ability of a Coin Piece you own is activated, Add a %s to it.\nAfter a %s is removed from a Coin Piece you own, add a %s to it.",
+			"name": "Circle of Leeches"
 		},
-		
-		"DRAG_UNDER":{
-			"name" : "Drag Under",
-			"desc" : "Opponent Loses Spin equal to half the difference between yours'."
+		"CROWN_OF_PRIMAE_NOCTIS": {
+			"desc": "At the start of each Round, Choose an Opponent's Coin Piece and activate a Copy of its ability.",
+			"name": "Crown of Primae Noctis"
 		},
-		
-		"OBLITERATE":{
-			"name" : "Obliterate",
-			"desc" : "Destroy target Finger."
+		"PRESERVER_OF_THE_DROWNED": {
+			"desc": "The first time each Round your Spin becomes less than 0, gain %d Spin.",
+			"name": "Preserver of the Drowned"
 		},
-		
-		"HESITANCE":{
-			"name" : "Hesitance",
-			"desc" : "Add a %s to target Coin Piece."
+		"TWIN_HEADED_OUROBOROS": {
+			"desc": "On Your First Turn, when you activate an ability, Copy it. You may choose new targets for the copy.\nOn Your Last Turn, when you activate an ability, Counter it.",
+			"name": "Twin-Headed Ouroboros"
 		},
-		
-		"RIP_TIDE":{
-			"name" : "Rip Tide",
-			"desc" : "Add a %s to target Coin Piece."
-		},
-		
-		"UNTOUCHABLE_HEAT":{
-			"name" : "Untouchable Heat",
-			"desc" : "Add a %s to target Coin Piece."
-		},
+		"VANITY_RING": {
+			"desc": "Neat",
+			"name": "Vanity Ring"
+		}
 	},
-	
-	
-	
-	"DEMON":{
-		"GLUTTONY":{
-			"name" : "Gluttony",
-			"epithet" : "The Everstarved",
-			"win_splash" : "Gluttony Consumes All"
+	"SEAL": {
+		"AQUA_FORTIS": {
+			"desc": "At the start of your turn, Lose %d Spin.",
+			"name": "Aqua Fortis Seal"
 		},
-		
-		"LUST":{
-			"name" : "Lust",
-			"epithet" : "The Dollmaker",
-			"win_splash" : "You Are Mine"
+		"CLEANSING": {
+			"desc": "At the end of your turn, remove this and all adjacent Seals.",
+			"name": "Cleansing Seal"
 		},
-		
-		"GREED":{
-			"name" : "Greed",
-			"epithet" : "",
-			"win_splash" : ""
+		"COPPER": {
+			"desc": "At the end of your turn, if an ability of this Coin Piece was activated, Lose %d Spin and Remove this Seal. Otherwise, gain %d Spin.",
+			"name": "Copper Seal"
 		},
-		
-		"WRATH":{
-			"name" : "Wrath",
-			"epithet" : "",
-			"win_splash" : ""
+		"LEAD": {
+			"desc": "The next time an ability of this Coin Piece would be activated, Counter that activation and Remove this Seal.",
+			"name": "Lead Seal"
 		},
-		
-		"PRIDE":{
-			"name" : "Pride",
-			"epithet" : "The Mother of Sin",
-			"win_splash" : ""
-		},
-		
-		"SLOTH":{
-			"name" : "Sloth",
-			"epithet" : "The Hollow Miasma",
-			"win_splash" : "Time Begets Emptiness"
-		},
-		
-		"ENVY":{
-			"name" : "Envy",
-			"epithet" : "The Grasping Covet",
-			"win_splash" : ""
-		},
-	},
+		"QUICKSILVER": {
+			"desc": "After an ability of this Coin Piece is activated, Lose %d Spin.",
+			"name": "Quicksilver Seal"
+		}
+	}
 }

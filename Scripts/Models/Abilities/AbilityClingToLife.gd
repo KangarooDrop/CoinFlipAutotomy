@@ -1,8 +1,8 @@
 extends Ability
-class_name AbilityDragUnder
+class_name AbilityClingToLife
 
 func getLocID() -> String: 
-	return super.getLocID() + "DRAG_UNDER"
+	return super.getLocID() + "CLING_TO_LIFE"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
@@ -14,7 +14,7 @@ func getBaseData() -> Dictionary:
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 0:
-		push_error("ERROR: Invalid num targets given to AbilityDragUnder.activate: " + str(abilityContext.targets.size()) + " != 0.")
+		push_error("ERROR: Invalid num targets given to AbilityClingToLife.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
 	
 	var playerModel : PlayerModel = getPlayerModel(abilityContext)

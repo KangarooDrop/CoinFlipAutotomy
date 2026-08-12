@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bpugaf4q68moi" path="res://Textures/UI/background_normal.png" id="2_xkvmb"]
 [ext_resource type="PackedScene" uid="uid://vujl1wgx0sov" path="res://Scenes/UI/Menus/Vender/VenderRefreshButton.tscn" id="3_qumqh"]
 [ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="6_1fbem"]
-[ext_resource type="Texture2D" uid="uid://bm4aiajlygkig" path="res://Textures/Rings/vanity_ring_finger.png" id="7_j3vb4"]
 
 [node name="Vender" type="Node2D" unique_id=723774995 groups=["VenderNode"]]
 script = ExtResource("1_xt8eu")
@@ -86,30 +85,6 @@ text = "Go Next"
 
 [node name="HandNode" parent="." unique_id=1522124850 instance=ExtResource("6_1fbem")]
 position = Vector2(-209, 73)
-
-[node name="VanityRingFinger" type="Sprite2D" parent="HandNode" unique_id=1010320406]
-position = Vector2(17, -16)
-rotation = 1.5707964
-texture = ExtResource("7_j3vb4")
-
-[node name="VanityRingFinger2" type="Sprite2D" parent="HandNode" unique_id=1046820692]
-position = Vector2(21, 2)
-rotation = 1.5707964
-texture = ExtResource("7_j3vb4")
-
-[node name="VanityRingFinger3" type="Sprite2D" parent="HandNode" unique_id=713059700]
-position = Vector2(17, 17)
-rotation = 1.5707964
-texture = ExtResource("7_j3vb4")
-
-[node name="VanityRingFinger4" type="Sprite2D" parent="HandNode" unique_id=2016010567]
-position = Vector2(12, 32)
-rotation = 1.5707964
-texture = ExtResource("7_j3vb4")
-
-[node name="VanityRingFinger5" type="Sprite2D" parent="HandNode" unique_id=762008809]
-position = Vector2(-28, -30)
-texture = ExtResource("7_j3vb4")
 
 [connection signal="item_node_pressed" from="CoreHolder" to="." method="onItemNodePressed"]
 [connection signal="item_node_pressed" from="CoinPieceHolder" to="." method="onItemNodePressed"]

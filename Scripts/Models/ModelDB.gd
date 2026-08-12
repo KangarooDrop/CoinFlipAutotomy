@@ -22,7 +22,7 @@ func _ready() -> void:
 	_abilityDB.add(AbilityMock)
 	_abilityDB.add(AbilityMockSeal)
 	_abilityDB.add(AbilityStoppage)
-	_abilityDB.add(AbilityDragUnder)
+	_abilityDB.add(AbilityClingToLife)
 	_abilityDB.add(AbilityConsumption)
 	_abilityDB.add(AbilityObliterate)
 	_abilityDB.add(AbilityHesitance)

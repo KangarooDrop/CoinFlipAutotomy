@@ -34,8 +34,8 @@ func getBaseData() -> Dictionary:
 	}, true)
 	return baseData
 
-func getTexturePath() -> String:
-	return Preloader.texturePath + "Abilities/"
+#func getTexturePath() -> String:
+#	return Preloader.texturePath + "Abilities/"
 
 @abstract func activate(matchState : MatchState, abilityContext : AbilityContext) -> void
 

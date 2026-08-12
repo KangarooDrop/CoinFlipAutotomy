@@ -11,7 +11,7 @@ func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
-		ABILITY_SCRIPT_KEY : AbilityDragUnder,
+		ABILITY_SCRIPT_KEY : AbilityClingToLife,
 		PIECE_TYPE_KEY : Entities.CoinPieceType.CORE,
 	}, true)
 	return baseData
