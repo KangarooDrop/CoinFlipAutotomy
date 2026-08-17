@@ -138,11 +138,11 @@ func _onTurnStartInternal() -> void:
 	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	await _matchState.onTurnStart()
 	if (activePlayer == _matchState.getActivePlayerModel()) and not activePlayer.isHuman:
-		var coinPiecesThatCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
-		if coinPiecesThatCanActivate.size() == 0:
+		var coinPieceModelsCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
+		if coinPieceModelsCanActivate.size() == 0:
 			await skipTurn()
 		else:
-			var targetToActivate : CoinPieceModel = coinPiecesThatCanActivate[RNG.getRandi() % coinPiecesThatCanActivate.size()]
+			var targetToActivate : CoinPieceModel = coinPieceModelsCanActivate[RNG.getRandi() % coinPieceModelsCanActivate.size()]
 			await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
 			await _onTurnEndInternal()
 	_updateBackgroundScale()
@@ -190,6 +190,8 @@ func _onRoundEndInternal() -> void:
 ####################################################################################################
 
 func _userActivateAbility(coinPieceModel : CoinPieceModel) -> void:
+	if not TriggerHandler.canActivateAbilityOfCoinPiece(_matchState, coinPieceModel):
+		return
 	canCancelTargetChoice = true
 	var successfullyActivated : bool = await _matchState.activateAbilityOfCoinPieceModel(coinPieceModel)
 	canCancelTargetChoice = false
@@ -291,17 +293,17 @@ func getMatchState() -> MatchState:
 func skipTurn() -> void:
 	await _onTurnSkippedInternal()
 
-func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
-	return await _getUserTarget(targetType, playerModel)
+func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
+	return await _getUserTarget(targetType, playerModel, verifyCallable)
 
 signal target_node_chosen_or_forced_skip
 var choosingTarget : bool = false
 var canCancelTargetChoice : bool = false
 
-func _getUserTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
+func _getUserTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
 	choosingTarget = true
 	invalidTargetsOverlay.show()
-	_setTargetingZIndices(targetType, playerModel)
+	_setTargetingZIndices(targetType, playerModel, verifyCallable)
 	var targetNode = await target_node_chosen_or_forced_skip
 	choosingTarget = false
 	canCancelTargetChoice = false
@@ -311,11 +313,12 @@ func _getUserTarget(targetType : Entities.TargetType, playerModel : PlayerModel)
 		target = Entities.TargetScript.getTargetNodeToModel(targetType, targetNode)
 	return target
 
-func _setTargetingZIndices(targetType : Entities.TargetType, playerModel : PlayerModel) -> void:
+func _setTargetingZIndices(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> void:
 	var targetableNodes : Array = coinFaceNodeUser.getAllCoinPieceNodes() + coinFaceNodeOpponent.getAllCoinPieceNodes() + coinNode.getAllCoinPieceNodes() \
 			+ handNodeUser.getAllRingNodes() + handNodeOpponent.getAllRingNodes() + handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
 	for targetNode : Node2D in targetableNodes:
-		targetNode.z_index = 2 if Entities.TargetScript.isValidNode(targetType, playerModel, targetNode) else 0
+		var isValid : bool = Entities.TargetScript.isValidNode(targetType, playerModel, targetNode) and verifyCallable.call(Entities.TargetScript.getTargetNodeToModel(targetType, targetNode))
+		targetNode.z_index = 2 if isValid else 0
 func _resetTargetingZIndices() -> void:
 	invalidTargetsOverlay.hide()
 

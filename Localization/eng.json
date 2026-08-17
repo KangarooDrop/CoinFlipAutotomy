@@ -35,6 +35,10 @@
 		"UNTOUCHABLE_HEAT": {
 			"desc": "Add a %s to target Coin Piece.",
 			"name": "Untouchable Heat"
+		},
+		"JOIN_ME": {
+			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
+			"name": "Join Me"
 		}
 	},
 	"COIN_PIECE": {
@@ -73,6 +77,10 @@
 		"OCEANS_DESCENT": {
 			"flavor": "All will be crushed beneath the tides.",
 			"name": "Oceans' Descent"
+		},
+		"SIRENS_CALL": {
+			"flavor": "Never gonna give you up...",
+			"name": "The Sirens' Call"
 		}
 	},
 	"DEMON": {
@@ -114,23 +122,19 @@
 	},
 	"RING": {
 		"BOW_OF_BELLS_END": {
-			"desc": "On Your First Turn, Skip that turn.\nOn Your Last Turn, take and Additional Turn after that.",
+			"desc": "At the Start of each Round, Add a %s to each Coin Piece you own.\nOn Your Last Turn, take an Additional Turn after that.",
 			"name": "Bow of Bell's End"
 		},
 		"BUCKET_BRIM_CRUSTACEAN": {
 			"desc": "When you would Lose Spin on your Turn, %d%% chance to gain that much instead.",
 			"name": "Bucket Brim Crustacean"
 		},
-		"CIRCLES_OF_HELL": {
-			"desc": "NOBODY LOOK!",
-			"name": "The Circles of Hell"
-		},
 		"CIRCLE_OF_LEECHES": {
-			"desc": "After an ability of a Coin Piece you own is activated, Add a %s to it.\nAfter a %s is removed from a Coin Piece you own, add a %s to it.",
+			"desc": "After an Ability of a Coin Piece you own is Activated, Add a %s to it.\nAfter a %s is Removed from a Coin Piece you own, add a %s to it.",
 			"name": "Circle of Leeches"
 		},
 		"CROWN_OF_PRIMAE_NOCTIS": {
-			"desc": "At the start of each Round, Choose an Opponent's Coin Piece and activate a Copy of its ability.",
+			"desc": "At the Start of each Round, Choose an Opponent's Coin Piece and Activate a Copy of its Ability.",
 			"name": "Crown of Primae Noctis"
 		},
 		"PRESERVER_OF_THE_DROWNED": {
@@ -138,34 +142,50 @@
 			"name": "Preserver of the Drowned"
 		},
 		"TWIN_HEADED_OUROBOROS": {
-			"desc": "On Your First Turn, when you activate an ability, Copy it. You may choose new targets for the copy.\nOn Your Last Turn, when you activate an ability, Counter it.",
+			"desc": "On Your First Turn, when you Activate an Ability, Copy it. You may choose new targets for the copy.\nOn Your Last Turn, when you Activate an Ability, Counter it.",
 			"name": "Twin-Headed Ouroboros"
 		},
 		"VANITY_RING": {
 			"desc": "Neat",
 			"name": "Vanity Ring"
+		},
+		"DUAL_TUNGSTEN_SIGNATE": {
+			"desc": "At the Start of each Round, lose %d Spin and Activate a copy of an Ability of target Coin Piece you own.",
+			"name": "Dual Tungsten Signate"
+		},
+		"AMAZONITE_CLUSTER_RING": {
+			"desc": "At the Start of each Round, for each Player, Add a %s to a random Coin Piece they own, %d times.",
+			"name": "Amazonite Cluster Ring"
+		},
+		"BLANK_BAND": {
+			"desc": "When an Ability is Countered or a Turn is Skipped, gain %d Spin.",
+			"name": "Blank Brand"
 		}
 	},
 	"SEAL": {
 		"AQUA_FORTIS": {
-			"desc": "At the start of your turn, Lose %d Spin.",
+			"desc": "At the Start of your Turn, Lose %d Spin.",
 			"name": "Aqua Fortis Seal"
 		},
 		"CLEANSING": {
-			"desc": "At the end of your turn, remove this and all adjacent Seals.",
+			"desc": "At the End of your Turn, Remove this and all adjacent Seals.",
 			"name": "Cleansing Seal"
 		},
 		"COPPER": {
-			"desc": "At the end of your turn, if an ability of this Coin Piece was activated, Lose %d Spin and Remove this Seal. Otherwise, gain %d Spin.",
+			"desc": "At the End of your Turn, if an Ability of this Coin Piece was Activated, Lose %d Spin and Remove this Seal. Otherwise, gain %d Spin.",
 			"name": "Copper Seal"
 		},
 		"LEAD": {
-			"desc": "The next time an ability of this Coin Piece would be activated, Counter that activation and Remove this Seal.",
+			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Remove this Seal.",
 			"name": "Lead Seal"
 		},
 		"QUICKSILVER": {
-			"desc": "After an ability of this Coin Piece is activated, Lose %d Spin.",
+			"desc": "After an Ability of this Coin Piece is Activated, Lose %d Spin.",
 			"name": "Quicksilver Seal"
+		},
+		"CRYSTALLIZATION": {
+			"desc": "The Ability of this Coin Piece cannot be Activated. At the End of your next Turn, Remove this Seal.",
+			"name": "Crystallization Seal"
 		}
 	}
 }

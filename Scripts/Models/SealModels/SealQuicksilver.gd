@@ -2,7 +2,7 @@ extends SealModel
 
 class_name SealQuicksliver
 
-const SPIN_LOSS_BASE : int = 12
+const SPIN_LOSS_BASE : int = 10
 
 func getLocID() -> String: return super.getLocID() + "QUICKSILVER"
 

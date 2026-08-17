@@ -201,39 +201,49 @@ func getSpinOpponent() -> int: return _spinOpponent
 func addAdditionalTurn(playerModel : PlayerModel) -> void:
 	_additionalTurnQueue.append(playerModel)
 
-func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel) -> Array:
+var _targetCallableTrue : Callable = func(_target): return true
+var _targetCallableCanActivate : Callable = func(target):
+	if not TriggerHandler.canActivateAbilityOfCoinPiece(self, target):
+		return false
+	if getValidTargets(ModelDB.getAbility(target.abilityScript).targetType, target.getPlayerModel()).size() == 0:
+		return false
+	return true
+
+func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetCallableTrue) -> Array:
 	var allTargets : Array[RefCounted] = []
 	for currentPlayerModel : PlayerModel in getAllPlayerModels():
 		allTargets.append_array(currentPlayerModel.getCoinFaceModel().getAllPieces())
 		allTargets.append_array(currentPlayerModel.getHandModel().getFingers())
 		allTargets.append_array(currentPlayerModel.getHandModel().getRings())
 	for i in range(allTargets.size()-1, -1, -1):
-		if not Entities.TargetScript.isValidModel(targetType, playerModel, allTargets[i]):
+		if not Entities.TargetScript.isValidModel(targetType, playerModel, allTargets[i]) or not verifyCallable.call(allTargets[i]):
 			allTargets.remove_at(i)
 	return allTargets
 
 func getCoinPiecesThatCanActivate(playerModel : PlayerModel) -> Array[CoinPieceModel]:
-	var allCoinPieces : Array[CoinPieceModel] = playerModel.getCoinFaceModel().getAllPieces()
+	var allCoinPieces : Array[CoinPieceModel] = []
+	allCoinPieces.append_array(getValidTargets(Entities.TargetType.ABILITY_PIECE_FRIENDLY, playerModel, _targetCallableCanActivate))
 	for i in range(allCoinPieces.size()-1, -1, -1):
-		if allCoinPieces[i].abilityScript == null:
-			allCoinPieces.remove_at(i)
-			continue
 		var abilitySingleton : Ability = ModelDB.getAbility(allCoinPieces[i].abilityScript)
 		if getValidTargets(abilitySingleton.targetType, playerModel).size() == 0:
 			allCoinPieces.remove_at(i)
 			continue
 	return allCoinPieces
 
-func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
+func getTargetCoinPieceCanActivate(playerModel : PlayerModel) -> CoinPieceModel:
+	return await getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, playerModel, _targetCallableCanActivate)
+
+func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetCallableTrue) -> Variant:
 	var target : RefCounted = null
 	if _matchNode != null and playerModel.isHuman:
-		while target == null or not Entities.TargetScript.isValidModel(targetType, playerModel, target):
-			target = await _matchNode.getTarget(targetType, playerModel)
+		while target == null or not Entities.TargetScript.isValidModel(targetType, playerModel, target) or not verifyCallable.call(target):
+			target = await _matchNode.getTarget(targetType, playerModel, verifyCallable)
 			if target == null:
 				break
 	else:
-		var validTargets : Array = getValidTargets(targetType, playerModel)
-		target = validTargets[RNG.getRandi() % validTargets.size()]
+		var validTargets : Array = getValidTargets(targetType, playerModel, verifyCallable)
+		if validTargets.size() != 0:
+			target = validTargets[RNG.getRandi() % validTargets.size()]
 	if target != null and target.has_method("popNode"):
 		target.popNode()
 	return target

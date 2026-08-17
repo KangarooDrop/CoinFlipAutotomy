@@ -1,5 +1,12 @@
 extends Node
 
+#	Conditionals	#
+func canActivateAbilityOfCoinPiece(matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:
+	for trig : Triggerable in matchState.getAllTriggerables():
+		if not (trig.canActivateAbilityOfCoinPiece(matchState, coinPieceModel)):
+			return false
+	return true
+
 #	Match Time Triggers	#
 func onMatchStart(matchState : MatchState) -> void:
 	for trig : Triggerable in matchState.getAllTriggerables():

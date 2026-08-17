@@ -9,3 +9,6 @@ static func skipTurn(matchState : MatchState) -> void:
 
 static func getTarget(matchState : MatchState, targetType : Entities.TargetType, playerModel : PlayerModel) -> Variant:
 	return await matchState.getTarget(targetType, playerModel)
+
+static func getCoinPieceToActivate(matchState : MatchState, playerModel : PlayerModel) -> CoinPieceModel:
+	return await matchState.getTargetCoinPieceCanActivate(playerModel)

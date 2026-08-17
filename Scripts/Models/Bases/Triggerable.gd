@@ -9,6 +9,10 @@ func popNode() -> void:
 	await pop_node.emitSignal()
 
 ####################################################################################################
+#	Conditionals	#
+func canActivateAbilityOfCoinPiece(_matchState : MatchState, _coinPieceModel : CoinPieceModel) -> bool:
+	return true
+
 #	Match Time Triggers	#
 func onMatchStart(_matchState : MatchState) -> void:
 	pass

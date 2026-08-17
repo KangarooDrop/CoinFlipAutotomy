@@ -3,7 +3,6 @@ extends RingModel
 class_name RingBowOfBellsEnd
 
 var _canActivate : bool = true
-var _hasSkipped : bool = false
 
 ####################################################################################################
 
@@ -20,21 +19,21 @@ func getBaseData() -> Dictionary:
 func getTexturePath() -> String:
 	return super.getTexturePath() + "bow_of_bells_end.png"
 
+func getTooltipString() -> String:
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealCrystallization).getLocalizedString("name")
+
 ####################################################################################################
 
-func onRoundStart(_matchState : MatchState) -> void:
+func onRoundStart(matchState : MatchState) -> void:
 	_canActivate = true
-	_hasSkipped = false
-
-func onTurnStart(matchState : MatchState) -> void:
-	if getPlayerModel() != matchState.getActivePlayerModel():
-		return
-	if _hasSkipped:
+	popNode()
+	
+	var playerModel : PlayerModel = getPlayerModel()
+	if playerModel == null:
 		return
 	
-	popNode()
-	_hasSkipped = true
-	CmdAction.skipTurn(matchState)
+	for coinPieceModel : CoinPieceModel in playerModel.getCoinFaceModel().getAllPieces():
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), coinPieceModel)
 
 func onBeforeTurnEnd(matchState : MatchState) -> void:
 	if not _canActivate:

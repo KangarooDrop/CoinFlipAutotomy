@@ -9,7 +9,7 @@ func getDirName() -> String:
 
 func getStartingCoinPieceTypes() -> Array[Script]: 
 	return [CPDrownardsVictim, 
-		CPOceansDescent, CPDismay, CPCounterweightExterior]
+		CPOceansDescent, CPDismay, CPSirensCall]
 
 func getStartingRingTypes() -> Array[Script]: 
-	return [RingPreserverOfTheDrowned]
+	return [RingDualTungstenSignate]

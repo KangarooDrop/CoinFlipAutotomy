@@ -11,4 +11,4 @@ func getStartingCoinPieceTypes() -> Array[Script]:
 	return [CPCounterweightCore, CPAtrophy]
 
 func getStartingRingTypes() -> Array[Script]:
-	return [RingBowOfBellsEnd]
+	return [RingAmazoniteClusterRing, RingBlankBand]

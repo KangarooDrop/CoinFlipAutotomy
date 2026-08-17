@@ -63,7 +63,17 @@ func getTooltipString() -> String:
 	if _sealModel != null:
 		rtn += "\n" + _sealModel.getTooltipString()
 	return rtn
+	
+####################################################################################################
 
+func canActivateAbilityOfCoinPiece(matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:
+	if coinPieceModel == self:
+		if abilityScript != null:
+			return ModelDB.getAbilitySingleton(coinPieceModel.abilityScript).canActivateAbilityOfCoinPiece(matchState, coinPieceModel)
+		else:
+			return false
+	return true
+	
 ####################################################################################################
 
 func getSealModel() -> SealModel:

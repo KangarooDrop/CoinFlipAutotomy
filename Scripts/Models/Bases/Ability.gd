@@ -42,6 +42,9 @@ func getBaseData() -> Dictionary:
 func getTooltipString() -> String:
 	return getLocalizedString("name") + ": " + getLocalizedString("desc")
 
+func canActivateAbilityOfCoinPiece(_matchState : MatchState, _coinPieceModel : CoinPieceModel) -> bool:
+	return true
+
 ####################################################################################################
 
 func getPlayerModel(abilityContext : AbilityContext) -> PlayerModel:

@@ -1,3 +1,12 @@
+Gameplay mechanics: 
+	Increase (Own/Opponent) Spin
+	Decrease (Own/Opponent) Spin
+	Countering/Stalling/Skipping
+	Seal Removal
+	Copy (Own/Opponent) Abilities
+	Seals
+
+
 Gluttony:
 	--Art
 	Pose:
@@ -6,15 +15,19 @@ Gluttony:
 		Almost curled up, like a snake about to strike
 			w/ a large gaping maw
 	Gameplay:
-		NUMBER GO UP!
+		Primary: Increase Spin
+		Secondary: Seal Removal
+		Tertiary: Countering/Stalling/Skipping
+		//Gain 10 Spin. Remove a seal from this piece, if you do, add a Lead Seal to target opponents piece.
 	Themes: ??
 
 Envy
 	--Art
 	--Pose:
 	Gameplay:
-		Copying opponents abilities
-		Negatives for both players but yours are avoided/advantageous
+		Primary: Copy Opponent Abilities
+		Secondary: Lower opponent spin
+		Tertiary: 
 	Themes: ??
 
 Sloth:
@@ -29,8 +42,9 @@ Sloth:
 	Pose:
 		??
 	Gameplay:
-		Passing your turn
-		Countering abilities
+		Primary: Countering/Stalling/Skipping
+		Secondary: Seals
+		Tertiary: 
 	Themes: Avoidance of responsibility, they let bad things happen rather
 			than doing something about them
 
@@ -40,7 +54,9 @@ Lust:
 	Pose:
 		??
 	Gameplay:
-		??
+		Primary: 
+		Secondary: Copying opponent abilities
+		Tertiary: 
 	Themes: Viewing people as a means of attaining what you want rather
 			than as people, Obsession (Hunchback: Judge Frollo)
 
@@ -51,7 +67,9 @@ Wrath:
 	Pose:
 		??
 	Gameplay:
-		Revenge? - Buff for each loss
+		Primary: Decrease Own/Opponent Spin
+		Secondary: 
+		Tertiary: 
 	Themes: ??
 
 Pride:
@@ -62,7 +80,9 @@ Pride:
 	Pose:
 		??
 	Gameplay:
-		??
+		Primary: Copy Own Abilities
+		Secondary: Seal Removal
+		Tertiary: 
 		Core: The Fall
 	Epithet: The Progenitor Sin
 	Themes: ??
@@ -73,7 +93,9 @@ Greed:
 	Pose:
 		??
 	Gameplay:
-		Taking opponents rings on loss (too similar to wrath)??
+		Primary: 
+		Secondary: 
+		Tertiary: 
 	Themes: Control, Taking simply to have, 
 
 
@@ -85,4 +107,4 @@ Ring Naming Convention:
 		Passive
 
 	Loop, Circlet, Ring, Band, Annulet
-		Collar, Girdle, Spiral, Curle
+		Collar, Girdle, Spiral, Curle, Crown

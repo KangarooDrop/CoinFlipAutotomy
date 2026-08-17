@@ -2,7 +2,7 @@ extends SealModel
 
 class_name SealAquaFortis
 
-const SPIN_LOSS_BASE : int = 8
+const SPIN_LOSS_BASE : int = 5
 
 func getLocID() -> String: return super.getLocID() + "AQUA_FORTIS"
 

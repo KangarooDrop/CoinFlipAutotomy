@@ -19,6 +19,13 @@ var _scriptToSubDB : Dictionary = {
 ####################################################################################################
 
 func _ready() -> void:
+	addSeals()
+	addAbilities()
+	addCoinPieces()
+	addRings()
+	addDemons()
+
+func addAbilities():
 	_abilityDB.add(AbilityMock)
 	_abilityDB.add(AbilityMockSeal)
 	_abilityDB.add(AbilityStoppage)
@@ -27,14 +34,17 @@ func _ready() -> void:
 	_abilityDB.add(AbilityObliterate)
 	_abilityDB.add(AbilityHesitance)
 	_abilityDB.add(AbilityRipTide)
-	_abilityDB.add(AbilityUntouchableHeat)
-	
+	_abilityDB.add(AbilityJoinMe)
+
+func addSeals():
 	_sealDB.add(SealAquaFortis)
 	_sealDB.add(SealLead)
 	_sealDB.add(SealQuicksliver)
 	_sealDB.add(SealCleansing)
 	_sealDB.add(SealCopper)
-	
+	_sealDB.add(SealCrystallization)
+
+func addCoinPieces():
 	_coinPieceCoreDB.add(CPCounterweightCore)
 	_coinPieceCoreDB.add(CPAbyssalMaw)
 	_coinPieceCoreDB.add(CPDrownardsVictim)
@@ -44,8 +54,12 @@ func _ready() -> void:
 	_coinPieceExteriorDB.add(CPOceansDescent)
 	_coinPieceExteriorDB.add(CPDevouringSickness)
 	_coinPieceExteriorDB.add(CPDismay)
-	_coinPieceExteriorDB.add(CPAllureOfFlame)
+	_coinPieceExteriorDB.add(CPSirensCall)
 	
+	_coinPieceDB.merge(_coinPieceCoreDB)
+	_coinPieceDB.merge(_coinPieceExteriorDB)
+
+func addRings():
 	_ringDB.add(RingVanityRing)
 	_ringDB.add(RingTwinHeadedOuroboros)
 	_ringDB.add(RingBowOfBellsEnd)
@@ -53,7 +67,11 @@ func _ready() -> void:
 	_ringDB.add(RingCrownOfPrimaeNoctis)
 	_ringDB.add(RingCircleOfLeeches)
 	_ringDB.add(RingPreserverOfTheDrowned)
-	
+	_ringDB.add(RingDualTungstenSignate)
+	_ringDB.add(RingAmazoniteClusterRing)
+	_ringDB.add(RingBlankBand)
+
+func addDemons():
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)
 	#_demonDB.add(DemonGreed)
@@ -61,9 +79,6 @@ func _ready() -> void:
 	#_addDemon(DemonPride)
 	_demonDB.add(DemonSloth)
 	#_addDemon(DemonWrath)
-	
-	_coinPieceDB.merge(_coinPieceCoreDB)
-	_coinPieceDB.merge(_coinPieceExteriorDB)
 
 func _getFromSubByScript(subDB : SubDB, scr : Script) -> LocalizedModel:
 	return subDB.getModelByScript(scr)
