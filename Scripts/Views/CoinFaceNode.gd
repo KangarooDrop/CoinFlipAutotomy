@@ -157,3 +157,8 @@ func getCoinPieceNodeToSocketIndex(coinPieceNode : CoinPieceNode) -> Entities.Co
 		if _socketIndexToNodes[socketIndex] == coinPieceNode:
 			return socketIndex
 	return Entities.CoinPieceSocketIndex.NONE
+
+func getCoinPieceNodeAtSocketIndex(socketIndex : Entities.CoinPieceSocketIndex) -> CoinPieceNode:
+	if not _socketIndexToNodes.has(socketIndex):
+		return null
+	return _socketIndexToNodes[socketIndex]

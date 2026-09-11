@@ -15,13 +15,13 @@ const BG_SCALE_UPDATE_DURATION : float = 1.0
 @onready var turnTimer : TurnTimer = get_node("%TurnTimer")
 @onready var coinNode : CoinNode = get_node("%CoinNode")
 
-@onready var gearHolderUser : Control = get_node("%GearHolderUser")
-@onready var handNodeUser : HandNode = gearHolderUser.get_node("HandNode")
-@onready var coinFaceNodeUser : CoinFaceNode = gearHolderUser.get_node("CoinFaceNode")
+@onready var gearHolderUser : GearHolder = get_node("%GearHolderUser")
+@onready var handNodeUser : HandNode = gearHolderUser.handNode
+@onready var coinFaceNodeUser : CoinFaceNode = gearHolderUser.coinFaceNode
 
-@onready var gearHolderOpponent : Control = get_node("%GearHolderOpponent")
-@onready var handNodeOpponent : HandNode = gearHolderOpponent.get_node("HandNode")
-@onready var coinFaceNodeOpponent : CoinFaceNode = gearHolderOpponent.get_node("CoinFaceNode")
+@onready var gearHolderOpponent : GearHolder = get_node("%GearHolderOpponent")
+@onready var handNodeOpponent : HandNode = gearHolderOpponent.handNode
+@onready var coinFaceNodeOpponent : CoinFaceNode = gearHolderOpponent.coinFaceNode
 
 @onready var invalidTargetsOverlay : Node2D = get_node("%InvalidTargetsOverlay")
 
@@ -41,14 +41,20 @@ func _initMatch():
 	gearHolderUser.position.x = -gearHolderUser.size.x
 	gearHolderOpponent.position.x = opponentGearEndPosX+gearHolderOpponent.size.x
 	
+	setPlayerModelUser(RunManager.getUserPlayerModel())
+	setPlayerModelOpponent(getRandomOpponentPlayerModel())
+	
 	background.setScale(MatchBackground.BG_SCALE_MAX)
 	faceOffNode.showClash()
 	await faceOffNode.clash_finished
-	
 	_showGearUser()
 	_showGearOpponent()
 	
 	await _onMatchStartInternal()
+
+func getRandomOpponentPlayerModel() -> PlayerModel:
+	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
+	return playerModelOpponent
 
 func _attachPlayerModel(playerModel : PlayerModel, isUser : bool) -> void:
 	pass
@@ -184,8 +190,15 @@ func _onRoundEndInternal() -> void:
 	var fingerToDestroy : FingerModel = await _getFingerToDestroyInternal(_matchState.winnerLastRound)
 	await CmdFinger.destroyFinger(_matchState, fingerToDestroy)
 	
+	if _matchState.winningPlayers.size() > 0:
+		_onMatchEndInernal()
+		return
+	
 	background.isTurning = true
 	await _onResetRoundInternal()
+
+func _onMatchEndInernal() -> void:
+	RunManager.onMatchEnded(_matchState)
 
 ####################################################################################################
 
@@ -199,6 +212,9 @@ func _userActivateAbility(coinPieceModel : CoinPieceModel) -> void:
 		await _onTurnEndInternal()
 
 func _input(event: InputEvent) -> void:
+	if _flippingCoinToNextPlayer:
+		return
+	
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if not _matchState.isMyTurn():
@@ -239,6 +255,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if not _matchState.isMyTurn():
 		return
+	if _flippingCoinToNextPlayer:
+		return
 	if event.is_action_pressed("skip"):
 		_onTurnSkippedInternal()
 		return
@@ -255,10 +273,6 @@ func getAllRingNodes() -> Array[RingNode]:
 	return handNodeUser.getAllRingNodes() + handNodeOpponent.getAllRingNodes()
 func getAllFingerNodes() -> Array[FingerNode]:
 	return handNodeUser.getAllFingerNodes() + handNodeOpponent.getAllFingerNodes()
-
-func setPlayerModels(playerModelUser : PlayerModel, playerModelOpponent : PlayerModel) -> void:
-	setPlayerModelUser(playerModelUser)
-	setPlayerModelOpponent(playerModelOpponent)
 
 func setPlayerModelUser(playerModel : PlayerModel) -> void:
 	if _matchState.getPlayerModelUser() != null:

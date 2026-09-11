@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://c2m3slpv6n6bp"]
+
+[ext_resource type="Script" uid="uid://0y1h5if1p0a" path="res://Scripts/UI/Menus/Vender/VenderLives.gd" id="1_cljc6"]
+[ext_resource type="Texture2D" uid="uid://bak4sgaw7sek2" path="res://Textures/UI/Vender/lives.png" id="2_trljw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44ho0"]
+atlas = ExtResource("2_trljw")
+region = Rect2(0, 0, 64, 64)
+
+[node name="VenderLives" type="Control" unique_id=1883302800]
+custom_minimum_size = Vector2(128, 64)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 64.0
+script = ExtResource("1_cljc6")
+
+[node name="TextureHolder" type="Control" parent="." unique_id=220534257]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="TextureHolder" unique_id=131028187]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-5, -2)
+texture = SubResource("AtlasTexture_44ho0")

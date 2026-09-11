@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 class_name VenderItem
 
@@ -24,7 +24,6 @@ signal hover_entered()
 signal hover_exited()
 signal button_down()
 signal button_up()
-signal pressed()
 
 func onHoverEnter() -> void:
 	hovering = true
@@ -39,9 +38,6 @@ func onButtonDown() -> void:
 
 func onButtonUp() -> void:
 	button_up.emit()
-
-func onPressed() -> void:
-	pressed.emit()
 
 func setItem(item : ItemModel) -> void:
 	if item is RingModel:

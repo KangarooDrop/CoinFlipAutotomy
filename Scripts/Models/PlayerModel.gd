@@ -26,6 +26,12 @@ func resetMatchHandModel() -> void:
 func getDemon() -> DemonModel:
 	return _demon
 
+func getOriginalHandModel() -> HandModel:
+	return _handModelOriginal
+
+func getOriginalCoinFaceModel() -> CoinFaceModel:
+	return _coinFaceModelOriginal
+
 func getHandModel() -> HandModel:
 	return _handModelMatch
 

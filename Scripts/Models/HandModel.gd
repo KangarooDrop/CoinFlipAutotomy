@@ -11,7 +11,7 @@ var _playerModelRef : WeakRef = null
 
 func _init(demon : DemonModel) -> void:
 	_demon = demon
-	for i in range(demon.getNumFingers()):
+	for i in range(demon.getTotalNumFingers()):
 		var fingerModel : FingerModel = FingerModel.new()
 		fingerModel.setHandModel(self)
 		_fingerModels.append(fingerModel)
@@ -68,14 +68,17 @@ func getRings() -> Array[RingModel]:
 func getRotData() -> Array[RingRotData]:
 	return _demon.rotDataArr
 
-func getNumFingers() -> int:
+func getTotalNumFingers() -> int:
 	return _demon.rotDataArr.size()
 
 func getNextRingIndex() -> int:
-	for i in range(getNumFingers()):
+	for i in range(getTotalNumFingers()):
 		if _fingerModels[i].getRingModel() == null and not _fingerModels[i].destroyed:
 			return i
 	return -1
+
+func canAddRing() -> bool:
+	return getNextRingIndex() != -1
 
 func addRing(ringModel : RingModel) -> bool:
 	var nextIndex : int = getNextRingIndex()
@@ -84,14 +87,35 @@ func addRing(ringModel : RingModel) -> bool:
 		return true
 	return false
 
+func eraseRing(ringModel : RingModel) -> bool:
+	for i in getTotalNumFingers():
+		var fingerModel : FingerModel = getFinger(i)
+		if fingerModel.getRingModel() == ringModel:
+			fingerModel.setRingModel(null)
+			return true
+	return false
+
 func getFinger(index : int) -> FingerModel:
 	if not _hasIndex(index):
 		push_error("ERROR: Invalid index given to getFinger")
 		return null
 	return _fingerModels[index]
 
+func getRemainingNumFingers() -> int:
+	var rem : int = 0
+	for fingerModel : FingerModel in _fingerModels:
+		if not fingerModel.destroyed:
+			rem += 1
+	return rem
+
 func areAllFingersDestroyed() -> bool:
 	for fingerModel : FingerModel in _fingerModels:
 		if not fingerModel.destroyed:
 			return false
 	return true
+
+func getRingIndex(ringModel : RingModel) -> int:
+	for i in range(getTotalNumFingers()):
+		if _fingerModels[i].getRingModel() == ringModel:
+			return i
+	return -1

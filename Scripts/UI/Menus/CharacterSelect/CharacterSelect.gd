@@ -17,9 +17,9 @@ var waitingForTweens : bool = false
 var selectedIndex : int = -1
 
 @onready var portraitHolder : Control = get_node("%PortraitHolder")
-@onready var gearHolder : Control = get_node("%GearHolder")
-@onready var handNode : HandNode = get_node("%HandNode")
-@onready var coinFaceNode : CoinFaceNode = get_node("%CoinFaceNode")
+@onready var gearHolder : GearHolder = get_node("%GearHolder")
+@onready var handNode : HandNode = gearHolder.handNode
+@onready var coinFaceNode : CoinFaceNode = gearHolder.coinFaceNode
 @onready var poseHolder : Control = get_node("%PoseHolder")
 @onready var poseWindow : Control = get_node("%PoseWindow")
 @onready var poseSprite : Sprite2D = get_node("%PoseSprite")
@@ -116,17 +116,7 @@ func onBackPressed() -> void:
 func onPlayPressed() -> void:
 	if waitingForTweens:
 		return
-	var playerModelUser : PlayerModel = characterPortraits[selectedIndex].demon.getStarterData().createPlayerModel()
-	playerModelUser.isHuman = true
-	changeSceneAndInitMatch(playerModelUser)
-
-static func changeSceneAndInitMatch(playerModelUser : PlayerModel) -> void:
-	var playerModelOpponent : PlayerModel = ModelDB.getDemon(DemonGluttony).getStarterData().createPlayerModel()
-	var sceneTree : SceneTree = ModelDB.get_tree()
-	sceneTree.change_scene_to_file("res://Scenes/Match/MatchNode.tscn")
-	await sceneTree.scene_changed
-	var matchNode : MatchNode = sceneTree.current_scene
-	matchNode.setPlayerModels(playerModelUser, playerModelOpponent)
+	RunManager.onCharacterChosen(characterPortraits[selectedIndex].demon.get_script())
 
 func setDemonData() -> void:
 	var starterData : StarterData = characterPortraits[selectedIndex].demon.getStarterData()

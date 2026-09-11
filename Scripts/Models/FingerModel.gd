@@ -22,7 +22,8 @@ func setRingModel(newRingModel : RingModel) -> void:
 	if oldRingModel != null:
 		oldRingModel.setFingerModel(null)
 	_ringModel = newRingModel
-	_ringModel.setFingerModel(self)
+	if is_instance_valid(_ringModel):
+		_ringModel.setFingerModel(self)
 	if oldRingModel == null:
 		ring_added.emit(newRingModel)
 	elif newRingModel == null:

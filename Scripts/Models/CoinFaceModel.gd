@@ -21,7 +21,8 @@ func _setCoinPieceInternal(socketIndex : Entities.CoinPieceSocketIndex, coinPiec
 	if oldCoinPieceModel != null:
 		oldCoinPieceModel.setCoinFaceModel(null)
 	_socketIndexToPiece[socketIndex] = coinPieceModel
-	coinPieceModel.setCoinFaceModel(self)
+	if is_instance_valid(coinPieceModel):
+		coinPieceModel.setCoinFaceModel(self)
 	return oldCoinPieceModel
 
 func _hasSocket(socketIndex : Entities.CoinPieceSocketIndex) -> bool:
@@ -47,6 +48,9 @@ func getPlayerModel() -> PlayerModel:
 	if not _playerModelRef:
 		return null
 	return _playerModelRef.get_ref()
+
+func canAddCoinPieceModel(coinPieceModel : CoinPieceModel) -> bool:
+	return getNextIndex(coinPieceModel.coinPieceType) != Entities.CoinPieceSocketIndex.NONE
 
 func getNextIndex(coinPieceType : Entities.CoinPieceType) -> Entities.CoinPieceSocketIndex:
 	if coinPieceType == Entities.CoinPieceType.NONE:

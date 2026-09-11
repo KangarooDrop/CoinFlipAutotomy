@@ -46,7 +46,7 @@ func getPortraitPath() -> String:
 func getPosePath() -> String:
 	return getDirParentPath() + getDirName() + "/pose.png"
 
-func getNumFingers() -> int:
+func getTotalNumFingers() -> int:
 	return rotDataArr.size()
 
 func getStarterData() -> StarterData:

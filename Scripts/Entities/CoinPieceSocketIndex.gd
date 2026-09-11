@@ -17,6 +17,12 @@ static func getRotated(socketIndex : CoinPieceSocketIndex, rotAmount : int) -> C
 		return CoinPieceSocketIndex.NONE
 	return posmod(socketIndex+rotAmount-1, CoinPieceSocketIndex.EXT_UP_LEFT) + 1 as CoinPieceSocketIndex
 
+static func getClockwise(socketIndex : CoinPieceSocketIndex) -> CoinPieceSocketIndex:
+	return getRotated(socketIndex, 1)
+
+static func getCounterclockwise(socketIndex : CoinPieceSocketIndex) -> CoinPieceSocketIndex:
+	return getRotated(socketIndex, -1)
+
 static func getOpposite(socketIndex : CoinPieceSocketIndex) -> CoinPieceSocketIndex:
 	return getRotated(socketIndex, 4)
 
@@ -26,4 +32,4 @@ static func getAllAdjacent(socketIndex : CoinPieceSocketIndex) -> Array[CoinPiec
 		rtn.assign(Entities.getAllExceptVals(CoinPieceSocketIndex, [CoinPieceSocketIndex.NONE, CoinPieceSocketIndex.CORE]))
 		return rtn
 	else:
-		return [CoinPieceSocketIndex.CORE, getRotated(socketIndex, -1), getRotated(socketIndex, 1)]
+		return [CoinPieceSocketIndex.CORE, getClockwise(socketIndex), getCounterclockwise(socketIndex)]

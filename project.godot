@@ -17,7 +17,7 @@ general/defaults/default_clear_color=Color(0, 0, 0, 1)
 config/name="Coin Flip Autotomy"
 config/version="0.01.00"
 run/main_scene="uid://d0nnr7vplu62v"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 config/windows_native_icon="res://Textures/icon.ico"
@@ -34,7 +34,7 @@ Settings="*uid://bd6vr65dc844a"
 TooltipHandler="*uid://rc5k5r3o58sy"
 TriggerHandler="*uid://m5a8rwpbqsqu"
 RNG="*uid://bl1i2xt8c5fx5"
-RunManager="*uid://coub06pqiah6k"
+RunManager="*uid://dxrfymggifyv1"
 
 [debug]
 

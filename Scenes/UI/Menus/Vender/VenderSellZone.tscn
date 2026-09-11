@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dk3eru0t0cjqs"]
+
+[ext_resource type="Script" uid="uid://b0aidr7h7qbpm" path="res://Scripts/UI/Menus/Vender/VenderSellZone.gd" id="1_8g0et"]
+[ext_resource type="Texture2D" uid="uid://b8e2dd5g25jch" path="res://Textures/UI/Vender/sell_zone.png" id="2_fhgwk"]
+
+[node name="VenderSellZone" type="Control" unique_id=663378441]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -512.0
+offset_bottom = -296.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8g0et")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1499005331]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fhgwk")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

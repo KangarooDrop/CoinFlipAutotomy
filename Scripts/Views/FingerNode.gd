@@ -59,7 +59,7 @@ func onRingNodeAdded(ringNode : RingNode) -> RingNode:
 	_ringNode = ringNode
 	return rtn
 
-func onRingModelRemoved() -> RingNode:
+func onRingModelRemoved(_oldRingModel : RingModel = null) -> RingNode:
 	var oldRingNode : RingNode = _ringNode
 	_ringNode = null
 	return oldRingNode

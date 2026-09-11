@@ -2,8 +2,12 @@ extends Control
 
 class_name TooltipViewer
 
+const TOOLTIP_SHOW_WAIT_MAX_TIME : float = 0.0
+const TOOLTIP_HIDE_WAIT_MAX_TIME : float = 0.15
+
 var _text : String = ""
 var _localizedModel : LocalizedModel = null
+var _disabled : bool = false
 
 var _hoveringViewer : bool = false
 var _tooltipShowWaitTimer : float = 0.0
@@ -11,12 +15,14 @@ var _tooltipHideWaitTimer : float = 0.0
 
 var _tooltip : Tooltip = null
 
-const TOOLTIP_SHOW_WAIT_MAX_TIME : float = 0.0
-const TOOLTIP_HIDE_WAIT_MAX_TIME : float = 0.15
-
 ####################################################################################################
 
 func _process(delta: float) -> void:
+	if _disabled:
+		_tooltipShowWaitTimer = 0.0
+		_tooltipHideWaitTimer = 0.0
+		return
+	
 	if isMouseHovering() and _tooltip == null:
 		_tooltipShowWaitTimer += delta
 		if _tooltipShowWaitTimer >= TOOLTIP_SHOW_WAIT_MAX_TIME:
@@ -43,6 +49,8 @@ func _removeTooltip() -> void:
 	_tooltip = null
 
 func _onMouseEnter() -> void:
+	if _disabled:
+		return
 	_hoveringViewer = true
 func _onMouseExit() -> void:
 	_hoveringViewer = false
@@ -63,3 +71,16 @@ func setLocalizedModel(newLocalizedModel : LocalizedModel) -> void:
 
 func isMouseHovering() -> bool:
 	return _hoveringViewer
+
+func removeTooltipIfPresent() -> void:
+	if _tooltip == null:
+		return
+	_removeTooltip()
+
+func disable() -> void:
+	_disabled = true
+	_hoveringViewer = false
+	removeTooltipIfPresent()
+
+func enable() -> void:
+	_disabled = false

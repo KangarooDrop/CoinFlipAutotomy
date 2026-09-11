@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d2hcpnfh26wff"]
 
 [ext_resource type="Script" uid="uid://eosvi2abxqf" path="res://Scripts/UI/Menus/CharacterSelect/CharacterSelect.gd" id="1_6f6kx"]
+[ext_resource type="PackedScene" uid="uid://dg0suetlhiagc" path="res://Scenes/UI/GearHolder.tscn" id="2_uswbb"]
 [ext_resource type="PackedScene" uid="uid://u01xnu8yrvdx" path="res://Scenes/UI/ButtonNine.tscn" id="2_vcbhj"]
 [ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="3_3hcbw"]
 [ext_resource type="PackedScene" uid="uid://dk3e2678opqm6" path="res://Scenes/Views/CoinFaceNode.tscn" id="4_pvxt1"]
@@ -29,8 +30,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="GearHolder" type="Control" parent="." unique_id=1185327942]
+[node name="GearHolder" parent="." unique_id=1289665682 instance=ExtResource("2_uswbb")]
 unique_name_in_owner = true
+layout_mode = 1
+offset_left = -128.0
+offset_right = 0.0
+
+[node name="GearHolder_DEPRECATED" type="Control" parent="." unique_id=1185327942]
+visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -39,7 +46,7 @@ offset_right = -128.0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="GearOffset" type="Control" parent="GearHolder" unique_id=1915798343]
+[node name="GearOffset" type="Control" parent="GearHolder_DEPRECATED" unique_id=1915798343]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -54,7 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HandHolder" type="Control" parent="GearHolder/GearOffset" unique_id=1025105064]
+[node name="HandHolder" type="Control" parent="GearHolder_DEPRECATED/GearOffset" unique_id=1025105064]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -67,10 +74,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HandNode" parent="GearHolder/GearOffset/HandHolder" unique_id=1522124850 instance=ExtResource("3_3hcbw")]
+[node name="HandNode" parent="GearHolder_DEPRECATED/GearOffset/HandHolder" unique_id=1522124850 instance=ExtResource("3_3hcbw")]
 unique_name_in_owner = true
 
-[node name="CoinFaceHolder" type="Control" parent="GearHolder/GearOffset" unique_id=707072981]
+[node name="CoinFaceHolder" type="Control" parent="GearHolder_DEPRECATED/GearOffset" unique_id=707072981]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -80,7 +87,7 @@ offset_bottom = -80.0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CoinFaceNode" parent="GearHolder/GearOffset/CoinFaceHolder" unique_id=1681672531 instance=ExtResource("4_pvxt1")]
+[node name="CoinFaceNode" parent="GearHolder_DEPRECATED/GearOffset/CoinFaceHolder" unique_id=1681672531 instance=ExtResource("4_pvxt1")]
 unique_name_in_owner = true
 
 [node name="PoseHolder" type="Control" parent="." unique_id=1612603811]

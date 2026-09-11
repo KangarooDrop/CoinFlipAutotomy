@@ -19,6 +19,7 @@ var currentTurnsRemaining : int = 0
 var activePlayerOnStart : PlayerModel = null
 var winnerLastRound : PlayerModel = null
 var isActionable : bool = false
+var winningPlayers : Array[PlayerModel] = []
 
 var _matchNode : MatchNode = null
 var _activePlayer : PlayerModel = null
@@ -117,14 +118,13 @@ func onRoundEnd() -> void:
 	_activePlayer = null
 
 func onFingerDestroyed() -> void:
-	var deadPlayers : Array = []
 	for playerModel : PlayerModel in getAllPlayerModels():
 		if playerModel.getHandModel().areAllFingersDestroyed():
-			deadPlayers.append(playerModel)
-	if deadPlayers.size() == 2:
+			winningPlayers.append(playerModel)
+	if winningPlayers.size() == 2:
 		print("Match is a draw!")
-	elif deadPlayers.size() == 1:
-		print("WINNER is ", "YOU!" if deadPlayers[0] == _playerModelOpponent else "OPPONENT!")
+	elif winningPlayers.size() == 1:
+		print("WINNER is ", "OPPONENT!" if winningPlayers[0] == _playerModelOpponent else "YOU!")
 	print("MatchState: AAAAAAAAAAAAAA")
 
 ####################################################################################################

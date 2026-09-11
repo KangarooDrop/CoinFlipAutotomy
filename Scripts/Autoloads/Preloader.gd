@@ -5,6 +5,7 @@ var windowSize : Vector2 = Vector2(ProjectSettings.get_setting("display/window/s
 const mainMenuPacked : PackedScene = preload("res://Scenes/UI/Menus/MainMenu/MainMenu.tscn")
 const characterSelectPacked : PackedScene = preload("res://Scenes/UI/Menus/CharacterSelect/CharacterSelect.tscn")
 const venderPacked : PackedScene = preload("res://Scenes/UI/Menus/Vender/Vender.tscn")
+const matchNodePacked : PackedScene = preload("res://Scenes/Match/MatchNode.tscn")
 
 const texturePath : String = "res://Textures/"
 

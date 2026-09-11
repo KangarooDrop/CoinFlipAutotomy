@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dg0suetlhiagc"]
+
+[ext_resource type="Script" uid="uid://de73ne84ydws7" path="res://Scripts/UI/GearHolder.gd" id="1_iawl8"]
+[ext_resource type="PackedScene" uid="uid://dthn7ks5b0eav" path="res://Scenes/Views/HandNode.tscn" id="1_yav4s"]
+[ext_resource type="PackedScene" uid="uid://dk3e2678opqm6" path="res://Scenes/Views/CoinFaceNode.tscn" id="2_iawl8"]
+
+[node name="GearHolder" type="Control" unique_id=1289665682]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 128.0
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_iawl8")
+
+[node name="HandNode" parent="." unique_id=1522124850 instance=ExtResource("1_yav4s")]
+unique_name_in_owner = true
+position = Vector2(64, 267)
+
+[node name="CoinFaceNode" parent="." unique_id=1660564807 instance=ExtResource("2_iawl8")]
+unique_name_in_owner = true
+position = Vector2(65, 144)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=755564109]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

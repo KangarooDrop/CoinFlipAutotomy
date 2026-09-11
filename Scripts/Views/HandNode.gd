@@ -17,8 +17,7 @@ var _fingerNodes : Array[FingerNode] = []
 ####################################################################################################
 
 func _ready() -> void:
-	if flipH:
-		spriteNubs.flip_h = true
+	setFlipped(flipH)
 
 func _setNumFingers(numFingers : int) -> void:
 	for fingerNode : FingerNode in _fingerNodes:
@@ -45,7 +44,11 @@ func _clear() -> void:
 
 ####################################################################################################
 
-func getNumFingers() -> int:
+func setFlipped(val : bool) -> void:
+	flipH = val
+	spriteNubs.flip_h = val
+
+func getTotalNumFingers() -> int:
 	return _handModel.getRotData().size()
 
 func setHandModel(newHandModel : HandModel) -> void:
@@ -55,9 +58,9 @@ func setHandModel(newHandModel : HandModel) -> void:
 	_handModel = newHandModel
 	_attachModel()
 	spriteNubs.texture = _handModel.getTextureAtlas()
-	_setNumFingers(getNumFingers())
+	_setNumFingers(getTotalNumFingers())
 	
-	for i in range(_handModel.getNumFingers()):
+	for i in range(_handModel.getTotalNumFingers()):
 		_fingerNodes[i].setHandData(_handModel, flipH, i)
 		_fingerNodes[i].setModel(_handModel.getFinger(i))
 
@@ -66,6 +69,11 @@ func getModel() -> HandModel:
 
 func getAllFingerNodes() -> Array[FingerNode]:
 	return _fingerNodes
+
+func getRingNode(index : int) -> RingNode:
+	if index < 0 or index >= getTotalNumFingers():
+		return null
+	return _fingerNodes[index].getRingNode()
 
 func getAllRingNodes() -> Array[RingNode]:
 	var rtn : Array[RingNode] = []

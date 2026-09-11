@@ -2,7 +2,7 @@ extends RingModel
 
 class_name RingDualTungstenSignate
 
-const SPIN_LOSS : int = 50
+const SPIN_LOSS : int = 20
 
 ####################################################################################################
 

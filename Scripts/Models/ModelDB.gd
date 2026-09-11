@@ -75,10 +75,10 @@ func addDemons():
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)
 	#_demonDB.add(DemonGreed)
-	#_addDemon(DemonLust)
-	#_addDemon(DemonPride)
+	#_demonDB.add(DemonLust)
+	#_demonDB.add(DemonPride)
 	_demonDB.add(DemonSloth)
-	#_addDemon(DemonWrath)
+	#_demonDB.add(DemonWrath)
 
 func _getFromSubByScript(subDB : SubDB, scr : Script) -> LocalizedModel:
 	return subDB.getModelByScript(scr)

@@ -2,10 +2,19 @@ Gameplay mechanics:
 	Increase (Own/Opponent) Spin
 	Decrease (Own/Opponent) Spin
 	Countering/Stalling/Skipping
-	Seal Removal
 	Copy (Own/Opponent) Abilities
-	Seals
+	Seal Application (Own/Opponent)
+	Seal Removal (Own/Opponent)
+	
 
+
+Demon Elements : 
+	Water = Envy
+	Fire = Gluttony
+	Stone = Lust
+	Wrath = Lightning
+	Pride, Sloth, Greed
+	
 
 Gluttony:
 	--Art
@@ -56,7 +65,7 @@ Lust:
 	Gameplay:
 		Primary: 
 		Secondary: Copying opponent abilities
-		Tertiary: 
+		Tertiary: Countering/Stalling/Skipping
 	Themes: Viewing people as a means of attaining what you want rather
 			than as people, Obsession (Hunchback: Judge Frollo)
 
@@ -108,3 +117,13 @@ Ring Naming Convention:
 
 	Loop, Circlet, Ring, Band, Annulet
 		Collar, Girdle, Spiral, Curle, Crown
+
+TODO:
+	onAfterAbilityActivated called on Seals that were just added (unintended)
+	MatchEvents - modify Event trigger funcs
+	Sloth Seal: At the start of your turn lose 5 Spin. \nWhen you skip your turn, Remove this Seal.
+	Envy (Wrath?) Seal: When an ability of this Coin Piece is activated, your opponent loses X(10) Spin.
+
+Ideas:
+	Bottlecaps for coin piece cores
+	Goldbones as greed
