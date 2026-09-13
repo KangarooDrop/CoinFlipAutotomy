@@ -39,7 +39,7 @@ func addAbilities():
 func addSeals():
 	_sealDB.add(SealAquaFortis)
 	_sealDB.add(SealLead)
-	_sealDB.add(SealQuicksliver)
+	_sealDB.add(SealQuicksilver)
 	_sealDB.add(SealCleansing)
 	_sealDB.add(SealCopper)
 	_sealDB.add(SealCrystallization)

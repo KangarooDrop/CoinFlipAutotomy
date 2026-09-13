@@ -7,7 +7,7 @@ var presentSinceStart : bool = false
 func getLocID() -> String: return super.getLocID() + "CRYSTALLIZATION"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "sigil_crystallization.png"
+	return super.getTexturePath() + "crystallization.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

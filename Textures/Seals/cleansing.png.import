@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cejjsskjxuhjf"
-path="res://.godot/imported/sigil_quicksilver.png-e4643a9e9815a0c5eb36ed9f58c9405f.ctex"
+uid="uid://bds2kwebc3b6g"
+path="res://.godot/imported/cleansing.png-fc9c0930d5aa2b8664d828442acce214.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/sigil_quicksilver.png"
-dest_files=["res://.godot/imported/sigil_quicksilver.png-e4643a9e9815a0c5eb36ed9f58c9405f.ctex"]
+source_file="res://Textures/Seals/cleansing.png"
+dest_files=["res://.godot/imported/cleansing.png-fc9c0930d5aa2b8664d828442acce214.ctex"]
 
 [params]
 

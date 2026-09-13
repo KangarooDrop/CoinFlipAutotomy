@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do7nytint5546"
-path="res://.godot/imported/sigil_crystallization.png-19f77f1ea50c2eaa20769bf6d759076d.ctex"
+uid="uid://bb03g78qogkob"
+path="res://.godot/imported/_seal_background_greyscale.png-87d1c2d3a21e4157ed1576960c2ad4e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/sigil_crystallization.png"
-dest_files=["res://.godot/imported/sigil_crystallization.png-19f77f1ea50c2eaa20769bf6d759076d.ctex"]
+source_file="res://Textures/Seals/_seal_background_greyscale.png"
+dest_files=["res://.godot/imported/_seal_background_greyscale.png-87d1c2d3a21e4157ed1576960c2ad4e6.ctex"]
 
 [params]
 

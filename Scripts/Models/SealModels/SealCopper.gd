@@ -12,7 +12,7 @@ var _wasAbilityActivated : bool = false
 func getLocID() -> String: return super.getLocID() + "COPPER"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "sigil_copper.png"
+	return super.getTexturePath() + "copper.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

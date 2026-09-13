@@ -51,8 +51,11 @@ func serialize() -> Dictionary:
 	}, true)
 	return rtn
 
+func getName() -> String:
+	return getLocalizedString("name") + " Seal"
+
 func getTooltipString() -> String:
-	return getLocalizedString("name") + ": " + getLocalizedString("desc")
+	return getName() + ": " + getLocalizedString("desc")
 
 ####################################################################################################
 

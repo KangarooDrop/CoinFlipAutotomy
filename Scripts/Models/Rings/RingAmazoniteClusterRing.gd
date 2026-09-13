@@ -20,7 +20,7 @@ func getTexturePath() -> String:
 	return super.getTexturePath() + "amazonite_cluster_ring.png"
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % [ModelDB.getSealSingleton(SealLead).getLocalizedString("name"), NUM_SEALS_PER_PLAYER]
+	return super.getTooltipString() % [ModelDB.getSealSingleton(SealLead).getName(), NUM_SEALS_PER_PLAYER]
 
 ####################################################################################################
 

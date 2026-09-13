@@ -13,7 +13,7 @@ func getBaseData() -> Dictionary:
 	return baseData
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % ModelDB.getSealSingleton(SealAquaFortis).getLocalizedString("name")
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealAquaFortis).getName()
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:

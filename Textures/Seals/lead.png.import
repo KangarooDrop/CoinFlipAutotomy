@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bds2kwebc3b6g"
-path="res://.godot/imported/sigil_cleansing.png-30bc647700817ba22420dd95826b57a1.ctex"
+uid="uid://c47djmblwhe1t"
+path="res://.godot/imported/lead.png-9e3a9547f9bd341de81407e76eb2058a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/sigil_cleansing.png"
-dest_files=["res://.godot/imported/sigil_cleansing.png-30bc647700817ba22420dd95826b57a1.ctex"]
+source_file="res://Textures/Seals/lead.png"
+dest_files=["res://.godot/imported/lead.png-9e3a9547f9bd341de81407e76eb2058a.ctex"]
 
 [params]
 

@@ -4,11 +4,6 @@
 
 [node name="BuilderRenamer" type="Node2D" unique_id=735560264]
 script = ExtResource("1_b24c3")
-engLocPath = "res://Localization/eng.json"
-modelDBScript = "res://Scripts/Models/ModelDB.gd"
-ringScriptPath = "res://Scripts/Models/Rings"
-ringScriptBase = "res://Scripts/Models/Rings/RingVanity.gd"
-ringTexturePath = "res://Textures/Rings"
-fileToRename = "res://Scripts/Models/Abilities/AbilityClingToLife.gd"
-renamedPascaleCase = "AbilityClingToLife"
-renameDisplayName = "Cling to Life"
+fileToRename = "res://Scripts/Models/SealModels/SealAquaFortis.gd"
+renamedPascaleCase = "SealAquaFortis"
+renameDisplayName = "Aqua Fortis"

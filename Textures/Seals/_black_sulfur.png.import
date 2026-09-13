@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2jbq25yjstwl"
-path="res://.godot/imported/seal_empty.png-fe22abcd372a295fe5d7ab4073737ceb.ctex"
+uid="uid://phx3hu5bv5nr"
+path="res://.godot/imported/_black_sulfur.png-1e9593e8ddfd9c6f4f3cb311b9020cbf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/seal_empty.png"
-dest_files=["res://.godot/imported/seal_empty.png-fe22abcd372a295fe5d7ab4073737ceb.ctex"]
+source_file="res://Textures/Seals/_black_sulfur.png"
+dest_files=["res://.godot/imported/_black_sulfur.png-1e9593e8ddfd9c6f4f3cb311b9020cbf.ctex"]
 
 [params]
 

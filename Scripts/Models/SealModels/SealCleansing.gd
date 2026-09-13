@@ -5,7 +5,7 @@ class_name SealCleansing
 func getLocID() -> String: return super.getLocID() + "CLEANSING"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "sigil_cleansing.png"
+	return super.getTexturePath() + "cleansing.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://doebhioa13nrv"
-path="res://.godot/imported/sigil_aqua_fortis.png-53353f97b0368eba34e1462a104324f5.ctex"
+uid="uid://d708q1i4r31p"
+path="res://.godot/imported/quicksilver.png-5edb02c3516a06b102b0b5b93a2f922d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/sigil_aqua_fortis.png"
-dest_files=["res://.godot/imported/sigil_aqua_fortis.png-53353f97b0368eba34e1462a104324f5.ctex"]
+source_file="res://Textures/Seals/quicksilver.png"
+dest_files=["res://.godot/imported/quicksilver.png-5edb02c3516a06b102b0b5b93a2f922d.ctex"]
 
 [params]
 

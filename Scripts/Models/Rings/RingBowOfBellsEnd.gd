@@ -20,7 +20,7 @@ func getTexturePath() -> String:
 	return super.getTexturePath() + "bow_of_bells_end.png"
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % ModelDB.getSealSingleton(SealCrystallization).getLocalizedString("name")
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealCrystallization).getName()
 
 ####################################################################################################
 

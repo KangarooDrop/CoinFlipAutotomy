@@ -7,7 +7,7 @@ const SPIN_LOSS_BASE : int = 5
 func getLocID() -> String: return super.getLocID() + "AQUA_FORTIS"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "sigil_aqua_fortis.png"
+	return super.getTexturePath() + "aqua_fortis.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

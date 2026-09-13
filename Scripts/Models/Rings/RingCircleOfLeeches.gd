@@ -18,8 +18,8 @@ func getTexturePath() -> String:
 	return super.getTexturePath() + "circle_of_leeches.png"
 
 func getTooltipString() -> String:
-	var cleansingSealName : String = ModelDB.getSeal(SealCleansing).getLocalizedString("name")
-	var leadSealName : String = ModelDB.getSeal(SealLead).getLocalizedString("name")
+	var cleansingSealName : String = ModelDB.getSeal(SealCleansing).getName()
+	var leadSealName : String = ModelDB.getSeal(SealLead).getName()
 	return super.getTooltipString() % [cleansingSealName, cleansingSealName, leadSealName]
 
 ####################################################################################################

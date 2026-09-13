@@ -14,7 +14,7 @@ func getBaseData() -> Dictionary:
 	return baseData
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % ModelDB.getSealSingleton(SealLead).getLocalizedString("name")
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealLead).getName()
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:

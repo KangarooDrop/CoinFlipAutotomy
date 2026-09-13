@@ -2,13 +2,17 @@
 extends Node
 
 @export_group("Globals")
-@export_file_path("*.json") var engLocPath : String = ""
-@export_file_path("*.gd") var modelDBScript : String = ""
+@export_file_path("*.json") var engLocPath : String = "res://Localization/eng.json"
+@export_file_path("*.gd") var modelDBScript : String = "res://Scripts/Models/ModelDB.gd"
 
-@export_group("Rings")
-@export_dir var ringScriptPath : String = ""
-@export_file_path("*.gd") var ringScriptBase : String = ""
-@export_dir var ringTexturePath : String = ""
+@export_group("Folder Paths")
+@export_dir var folderPathAbilities : String = "res://Scripts/Models/Abilities/"
+@export_dir var folderPathRings : String = "res://Scripts/Models/Rings/"
+@export_dir var folderPathCoinPieces : String = "res://Scripts/Models/CoinPieces/"
+@export_dir var folderPathDemons : String = "res://Scripts/Models/Demons/"
+@export_dir var folderPathSeals : String = "res://Scripts/Models/SealModels/"
+func getAllFolderPaths() -> Array[String]:
+	return [folderPathAbilities, folderPathRings, folderPathCoinPieces, folderPathDemons, folderPathSeals]
 
 @export_group("Ops")
 @export_file_path("*.gd") var fileToRename : String = ""
@@ -16,12 +20,13 @@ extends Node
 @export var renameDisplayName : String = ""
 @export_tool_button("Rename", "Callable") var renameButton = onRenamePressed
 
-enum MODEL_TYPE {NONE, RING, COIN_PIECE, ABILITY}
+enum MODEL_TYPE {NONE, RING, COIN_PIECE, ABILITY, SEAL}
 
 const modelTypeToSignatureString : Dictionary = {
 	MODEL_TYPE.COIN_PIECE : "CP",
 	MODEL_TYPE.RING : "Ring",
-	MODEL_TYPE.ABILITY : "Ability"
+	MODEL_TYPE.ABILITY : "Ability",
+	MODEL_TYPE.SEAL : "Seal",
 }
 
 func validateOpsData() -> bool:
@@ -77,6 +82,8 @@ static func getModelType(model : LocalizedModel) -> MODEL_TYPE:
 		return MODEL_TYPE.COIN_PIECE
 	elif model is Ability:
 		return MODEL_TYPE.ABILITY
+	elif model is SealModel:
+		return MODEL_TYPE.SEAL
 	else:
 		return MODEL_TYPE.NONE
 
@@ -98,6 +105,35 @@ func replaceDictRecursive(val : Dictionary, oldKey : String, newKey : String, ne
 				val[newKey] = dictData
 				return true
 	return false
+
+func replaceInOtherFiles(fromString : String, toString : String, excludes : Array[String] = []) -> bool:
+	var allFolderPaths : Array[String] = getAllFolderPaths()
+	var allFiles : Array[String] = []
+	for folderPath : String in allFolderPaths:
+		if not DirAccess.dir_exists_absolute(folderPath):
+			return false
+		for filePath : String in DirAccess.get_files_at(folderPath):
+			if not filePath.ends_with(".gd"):
+				continue
+			filePath = folderPath + filePath
+			if excludes.has(filePath):
+				continue
+			allFiles.append(filePath)
+	for filePath : String in allFiles:
+		var modelScriptFile : FileAccess = FileAccess.open(filePath, FileAccess.READ)
+		var oldModelScriptText : String = modelScriptFile.get_as_text()
+		modelScriptFile.close()
+		
+		if oldModelScriptText.find(fromString) == -1:
+			continue
+		
+		var newModelScriptText = oldModelScriptText.replace(fromString, toString)
+		modelScriptFile = FileAccess.open(filePath, FileAccess.WRITE)
+		modelScriptFile.store_string(newModelScriptText)
+		modelScriptFile.close()
+		print("\tRenamed class in ", filePath)
+		
+	return true
 
 func onRenamePressed() -> void:
 	if not validateOpsData():
@@ -140,18 +176,18 @@ func onRenamePressed() -> void:
 	var newModelScriptText : String = oldModelScriptText
 	#Replaces class_name : RingVanityRing -> RingNewName
 	if newModelScriptText.find(oldPascaleCase) == -1:
-		print("ERROR: Could not find class_name match in model file.")
+		print("ERROR: Could not find class_name match in model file: ", oldPascaleCase)
 		return
 	newModelScriptText = newModelScriptText.replace(oldPascaleCase, renamedPascaleCase)
 	#Replaces getLocID : "VANITY_RING" -> "NEW_NAME"
 	if newModelScriptText.find("\"" + oldCapitalNoSign + "\"") == -1:
-		print("ERROR: Could not find loc id match in model file.")
+		print("ERROR: Could not find loc id match in model file: ", "\"" + oldCapitalNoSign + "\"")
 		return
 	newModelScriptText = newModelScriptText.replace("\"" + oldCapitalNoSign + "\"", "\"" + renameCapitalNoSign + "\"")
 	#Replaces getTexturePath : "vanity_ring.png" -> "new_name.png"
 	if hasArt:
 		if newModelScriptText.find("\"" + oldSnakeNoSign + ".png\"") == -1:
-			print("ERROR: Could not find art file match in model file.")
+			print("ERROR: Could not find art file match in model file: ", "\"" + oldSnakeNoSign + ".png\"")
 			return
 		newModelScriptText = newModelScriptText.replace("\"" + oldSnakeNoSign + ".png\"", "\"" + renameSnakeNoSign + ".png\"")
 	
@@ -176,15 +212,13 @@ func onRenamePressed() -> void:
 	var newDBScriptString = oldDBScriptString.replace("(" + oldPascaleCase + ")", "(" + renamedPascaleCase + ")")
 	
 	################################################################################################
-	"""
-	TODO:
-		save over model script file
-		save over ModelDB
-		save over localization file
-		rename model script file
-		rename art file
-		change fileToRename to new file name
-	"""
+	
+	var success : bool = replaceInOtherFiles(oldPascaleCase, renamedPascaleCase, [fileToRename])
+	if not success:
+		print("ERROR: Could not iterate over other script files.")
+		return
+	
+	################################################################################################
 	
 	modelScriptFile = FileAccess.open(fileToRename, FileAccess.WRITE)
 	modelScriptFile.store_string(newModelScriptText)

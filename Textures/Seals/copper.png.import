@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://phx3hu5bv5nr"
-path="res://.godot/imported/sigil_black_sulfur.png-a821da023fa763e393b5af0da9d7b6f6.ctex"
+uid="uid://cghwrofh3ixww"
+path="res://.godot/imported/copper.png-4a098aa45fcc3bf6c00f8a0a6f553181.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/sigil_black_sulfur.png"
-dest_files=["res://.godot/imported/sigil_black_sulfur.png-a821da023fa763e393b5af0da9d7b6f6.ctex"]
+source_file="res://Textures/Seals/copper.png"
+dest_files=["res://.godot/imported/copper.png-4a098aa45fcc3bf6c00f8a0a6f553181.ctex"]
 
 [params]
 

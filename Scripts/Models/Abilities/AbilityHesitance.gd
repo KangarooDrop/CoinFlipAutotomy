@@ -13,7 +13,7 @@ func getBaseData() -> Dictionary:
 	return baseData
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % ModelDB.getSealSingleton(SealQuicksliver).getLocalizedString("name")
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealQuicksilver).getName()
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
@@ -23,4 +23,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Invalid target given to AbilityHesitance.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealQuicksliver), abilityContext.targets[0])
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealQuicksilver), abilityContext.targets[0])

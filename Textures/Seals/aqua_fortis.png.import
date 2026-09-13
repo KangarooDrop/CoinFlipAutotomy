@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds6m615wp814r"
-path="res://.godot/imported/black_sulfur_greyscale.png-42704138bb7d5bb3f8952362dea13f2a.ctex"
+uid="uid://b2dkdx43mvbto"
+path="res://.godot/imported/aqua_fortis.png-9b4e146fdf4e5dd657b3473269adbb3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Seals/black_sulfur_greyscale.png"
-dest_files=["res://.godot/imported/black_sulfur_greyscale.png-42704138bb7d5bb3f8952362dea13f2a.ctex"]
+source_file="res://Textures/Seals/aqua_fortis.png"
+dest_files=["res://.godot/imported/aqua_fortis.png-9b4e146fdf4e5dd657b3473269adbb3e.ctex"]
 
 [params]
 

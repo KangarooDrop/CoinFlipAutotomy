@@ -12,6 +12,10 @@
 			"desc": "Add a %s to target Coin Piece.",
 			"name": "Hesitance"
 		},
+		"JOIN_ME": {
+			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
+			"name": "Join Me"
+		},
 		"MOCK": {
 			"desc": "Add a %s to target Coin Piece.",
 			"name": "Mock Ability"
@@ -35,10 +39,6 @@
 		"UNTOUCHABLE_HEAT": {
 			"desc": "Add a %s to target Coin Piece.",
 			"name": "Untouchable Heat"
-		},
-		"JOIN_ME": {
-			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
-			"name": "Join Me"
 		}
 	},
 	"COIN_PIECE": {
@@ -121,6 +121,14 @@
 		}
 	},
 	"RING": {
+		"AMAZONITE_CLUSTER_RING": {
+			"desc": "At the Start of each Round, for each Player, Add a %s to a random Coin Piece they own, %d times.",
+			"name": "Amazonite Cluster Ring"
+		},
+		"BLANK_BAND": {
+			"desc": "When an Ability is Countered or a Turn is Skipped, gain %d Spin.",
+			"name": "Blank Brand"
+		},
 		"BOW_OF_BELLS_END": {
 			"desc": "At the Start of each Round, Add a %s to each Coin Piece you own.\nOn Your Last Turn, take an Additional Turn after that.",
 			"name": "Bow of Bell's End"
@@ -137,6 +145,10 @@
 			"desc": "At the Start of each Round, Choose an Opponent's Coin Piece and Activate a Copy of its Ability.",
 			"name": "Crown of Primae Noctis"
 		},
+		"DUAL_TUNGSTEN_SIGNATE": {
+			"desc": "At the Start of each Round, lose %d Spin and Activate a copy of an Ability of target Coin Piece you own.",
+			"name": "Dual Tungsten Signate"
+		},
 		"PRESERVER_OF_THE_DROWNED": {
 			"desc": "The first time each Round your Spin becomes less than 0, gain %d Spin.",
 			"name": "Preserver of the Drowned"
@@ -148,44 +160,32 @@
 		"VANITY_RING": {
 			"desc": "Neat",
 			"name": "Vanity Ring"
-		},
-		"DUAL_TUNGSTEN_SIGNATE": {
-			"desc": "At the Start of each Round, lose %d Spin and Activate a copy of an Ability of target Coin Piece you own.",
-			"name": "Dual Tungsten Signate"
-		},
-		"AMAZONITE_CLUSTER_RING": {
-			"desc": "At the Start of each Round, for each Player, Add a %s to a random Coin Piece they own, %d times.",
-			"name": "Amazonite Cluster Ring"
-		},
-		"BLANK_BAND": {
-			"desc": "When an Ability is Countered or a Turn is Skipped, gain %d Spin.",
-			"name": "Blank Brand"
 		}
 	},
 	"SEAL": {
-		"AQUA_FORTIS": {
+		"BLACK_SULFUR": {
 			"desc": "At the Start of your Turn, Lose %d Spin.",
-			"name": "Aqua Fortis Seal"
+			"name": "Black Sulfur"
 		},
 		"CLEANSING": {
 			"desc": "At the End of your Turn, Remove this and all adjacent Seals.",
-			"name": "Cleansing Seal"
+			"name": "Cleansing"
 		},
 		"COPPER": {
 			"desc": "At the End of your Turn, if an Ability of this Coin Piece was Activated, Lose %d Spin and Remove this Seal. Otherwise, gain %d Spin.",
-			"name": "Copper Seal"
-		},
-		"LEAD": {
-			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Remove this Seal.",
-			"name": "Lead Seal"
-		},
-		"QUICKSILVER": {
-			"desc": "After an Ability of this Coin Piece is Activated, Lose %d Spin.",
-			"name": "Quicksilver Seal"
+			"name": "Copper"
 		},
 		"CRYSTALLIZATION": {
 			"desc": "The Ability of this Coin Piece cannot be Activated. At the End of your next Turn, Remove this Seal.",
-			"name": "Crystallization Seal"
+			"name": "Crystallization"
+		},
+		"LEAD": {
+			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Remove this Seal.",
+			"name": "Lead"
+		},
+		"QUICKSILVER": {
+			"desc": "After an Ability of this Coin Piece is Activated, Lose %d Spin.",
+			"name": "Quicksilver"
 		}
 	}
 }
