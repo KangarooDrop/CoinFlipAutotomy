@@ -174,7 +174,7 @@ func onRenamePressed() -> void:
 	################################################################################################
 	
 	var newModelScriptText : String = oldModelScriptText
-	#Replaces class_name : RingVanityRing -> RingNewName
+	#Replaces class_name : RingVanity -> RingNewName
 	if newModelScriptText.find(oldPascaleCase) == -1:
 		print("ERROR: Could not find class_name match in model file: ", oldPascaleCase)
 		return

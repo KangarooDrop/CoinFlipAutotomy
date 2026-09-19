@@ -17,12 +17,8 @@
 			"name": "Join Me"
 		},
 		"MOCK": {
-			"desc": "Add a %s to target Coin Piece.",
+			"desc": "Does Nothing.",
 			"name": "Mock Ability"
-		},
-		"MOCK_SEAL": {
-			"desc": "Remove the Seal from target Coin Piece.",
-			"name": "Mock Seal"
 		},
 		"OBLITERATE": {
 			"desc": "Destroy target Finger.",
@@ -158,14 +154,14 @@
 			"name": "Twin-Headed Ouroboros"
 		},
 		"VANITY_RING": {
-			"desc": "Neat",
+			"desc": "Useless",
 			"name": "Vanity Ring"
 		}
 	},
 	"SEAL": {
-		"BLACK_SULFUR": {
+		"AQUA_FORTIS": {
 			"desc": "At the Start of your Turn, Lose %d Spin.",
-			"name": "Black Sulfur"
+			"name": "Aqua Fortis"
 		},
 		"CLEANSING": {
 			"desc": "At the End of your Turn, Remove this and all adjacent Seals.",
@@ -182,6 +178,10 @@
 		"LEAD": {
 			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Remove this Seal.",
 			"name": "Lead"
+		},
+		"EMPTY": {
+			"desc": "Does Nothing.",
+			"name": "Empty"
 		},
 		"QUICKSILVER": {
 			"desc": "After an Ability of this Coin Piece is Activated, Lose %d Spin.",

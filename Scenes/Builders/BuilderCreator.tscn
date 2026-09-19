@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://tbx5v3wwm45"]
+
+[ext_resource type="Script" uid="uid://bqj1h8r8cwe31" path="res://Scripts/Builders/BuilderCreator.gd" id="1_whuqm"]
+
+[node name="BuilderCreator" type="Node2D" unique_id=1694063874]
+script = ExtResource("1_whuqm")
+newPascaleCase = "RingSlinkyCoil"
+newDisplayName = "Slinky Coil"
