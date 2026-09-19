@@ -13,7 +13,7 @@ func getBaseData() -> Dictionary:
 	return baseData
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % ModelDB.getSealSingleton(SealAquaFortis).getName()
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealBlackSulfur).getName()
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
@@ -26,4 +26,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Coin Node without a seal given to AbilityRipTide.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.setSeal(matchState, ModelDB.getSeal(SealAquaFortis), abilityContext.targets[0])
+	await CmdSeal.setSeal(matchState, ModelDB.getSeal(SealBlackSulfur), abilityContext.targets[0])

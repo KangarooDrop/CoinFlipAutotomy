@@ -9,7 +9,7 @@
 			"name": "Consume"
 		},
 		"HESITANCE": {
-			"desc": "Add a %s to target Coin Piece.",
+			"desc": "Stamp a %s to target Coin Piece.",
 			"name": "Hesitance"
 		},
 		"JOIN_ME": {
@@ -21,15 +21,15 @@
 			"name": "Obliterate"
 		},
 		"RIP_TIDE": {
-			"desc": "Add a %s to target Coin Piece.",
+			"desc": "Stamp a %s to target Coin Piece.",
 			"name": "Rip Tide"
 		},
 		"STOPPAGE": {
-			"desc": "Add a %s to target Coin Piece.",
+			"desc": "Stamp a %s to target Coin Piece.",
 			"name": "Stoppage"
 		},
 		"UNTOUCHABLE_HEAT": {
-			"desc": "Add a %s to target Coin Piece.",
+			"desc": "Stamp a %s to target Coin Piece.",
 			"name": "Untouchable Heat"
 		},
 		"WAIT": {
@@ -118,7 +118,7 @@
 	},
 	"RING": {
 		"AMAZONITE_CLUSTER_RING": {
-			"desc": "At the Start of each Round, for each Player, Add a %s to a random Coin Piece they own, %d times.",
+			"desc": "At the Start of each Round, for each Player, Stamp a %s to a random Coin Piece they own, %d times.",
 			"name": "Amazonite Cluster Ring"
 		},
 		"BLANK_BAND": {
@@ -126,7 +126,7 @@
 			"name": "Blank Brand"
 		},
 		"BOW_OF_BELLS_END": {
-			"desc": "At the Start of each Round, Add a %s to each Coin Piece you own.\nOn Your Last Turn, take an Additional Turn after that.",
+			"desc": "At the Start of each Round, Stamp a %s to each Coin Piece you own.\nOn Your Last Turn, take an Additional Turn after that.",
 			"name": "Bow of Bell's End"
 		},
 		"BUCKET_BRIM_CRUSTACEAN": {
@@ -134,7 +134,7 @@
 			"name": "Bucket Brim Crustacean"
 		},
 		"CIRCLE_OF_LEECHES": {
-			"desc": "After an Ability of a Coin Piece you own is Activated, Add a %s to it.\nAfter a %s is Removed from a Coin Piece you own, add a %s to it.",
+			"desc": "After an Ability of a Coin Piece you own is Activated, Stamp a %s to it.\nAfter a %s is Broken from a Coin Piece you own, Stamp a %s to it.",
 			"name": "Circle of Leeches"
 		},
 		"CROWN_OF_PRIMAE_NOCTIS": {
@@ -160,27 +160,31 @@
 	},
 	"SEAL": {
 		"AQUA_FORTIS": {
-			"desc": "At the Start of your Turn, Lose %d Spin.",
+			"desc": "Does Nothing.",
 			"name": "Aqua Fortis"
+		},
+		"BLACK_SULFUR": {
+			"desc": "At the Start of your Turn, Lose %d Spin.",
+			"name": "Black Sulfur"
 		},
 		"BLANK": {
 			"desc": "Does Nothing.",
 			"name": "Blank"
 		},
 		"CLEANSING": {
-			"desc": "At the End of your Turn, Remove this and all adjacent Seals.",
+			"desc": "At the End of your Turn, Break this and all adjacent Seals.",
 			"name": "Cleansing"
 		},
 		"COPPER": {
-			"desc": "At the End of your Turn, if an Ability of this Coin Piece was Activated, Lose %d Spin and Remove this Seal. Otherwise, gain %d Spin.",
+			"desc": "At the End of your Turn, if an Ability of this Coin Piece was Activated, Lose %d Spin and Break this Seal. Otherwise, gain %d Spin.",
 			"name": "Copper"
 		},
 		"CRYSTALLIZATION": {
-			"desc": "The Ability of this Coin Piece cannot be Activated. At the End of your next Turn, Remove this Seal.",
+			"desc": "The Ability of this Coin Piece cannot be Activated. At the End of your next Turn, Break this Seal.",
 			"name": "Crystallization"
 		},
 		"LEAD": {
-			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Remove this Seal.",
+			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Break this Seal.",
 			"name": "Lead"
 		},
 		"QUICKSILVER": {
