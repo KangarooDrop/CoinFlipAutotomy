@@ -134,10 +134,10 @@ func isPlayerTurn(playerModel : PlayerModel) -> bool:
 		return false
 	return playerModel == _activePlayer
 
-func isMyTurn() -> bool:
-	if _activePlayer == null:
+func isUserControlled(playerModel : PlayerModel = _activePlayer) -> bool:
+	if playerModel == null:
 		return false
-	return isPlayerTurn(_playerModelUser)
+	return _playerModelUser == playerModel or (not playerModel.isHuman and playerModel.isControlledCPU)
 
 func getAllPlayerModels() -> Array[PlayerModel]:
 	var priorityPlayer : PlayerModel = _activePlayer if _activePlayer != null else activePlayerOnStart
@@ -235,7 +235,7 @@ func getTargetCoinPieceCanActivate(playerModel : PlayerModel) -> CoinPieceModel:
 
 func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetCallableTrue) -> Variant:
 	var target : RefCounted = null
-	if _matchNode != null and playerModel.isHuman:
+	if _matchNode != null and isUserControlled(playerModel):
 		while target == null or not Entities.TargetScript.isValidModel(targetType, playerModel, target) or not verifyCallable.call(target):
 			target = await _matchNode.getTarget(targetType, playerModel, verifyCallable)
 			if target == null:

@@ -4,6 +4,10 @@
 			"desc": "Opponent Loses Spin equal to half the difference between yours'.",
 			"name": "Cling to Life"
 		},
+		"CONSUME_THE_STARS": {
+			"desc": "Break the Seal on target Coin Piece and all adjacent Coin Pieces, then gain %d Spin for each Seal Broken. If %d+ Seals are Broken, Stamp a %s to another target Coin Piece.",
+			"name": "Consume The Stars"
+		},
 		"CONSUMPTION": {
 			"desc": "Gain %d Spin.",
 			"name": "Consume"
@@ -142,7 +146,7 @@
 			"name": "Crown of Primae Noctis"
 		},
 		"DUAL_TUNGSTEN_SIGNATE": {
-			"desc": "At the Start of each Round, lose %d Spin and Activate a copy of an Ability of target Coin Piece you own.",
+			"desc": "At the Start of each Round, lose %d Spin and Activate a Copy of an Ability of target Coin Piece you own.",
 			"name": "Dual Tungsten Signate"
 		},
 		"PRESERVER_OF_THE_DROWNED": {

@@ -54,6 +54,7 @@ func _initMatch():
 
 func getRandomOpponentPlayerModel() -> PlayerModel:
 	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
+	#playerModelOpponent.isControlledCPU = true
 	return playerModelOpponent
 
 func _attachPlayerModel(playerModel : PlayerModel, isUser : bool) -> void:
@@ -143,7 +144,7 @@ func _onRoundStartInternal() -> void:
 func _onTurnStartInternal() -> void:
 	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	await _matchState.onTurnStart()
-	if (activePlayer == _matchState.getActivePlayerModel()) and not activePlayer.isHuman:
+	if (activePlayer == _matchState.getActivePlayerModel()) and not _matchState.isUserControlled():
 		var coinPieceModelsCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
 		if coinPieceModelsCanActivate.size() == 0:
 			await skipTurn()
@@ -217,13 +218,13 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_RIGHT:
-			if not _matchState.isMyTurn():
+			if not _matchState.isUserControlled():
 				return
 			if choosingTarget and canCancelTargetChoice:
 				_cancelTargeting()
 				return
 		elif event.button_index == MOUSE_BUTTON_LEFT:
-			if not _matchState.isMyTurn() and not choosingTarget:
+			if not _matchState.isUserControlled() and not choosingTarget:
 				return
 			for coinPieceNode : CoinPieceNode in getAllCoinPieceNodes():
 				if coinPieceNode.tooltipViewer.isMouseHovering():
@@ -247,13 +248,13 @@ func _input(event: InputEvent) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
-		if choosingTarget and canCancelTargetChoice and _matchState.isMyTurn():
+		if choosingTarget and canCancelTargetChoice and _matchState.isUserControlled():
 			_cancelTargeting()
 		else:
 			print("ESCAPING")
 		return
 	
-	if not _matchState.isMyTurn():
+	if not _matchState.isUserControlled():
 		return
 	if _flippingCoinToNextPlayer:
 		return

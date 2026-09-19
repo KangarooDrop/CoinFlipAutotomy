@@ -205,7 +205,8 @@ func onCreatePressed() -> void:
 	newModelScriptFile.close()
 	
 	#Copy baseArtPath to newArtPath
-	DirAccess.copy_absolute(baseArtPath, newArtPath)
+	if not baseArtPath.is_empty():
+		DirAccess.copy_absolute(baseArtPath, newArtPath)
 	
 	#Save new localization text to eng.json
 	localizationFile = FileAccess.open(engLocPath, FileAccess.WRITE)

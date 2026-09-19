@@ -34,6 +34,7 @@ func addAbilities():
 	_abilityDB.add(AbilityHesitance)
 	_abilityDB.add(AbilityRipTide)
 	_abilityDB.add(AbilityJoinMe)
+	_abilityDB.add(AbilityConsumeTheStars)
 
 func addSeals():
 	_sealDB.add(SealBlank)
