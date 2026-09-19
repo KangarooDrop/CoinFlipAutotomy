@@ -1,8 +1,8 @@
 extends Ability
-class_name AbilityMock
+class_name AbilityWait
 
 func getLocID() -> String: 
-	return super.getLocID() + "MOCK"
+	return super.getLocID() + "WAIT"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

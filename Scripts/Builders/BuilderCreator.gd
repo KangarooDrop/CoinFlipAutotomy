@@ -10,7 +10,7 @@ extends Node
 @export_file_path("*.gd") var basicPathCoinPieceCore : String = "res://Scripts/Models/CoinPieces/CPCounterweightCore.gd"
 @export_file_path("*.gd") var basicPathRing : String = "res://Scripts/Models/Rings/RingVanityRing.gd"
 @export_file_path("*.gd") var basicPathAbility : String = "res://Scripts/Models/Abilities/AbilityMock.gd"
-@export_file_path("*.gd") var basicPathSeal : String = "res://Scripts/Models/SealModels/SealEmpty.gd"
+@export_file_path("*.gd") var basicPathSeal : String = "res://Scripts/Models/SealModels/SealBlank.gd"
 @export_file_path("*.gd") var basicPathDemon : String = "res://Scripts/Models/Demons/DemonGluttony.gd"
 
 func getModelTypeToBasicPath(modelType : MODEL_TYPE, isCoinPieceCore : bool) -> String:

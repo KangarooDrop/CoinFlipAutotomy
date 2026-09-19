@@ -26,7 +26,7 @@ func _ready() -> void:
 	addDemons()
 
 func addAbilities():
-	_abilityDB.add(AbilityMock)
+	_abilityDB.add(AbilityWait)
 	_abilityDB.add(AbilityStoppage)
 	_abilityDB.add(AbilityClingToLife)
 	_abilityDB.add(AbilityConsumption)
@@ -36,7 +36,7 @@ func addAbilities():
 	_abilityDB.add(AbilityJoinMe)
 
 func addSeals():
-	_sealDB.add(SealEmpty)
+	_sealDB.add(SealBlank)
 	_sealDB.add(SealAquaFortis)
 	_sealDB.add(SealLead)
 	_sealDB.add(SealQuicksilver)

@@ -1,11 +1,11 @@
 extends SealModel
 
-class_name SealEmpty
+class_name SealBlank
 
-func getLocID() -> String: return super.getLocID() + "EMPTY"
+func getLocID() -> String: return super.getLocID() + "BLANK"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "empty.png"
+	return super.getTexturePath() + "blank.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()

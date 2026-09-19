@@ -4,5 +4,6 @@
 
 [node name="BuilderCreator" type="Node2D" unique_id=1694063874]
 script = ExtResource("1_whuqm")
+basicPathSeal = "res://Scripts/Models/SealModels/SealEmpty.gd"
 newPascaleCase = "RingSlinkyCoil"
 newDisplayName = "Slinky Coil"
