@@ -6,20 +6,13 @@ extends Node
 @export_file_path("*.gd") var modelDBScript : String = "res://Scripts/Models/ModelDB.gd"
 
 @export_group("Basic Models")
-@export_file_path("*.gd") var basicPathCoinPieceExterior : String = "res://Scripts/Models/CoinPieces/CPCounterweightExterior.gd"
-@export_file_path("*.gd") var basicPathCoinPieceCore : String = "res://Scripts/Models/CoinPieces/CPCounterweightCore.gd"
 @export_file_path("*.gd") var basicPathRing : String = "res://Scripts/Models/Rings/RingVanityRing.gd"
 @export_file_path("*.gd") var basicPathAbility : String = "res://Scripts/Models/Abilities/AbilityWait.gd"
 @export_file_path("*.gd") var basicPathSeal : String = "res://Scripts/Models/SealModels/SealBlank.gd"
 @export_file_path("*.gd") var basicPathDemon : String = "res://Scripts/Models/Demons/DemonGluttony.gd"
 
-func getModelTypeToBasicPath(modelType : MODEL_TYPE, isCoinPieceCore : bool) -> String:
-	if modelType == MODEL_TYPE.COIN_PIECE:
-		if isCoinPieceCore:
-			return basicPathCoinPieceCore
-		else:
-			return basicPathCoinPieceExterior
-	elif modelType == MODEL_TYPE.RING:
+func getModelTypeToBasicPath(modelType : MODEL_TYPE) -> String:
+	if modelType == MODEL_TYPE.RING:
 		return basicPathRing
 	elif modelType == MODEL_TYPE.ABILITY:
 		return basicPathAbility
@@ -30,7 +23,7 @@ func getModelTypeToBasicPath(modelType : MODEL_TYPE, isCoinPieceCore : bool) -> 
 	else:
 		return ""
 func getModelTypeToFolderPath(modelType : MODEL_TYPE) -> String:
-	return getModelTypeToBasicPath(modelType, false).get_base_dir() + "/"
+	return getModelTypeToBasicPath(modelType).get_base_dir() + "/"
 func getAllFolderPaths() -> Array[String]:
 	var rtn : Array[String] = []
 	for modelType : MODEL_TYPE in MODEL_TYPE.keys():
@@ -39,10 +32,9 @@ func getAllFolderPaths() -> Array[String]:
 		rtn.append(getModelTypeToFolderPath(modelType))
 	return rtn
 
-enum MODEL_TYPE {NONE, RING, COIN_PIECE, ABILITY, SEAL, DEMON}
+enum MODEL_TYPE {NONE, RING, ABILITY, SEAL, DEMON}
 
 const modelTypeToSignatureString : Dictionary = {
-	MODEL_TYPE.COIN_PIECE : "CP",
 	MODEL_TYPE.RING : "Ring",
 	MODEL_TYPE.ABILITY : "Ability",
 	MODEL_TYPE.SEAL : "Seal",
@@ -52,8 +44,6 @@ const modelTypeToSignatureString : Dictionary = {
 static func getModelTypeFromModel(model : LocalizedModel) -> MODEL_TYPE:
 	if model is RingModel:
 		return MODEL_TYPE.RING
-	elif model is CoinPieceModel:
-		return MODEL_TYPE.COIN_PIECE
 	elif model is Ability:
 		return MODEL_TYPE.ABILITY
 	elif model is SealModel:
@@ -98,7 +88,6 @@ func validateGlobals() -> bool:
 @export_group("Ops")
 @export var newPascaleCase : String = ""
 @export var newDisplayName : String = ""
-@export var isCore : bool = false
 @export_tool_button("Create", "Callable") var createButton = onCreatePressed
 
 func getNewFilePath() -> String:
@@ -141,7 +130,7 @@ func onCreatePressed() -> void:
 	
 	var modelType : MODEL_TYPE = getModelTypeFromString(newPascaleCase)
 	var folderPath : String = getModelTypeToFolderPath(modelType)
-	var baseFilePath : String = getModelTypeToBasicPath(modelType, isCore)
+	var baseFilePath : String = getModelTypeToBasicPath(modelType)
 	var model : LocalizedModel = load(baseFilePath).new()
 	var baseArtPath : String = ""
 	var baseArtFileName : String = ""
@@ -189,6 +178,7 @@ func onCreatePressed() -> void:
 		var line : String = oldDBLines[i]
 		if line.contains("(" + baseClassName + ")"):
 			dbCheck = line.left(line.find("(" + baseClassName + ")"))
+			dbCheck = dbCheck.substr(1)		#Removes leading # from line
 			baseModelDBAddLine = line
 		if not dbCheck.is_empty() and line.contains(dbCheck):
 			lastDBIndex = i
@@ -196,7 +186,6 @@ func onCreatePressed() -> void:
 		print("WARNING: Could not find base model in ModelDB Script. Must be added manually.")
 	else:
 		oldDBLines.insert(lastDBIndex+1, baseModelDBAddLine.replace(baseClassName, newPascaleCase))
-		#print("\n".join(oldDBLines))
 	
 	#Save file w/ newScriptText at getNewFilePath()
 	var newFilePath : String = getNewFilePath()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgd3y7hpovx0w"
-path="res://.godot/imported/counterweight_exterior.png-54daa3af120206c6ebb5450bcc1ef2b7.ctex"
+uid="uid://b5yacy6ac7a17"
+path="res://.godot/imported/untouchable_flame.png-80963cfcf384c45515798bc011fbd225.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/counterweight_exterior.png"
-dest_files=["res://.godot/imported/counterweight_exterior.png-54daa3af120206c6ebb5450bcc1ef2b7.ctex"]
+source_file="res://Textures/CoinParts/untouchable_flame.png"
+dest_files=["res://.godot/imported/untouchable_flame.png-80963cfcf384c45515798bc011fbd225.ctex"]
 
 [params]
 

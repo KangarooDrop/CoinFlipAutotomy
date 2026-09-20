@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtv3csj2myp8y"
-path="res://.godot/imported/atrophy.png-aacc1b2d8ddb337b2e4d5c19f848fd76.ctex"
+uid="uid://hu48a5dch1q3"
+path="res://.godot/imported/stoppage.png-22f7b2ff1932f68748df7a03c81cce28.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/atrophy.png"
-dest_files=["res://.godot/imported/atrophy.png-aacc1b2d8ddb337b2e4d5c19f848fd76.ctex"]
+source_file="res://Textures/CoinParts/stoppage.png"
+dest_files=["res://.godot/imported/stoppage.png-22f7b2ff1932f68748df7a03c81cce28.ctex"]
 
 [params]
 

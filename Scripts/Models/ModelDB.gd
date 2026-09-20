@@ -2,16 +2,15 @@ extends Node
 
 var _abilityDB : SubDB = SubDB.new()
 var _sealDB : SubDB = SubDB.new()
-var _coinPieceDB : SubDB = SubDB.new()
-var _coinPieceExteriorDB : SubDB = SubDB.new()
-var _coinPieceCoreDB : SubDB = SubDB.new()
 var _ringDB : SubDB = SubDB.new()
 var _demonDB : SubDB = SubDB.new()
+
+var _abilityCoreDB : SubDB = SubDB.new()
+var _abilityExteriorDB : SubDB = SubDB.new()
 
 var _scriptToSubDB : Dictionary = {
 	Ability : _abilityDB,
 	SealModel : _sealDB,
-	CoinPieceModel : _coinPieceDB,
 	RingModel : _ringDB,
 	DemonModel : _demonDB,
 }
@@ -21,12 +20,11 @@ var _scriptToSubDB : Dictionary = {
 func _ready() -> void:
 	addSeals()
 	addAbilities()
-	addCoinPieces()
 	addRings()
 	addDemons()
 
 func addAbilities():
-	_abilityDB.add(AbilityWait)
+#	_abilityDB.add(AbilityWait)
 	_abilityDB.add(AbilityStoppage)
 	_abilityDB.add(AbilityClingToLife)
 	_abilityDB.add(AbilityConsumption)
@@ -35,9 +33,16 @@ func addAbilities():
 	_abilityDB.add(AbilityRipTide)
 	_abilityDB.add(AbilityJoinMe)
 	_abilityDB.add(AbilityConsumeTheStars)
+	
+	for abilityScript : Script in _abilityDB.getAllScripts():
+		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)
+		if abilityModel.coinPieceType == Entities.CoinPieceType.EXTERIOR:
+			_abilityExteriorDB.add(abilityScript)
+		elif abilityModel.coinPieceType == Entities.CoinPieceType.CORE:
+			_abilityCoreDB.add(abilityScript)
 
 func addSeals():
-	_sealDB.add(SealBlank)
+#	_sealDB.add(SealBlank)
 	_sealDB.add(SealBlackSulfur)
 	_sealDB.add(SealLead)
 	_sealDB.add(SealQuicksilver)
@@ -46,23 +51,8 @@ func addSeals():
 	_sealDB.add(SealCrystallization)
 	_sealDB.add(SealAquaFortis)
 
-func addCoinPieces():
-	_coinPieceCoreDB.add(CPCounterweightCore)
-	_coinPieceCoreDB.add(CPAbyssalMaw)
-	_coinPieceCoreDB.add(CPDrownardsVictim)
-	
-	_coinPieceExteriorDB.add(CPCounterweightExterior)
-	_coinPieceExteriorDB.add(CPAtrophy)
-	_coinPieceExteriorDB.add(CPOceansDescent)
-	_coinPieceExteriorDB.add(CPDevouringSickness)
-	_coinPieceExteriorDB.add(CPDismay)
-	_coinPieceExteriorDB.add(CPSirensCall)
-	
-	_coinPieceDB.merge(_coinPieceCoreDB)
-	_coinPieceDB.merge(_coinPieceExteriorDB)
-
 func addRings():
-	_ringDB.add(RingVanityRing)
+#	_ringDB.add(RingVanityRing)
 	_ringDB.add(RingTwinHeadedOuroboros)
 	_ringDB.add(RingBowOfBellsEnd)
 	_ringDB.add(RingBucketBrimCrustacean)
@@ -74,6 +64,7 @@ func addRings():
 	_ringDB.add(RingBlankBand)
 
 func addDemons():
+#	_demonDB.add(DemonNameless)
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)
 	#_demonDB.add(DemonGreed)
@@ -110,12 +101,6 @@ func getSeal(sealScript : Script) -> SealModel:
 func getSealSingleton(sealScript : Script) -> SealModel:
 	return _getFromSubByScriptSingleton(_sealDB, sealScript)
 
-func getCoinPiece(coinPieceScript : Script) -> CoinPieceModel:
-	return _getFromSubByScript(_coinPieceDB, coinPieceScript)
-
-func getCoinPieceSingleton(coinPieceScript : Script) -> CoinPieceModel:
-	return _getFromSubByScriptSingleton(_coinPieceDB, coinPieceScript)
-
 func getRing(ringScript : Script) -> RingModel:
 	return _getFromSubByScript(_ringDB, ringScript)
 
@@ -128,11 +113,14 @@ func getDemon(demonScript : Script) -> DemonModel:
 func getDemonSingleton(demonScript : Script) -> DemonModel:
 	return _getFromSubByScriptSingleton(_demonDB, demonScript)
 
-func getRandomCoinPieceCoreScript() -> Script:
-	return _coinPieceCoreDB.getRandomScript()
+func getRandomAbilityScript() -> Script:
+	return _abilityDB.getRandomScript()
 
-func getRandomCoinPieceExteriorScript() -> Script:
-	return _coinPieceExteriorDB.getRandomScript()
+func getRandomAbilityCoreScript() -> Script:
+	return _abilityCoreDB.getRandomScript()
+
+func getRandomAbilityExteriorScript() -> Script:
+	return _abilityExteriorDB.getRandomScript()
 
 func getRandomRingScript() -> Script:
 	return _ringDB.getRandomScript()

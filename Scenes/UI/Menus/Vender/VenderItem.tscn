@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b4fwgobql6eum"]
 
 [ext_resource type="Script" uid="uid://c3re6udlwvvyh" path="res://Scripts/UI/Menus/Vender/VenderItem.gd" id="1_d7j6b"]
-[ext_resource type="Texture2D" uid="uid://bkbnng6xce1ma" path="res://Textures/CoinParts/counterweight_core.png" id="1_m4103"]
+[ext_resource type="Texture2D" uid="uid://boe80pf05wqd0" path="res://Textures/CoinParts/_counterweight_core.png" id="3_asc5k"]
 [ext_resource type="PackedScene" uid="uid://c383t3ts5by6c" path="res://Scenes/UI/TooltipViewer.tscn" id="3_pg5fu"]
 
 [node name="VenderItem" type="Control" unique_id=619189547]
@@ -21,7 +21,7 @@ layout_mode = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=365972393]
 unique_name_in_owner = true
-texture = ExtResource("1_m4103")
+texture = ExtResource("3_asc5k")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 

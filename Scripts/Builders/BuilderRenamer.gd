@@ -8,11 +8,10 @@ extends Node
 @export_group("Folder Paths")
 @export_dir var folderPathAbilities : String = "res://Scripts/Models/Abilities/"
 @export_dir var folderPathRings : String = "res://Scripts/Models/Rings/"
-@export_dir var folderPathCoinPieces : String = "res://Scripts/Models/CoinPieces/"
 @export_dir var folderPathDemons : String = "res://Scripts/Models/Demons/"
 @export_dir var folderPathSeals : String = "res://Scripts/Models/SealModels/"
 func getAllFolderPaths() -> Array[String]:
-	return [folderPathAbilities, folderPathRings, folderPathCoinPieces, folderPathDemons, folderPathSeals]
+	return [folderPathAbilities, folderPathRings, folderPathDemons, folderPathSeals]
 
 @export_group("Ops")
 @export_file_path("*.gd") var fileToRename : String = ""
@@ -20,10 +19,9 @@ func getAllFolderPaths() -> Array[String]:
 @export var renameDisplayName : String = ""
 @export_tool_button("Rename", "Callable") var renameButton = onRenamePressed
 
-enum MODEL_TYPE {NONE, RING, COIN_PIECE, ABILITY, SEAL}
+enum MODEL_TYPE {NONE, RING, ABILITY, SEAL}
 
 const modelTypeToSignatureString : Dictionary = {
-	MODEL_TYPE.COIN_PIECE : "CP",
 	MODEL_TYPE.RING : "Ring",
 	MODEL_TYPE.ABILITY : "Ability",
 	MODEL_TYPE.SEAL : "Seal",
@@ -78,8 +76,6 @@ func validateSignature() -> bool:
 static func getModelType(model : LocalizedModel) -> MODEL_TYPE:
 	if model is RingModel:
 		return MODEL_TYPE.RING
-	elif model is CoinPieceModel:
-		return MODEL_TYPE.COIN_PIECE
 	elif model is Ability:
 		return MODEL_TYPE.ABILITY
 	elif model is SealModel:
@@ -244,5 +240,3 @@ func onRenamePressed() -> void:
 	################################################################################################
 	
 	print("Successfully renamed ", oldPascaleCase, " to ", renamedPascaleCase, ".")
-
-#@export_dir coinPieceScriptPath : Strin

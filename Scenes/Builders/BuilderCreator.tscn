@@ -4,6 +4,8 @@
 
 [node name="BuilderCreator" type="Node2D" unique_id=1694063874]
 script = ExtResource("1_whuqm")
+basicPathCoinPieceExterior = "res://Scripts/Models/CoinPieces/CPCounterweightExterior.gd"
+basicPathCoinPieceCore = "res://Scripts/Models/CoinPieces/CPCounterweightCore.gd"
 newPascaleCase = "AbilityConsumeTheStars"
 newDisplayName = "Consume The Stars"
 isCore = true

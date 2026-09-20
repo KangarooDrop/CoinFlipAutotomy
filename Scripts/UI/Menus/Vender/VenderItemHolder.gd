@@ -111,9 +111,9 @@ func getRandomItem() -> ItemModel:
 	if itemType == VenderItem.ITEM_TYPE.RING:
 		itemModel = ModelDB.getRing(ModelDB.getRandomRingScript())
 	elif itemType == VenderItem.ITEM_TYPE.COIN_PIECE_CORE:
-		itemModel = ModelDB.getCoinPiece(ModelDB.getRandomCoinPieceCoreScript())
+		itemModel = CoinPieceModel.new().setAbilityScript(ModelDB.getRandomAbilityCoreScript())
 	elif itemType == VenderItem.ITEM_TYPE.COIN_PIECE_EXTERIOR:
-		itemModel = ModelDB.getCoinPiece(ModelDB.getRandomCoinPieceExteriorScript())
+		itemModel = CoinPieceModel.new().setAbilityScript(ModelDB.getRandomAbilityExteriorScript())
 	return itemModel
 
 func refreshAllItems() -> void:

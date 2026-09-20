@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kt4utgjdg1hp"
-path="res://.godot/imported/drownards_victim.png-27ee7d3e7db027482a6b93359db8355c.ctex"
+uid="uid://bgwy10g8wbeya"
+path="res://.godot/imported/join_me.png-c4afa0814bf7cccbb531c067420eb4c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/drownards_victim.png"
-dest_files=["res://.godot/imported/drownards_victim.png-27ee7d3e7db027482a6b93359db8355c.ctex"]
+source_file="res://Textures/CoinParts/join_me.png"
+dest_files=["res://.godot/imported/join_me.png-c4afa0814bf7cccbb531c067420eb4c4.ctex"]
 
 [params]
 

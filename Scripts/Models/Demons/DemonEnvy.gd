@@ -7,9 +7,9 @@ func getLocID() -> String: return super.getLocID() + "ENVY"
 func getDirName() -> String:
 	return "envy"
 
-func getStartingCoinPieceTypes() -> Array[Script]: 
-	return [CPDrownardsVictim, 
-		CPOceansDescent, CPDismay, CPSirensCall]
+func getStartingAbilityTypes() -> Array[Script]: 
+	return [AbilityClingToLife, 
+		AbilityRipTide, AbilityHesitance, AbilityJoinMe]
 
 func getStartingRingTypes() -> Array[Script]: 
 	return [RingDualTungstenSignate]

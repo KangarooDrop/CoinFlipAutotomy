@@ -1,16 +1,24 @@
 extends Ability
 class_name AbilityObliterate
 
+####################################################################################################
+
 func getLocID() -> String: 
 	return super.getLocID() + "OBLITERATE"
+
+func getTexturePath() -> String:
+	return super.getTexturePath() + "obliterate.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.FINGER_FRIENDLY,
+		PIECE_TYPE_KEY : Entities.CoinPieceType.EXTERIOR,
 	}, true)
 	return baseData
+
+####################################################################################################
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:

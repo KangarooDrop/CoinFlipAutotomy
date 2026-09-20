@@ -22,7 +22,7 @@ func getLocID() -> String: return "DEMON."
 
 @abstract func getDirName() -> String
 
-func getStartingCoinPieceTypes() -> Array[Script]: return []
+func getStartingAbilityTypes() -> Array[Script]: return []
 
 func getStartingRingTypes() -> Array[Script]: return []
 
@@ -50,7 +50,7 @@ func getTotalNumFingers() -> int:
 	return rotDataArr.size()
 
 func getStarterData() -> StarterData:
-	return StarterData.new(self, getStartingCoinPieceTypes(), getStartingRingTypes())
+	return StarterData.new(self, getStartingAbilityTypes(), getStartingRingTypes())
 
 func getName() -> String:
 	return getLocalizedString("name")

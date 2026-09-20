@@ -7,8 +7,9 @@ func getLocID() -> String: return super.getLocID() + "SLOTH"
 func getDirName() -> String:
 	return "sloth"
 
-func getStartingCoinPieceTypes() -> Array[Script]: 
-	return [CPCounterweightCore, CPAtrophy]
+func getStartingAbilityTypes() -> Array[Script]: 
+	return [AbilityConsumeTheStars, 
+		AbilityStoppage]
 
 func getStartingRingTypes() -> Array[Script]:
 	return [RingAmazoniteClusterRing, RingBlankBand]

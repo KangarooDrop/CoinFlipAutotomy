@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkbnng6xce1ma"
-path="res://.godot/imported/counterweight_core.png-c127b5c9e0f202080bc128b295bcbe96.ctex"
+uid="uid://d2yiatg54ko2r"
+path="res://.godot/imported/hesitance.png-ae2ba0faa5dcde19dbaed2f84b72582d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/counterweight_core.png"
-dest_files=["res://.godot/imported/counterweight_core.png-c127b5c9e0f202080bc128b295bcbe96.ctex"]
+source_file="res://Textures/CoinParts/hesitance.png"
+dest_files=["res://.godot/imported/hesitance.png-ae2ba0faa5dcde19dbaed2f84b72582d.ctex"]
 
 [params]
 

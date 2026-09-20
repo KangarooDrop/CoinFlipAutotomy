@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2fdv1l5y54lk"
-path="res://.godot/imported/allure_of_flame.png-8771e9fad31dfda0da700a2688cada3c.ctex"
+uid="uid://d3dgceipp8ccs"
+path="res://.godot/imported/consumption.png-443b44f5bbea4f07db80045956be730c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/allure_of_flame.png"
-dest_files=["res://.godot/imported/allure_of_flame.png-8771e9fad31dfda0da700a2688cada3c.ctex"]
+source_file="res://Textures/CoinParts/consumption.png"
+dest_files=["res://.godot/imported/consumption.png-443b44f5bbea4f07db80045956be730c.ctex"]
 
 [params]
 

@@ -1,19 +1,27 @@
 extends Ability
 class_name AbilityHesitance
 
+####################################################################################################
+
 func getLocID() -> String: 
 	return super.getLocID() + "HESITANCE"
+
+func getTexturePath() -> String:
+	return super.getTexturePath() + "hesitance.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NON_SEAL_ANY,
+		PIECE_TYPE_KEY : Entities.CoinPieceType.EXTERIOR,
 	}, true)
 	return baseData
 
 func getTooltipString() -> String:
 	return super.getTooltipString() % ModelDB.getSealSingleton(SealQuicksilver).getName()
+
+####################################################################################################
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:

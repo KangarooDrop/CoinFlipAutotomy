@@ -1,10 +1,9 @@
-@abstract
 extends ItemModel
 
 class_name CoinPieceModel
 
-const ABILITY_SCRIPT_KEY : String = "ability_script"
 const PIECE_TYPE_KEY : String = "piece_type"
+const ABILITY_SCRIPT_KEY : String = "ability_script"
 
 var coinPieceType : Entities.CoinPieceType = Entities.CoinPieceType.NONE
 var abilityScript : Script = null
@@ -16,18 +15,7 @@ var seal_added : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(sealMode
 var seal_removed : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(sealModel : SealModel)
 var seal_replaced : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(newSealModel : SealModel, oldSealModel : SealModel)
 
-#signal seal_added(sealModel : SealModel)
-#signal seal_removed(sealModel : SealModel)
-#signal seal_replaced(newSealModel : SealModel, oldSealModel : SealModel)
-
 ####################################################################################################
-
-####################################################################################################
-
-func getLocID() -> String: return "COIN_PIECE."
-
-func getTexturePath() -> String:
-	return Preloader.texturePath + "CoinParts/"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
@@ -55,15 +43,31 @@ func serialize() -> Dictionary:
 	return rtn
 
 func getTooltipString() -> String:
-	var rtn : String = getLocalizedString("name")
+	var rtn : String = ""
 	if abilityScript != null:
-		rtn += "\n" + ModelDB.getAbilitySingleton(abilityScript).getTooltipString()
+		rtn += ModelDB.getAbilitySingleton(abilityScript).getTooltipString()
 	else:
 		"Ability: None"
 	if _sealModel != null:
 		rtn += "\n" + _sealModel.getTooltipString()
 	return rtn
 	
+func getTexturePath() -> String:
+	if abilityScript == null:
+		return ""
+	else:
+		return ModelDB.getAbilitySingleton(abilityScript).getTexturePath()
+
+func getLocID() -> String:
+	return ModelDB.getAbilitySingleton(abilityScript).getLocID()
+
+func setAbilityScript(newAbilityScript : Script) -> CoinPieceModel:
+	abilityScript = newAbilityScript
+	var abilitySingleton : Ability = ModelDB.getAbilitySingleton(abilityScript)
+	coinPieceType = abilitySingleton.coinPieceType
+	texPath = abilitySingleton.getTexturePath()
+	return self
+
 ####################################################################################################
 
 func canActivateAbilityOfCoinPiece(matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:

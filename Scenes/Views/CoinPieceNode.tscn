@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bkt5858p1p3lh"]
 
 [ext_resource type="Script" uid="uid://c22tei2rr11r8" path="res://Scripts/Views/CoinPieceNode.gd" id="1_vu44t"]
-[ext_resource type="Texture2D" uid="uid://dgd3y7hpovx0w" path="res://Textures/CoinParts/counterweight_exterior.png" id="2_vullg"]
+[ext_resource type="Texture2D" uid="uid://dixiv3pq56lr3" path="res://Textures/CoinParts/_counterweight_exterior.png" id="2_kdc1x"]
 [ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="3_kdc1x"]
 [ext_resource type="PackedScene" uid="uid://c383t3ts5by6c" path="res://Scenes/UI/TooltipViewer.tscn" id="3_vxif4"]
 
@@ -10,7 +10,7 @@ script = ExtResource("1_vu44t")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1131125095]
 unique_name_in_owner = true
-texture = ExtResource("2_vullg")
+texture = ExtResource("2_kdc1x")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 

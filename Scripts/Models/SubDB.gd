@@ -23,6 +23,9 @@ func _insert(model : LocalizedModel) -> void:
 
 ####################################################################################################
 
+func getAllScripts() -> Array[Script]:
+	return _scriptToModel.keys()
+
 func merge(otherSubDB : SubDB) -> void:
 	for model in otherSubDB._models:
 		_insert(model)

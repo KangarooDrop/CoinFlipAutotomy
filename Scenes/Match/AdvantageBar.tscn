@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://hkvvdtfcwts5" path="res://Scripts/Match/AdvantageBar.gd" id="1_hid0u"]
 [ext_resource type="Texture2D" uid="uid://cjhgngx3y646k" path="res://Textures/Match/advantage_bar.png" id="1_ta6vh"]
-[ext_resource type="Texture2D" uid="uid://bkbnng6xce1ma" path="res://Textures/CoinParts/counterweight_core.png" id="2_68y07"]
-[ext_resource type="Texture2D" uid="uid://dgd3y7hpovx0w" path="res://Textures/CoinParts/counterweight_exterior.png" id="3_iaf06"]
+[ext_resource type="Texture2D" uid="uid://boe80pf05wqd0" path="res://Textures/CoinParts/_counterweight_core.png" id="2_iaf06"]
+[ext_resource type="Texture2D" uid="uid://dixiv3pq56lr3" path="res://Textures/CoinParts/_counterweight_exterior.png" id="3_rc7fx"]
 [ext_resource type="Theme" uid="uid://domns0ab573dx" path="res://Themes/label_theme.tres" id="3_srpxl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rc7fx"]
@@ -35,7 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="MarkerCenter" unique_id=566620072]
-texture = ExtResource("2_68y07")
+texture = ExtResource("2_iaf06")
 
 [node name="MarkerLeft" type="Control" parent="." unique_id=217572262]
 layout_mode = 1
@@ -48,7 +48,7 @@ grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="MarkerLeft" unique_id=1415480629]
 rotation = -1.5707964
-texture = ExtResource("3_iaf06")
+texture = ExtResource("3_rc7fx")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 
@@ -66,7 +66,7 @@ grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="MarkerRight" unique_id=394704706]
 rotation = 1.5707964
-texture = ExtResource("3_iaf06")
+texture = ExtResource("3_rc7fx")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 

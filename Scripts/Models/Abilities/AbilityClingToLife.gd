@@ -1,16 +1,24 @@
 extends Ability
 class_name AbilityClingToLife
 
+####################################################################################################
+
 func getLocID() -> String: 
 	return super.getLocID() + "CLING_TO_LIFE"
+
+func getTexturePath() -> String:
+	return super.getTexturePath() + "cling_to_life.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NONE,
+		PIECE_TYPE_KEY : Entities.CoinPieceType.CORE,
 	}, true)
 	return baseData
+
+####################################################################################################
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 0:

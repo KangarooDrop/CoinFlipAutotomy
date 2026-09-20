@@ -8,11 +8,15 @@ const SPIN_DEC : int = 40
 func getLocID() -> String: 
 	return super.getLocID() + "JOIN_ME"
 
+func getTexturePath() -> String:
+	return super.getTexturePath() + "join_me.png"
+
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NONE,
+		PIECE_TYPE_KEY : Entities.CoinPieceType.EXTERIOR,
 	}, true)
 	return baseData
 

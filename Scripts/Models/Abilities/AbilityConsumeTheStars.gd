@@ -4,16 +4,27 @@ class_name AbilityConsumeTheStars
 const SPIN_PER_BREAK : int = 5
 const BREAKS_TO_STAMP : int = 4
 
+####################################################################################################
+
 func getLocID() -> String: 
 	return super.getLocID() + "CONSUME_THE_STARS"
+
+func getTexturePath() -> String:
+	return super.getTexturePath() + "consume_the_stars.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.COIN_PIECE_ANY,
+		PIECE_TYPE_KEY : Entities.CoinPieceType.CORE,
 	}, true)
 	return baseData
+
+func getTooltipString() -> String:
+	return super.getTooltipString() % [SPIN_PER_BREAK, BREAKS_TO_STAMP, ModelDB.getSealSingleton(SealLead).getName()]
+
+####################################################################################################
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:

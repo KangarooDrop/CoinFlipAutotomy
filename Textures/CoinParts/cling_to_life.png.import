@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu1e2xcv70o2"
-path="res://.godot/imported/sirens_call.png-5e58c2183030b034581b0b563f9e9e84.ctex"
+uid="uid://cgim5ihssjfob"
+path="res://.godot/imported/cling_to_life.png-034f768450078e12c2ba165563d89ff1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/sirens_call.png"
-dest_files=["res://.godot/imported/sirens_call.png-5e58c2183030b034581b0b563f9e9e84.ctex"]
+source_file="res://Textures/CoinParts/cling_to_life.png"
+dest_files=["res://.godot/imported/cling_to_life.png-034f768450078e12c2ba165563d89ff1.ctex"]
 
 [params]
 

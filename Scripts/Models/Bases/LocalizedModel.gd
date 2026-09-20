@@ -38,7 +38,12 @@ func clone() -> LocalizedModel:
 	return cloneModel
 
 func cloneBase() -> LocalizedModel:
-	return ModelDB.getModel(get_script())
+	var selfScript : Script = get_script()
+	var model : LocalizedModel = ModelDB.getModel(selfScript)
+	if model != null:
+		return model
+	else:
+		return selfScript.new()
 
 func getLocalizedString(key : String) -> String:
 	return Localization.getLocalizedData(getLocID() + "." + key)

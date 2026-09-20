@@ -3,12 +3,12 @@ extends RefCounted
 class_name StarterData
 
 var sourceDemon = null
-var startingCoinPieceTypes : Array[Script] = []
+var startingAbilityTypes : Array[Script] = []
 var startingRingTypes : Array[Script] = []
 
-func _init(demon, coinPieceTypes : Array[Script], ringTypes : Array[Script]) -> void:
+func _init(demon, abilityTypes : Array[Script], ringTypes : Array[Script]) -> void:
 	sourceDemon = demon
-	startingCoinPieceTypes = coinPieceTypes
+	startingAbilityTypes = abilityTypes
 	startingRingTypes = ringTypes
 
 func createHandModel() -> HandModel:
@@ -19,8 +19,8 @@ func createHandModel() -> HandModel:
 
 func createCoinFaceModel() -> CoinFaceModel:
 	var coinFaceModel : CoinFaceModel = CoinFaceModel.new()
-	for coinPieceType : Script in startingCoinPieceTypes:
-		coinFaceModel.addCoinPieceToNextSocket(ModelDB.getCoinPiece(coinPieceType))
+	for abilityScript : Script in startingAbilityTypes:
+		coinFaceModel.addCoinPieceToNextSocket(CoinPieceModel.new().setAbilityScript(abilityScript))
 	return coinFaceModel
 
 func createPlayerModel() -> PlayerModel:
