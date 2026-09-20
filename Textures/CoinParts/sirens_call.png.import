@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgwy10g8wbeya"
-path="res://.godot/imported/join_me.png-c4afa0814bf7cccbb531c067420eb4c4.ctex"
+uid="uid://crfuw2kbeuwfq"
+path="res://.godot/imported/sirens_call.png-5e58c2183030b034581b0b563f9e9e84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/join_me.png"
-dest_files=["res://.godot/imported/join_me.png-c4afa0814bf7cccbb531c067420eb4c4.ctex"]
+source_file="res://Textures/CoinParts/sirens_call.png"
+dest_files=["res://.godot/imported/sirens_call.png-5e58c2183030b034581b0b563f9e9e84.ctex"]
 
 [params]
 

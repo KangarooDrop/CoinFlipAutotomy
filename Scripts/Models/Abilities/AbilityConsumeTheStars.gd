@@ -28,10 +28,10 @@ func getTooltipString() -> String:
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
-		push_error("ERROR: Invalid num targets given to AbilityRipTide.activate: " + str(abilityContext.targets.size()) + " != 1.")
+		push_error("ERROR: Invalid num targets given to AbilityConsumeTheStars.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
 	if not abilityContext.targets[0] is CoinPieceModel:
-		push_error("ERROR: Invalid target given to AbilityRipTide.activate: " + str(abilityContext.targets[0]) + ".")
+		push_error("ERROR: Invalid target given to AbilityConsumeTheStars.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
 	var coinPieceTarget : CoinPieceModel = abilityContext.targets[0]

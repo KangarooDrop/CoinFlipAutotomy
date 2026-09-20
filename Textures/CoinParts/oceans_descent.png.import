@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3dgceipp8ccs"
-path="res://.godot/imported/consumption.png-443b44f5bbea4f07db80045956be730c.ctex"
+uid="uid://c56bqhx3rx2et"
+path="res://.godot/imported/oceans_descent.png-29bf2579d005b36d684b98d0893e4096.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/consumption.png"
-dest_files=["res://.godot/imported/consumption.png-443b44f5bbea4f07db80045956be730c.ctex"]
+source_file="res://Textures/CoinParts/oceans_descent.png"
+dest_files=["res://.godot/imported/oceans_descent.png-29bf2579d005b36d684b98d0893e4096.ctex"]
 
 [params]
 

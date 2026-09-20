@@ -9,7 +9,7 @@ func getDirName() -> String:
 
 func getStartingAbilityTypes() -> Array[Script]: 
 	return [AbilityConsumeTheStars, 
-		AbilityStoppage]
+		AbilityAtrophy]
 
 func getStartingRingTypes() -> Array[Script]:
 	return [RingAmazoniteClusterRing, RingBlankBand]

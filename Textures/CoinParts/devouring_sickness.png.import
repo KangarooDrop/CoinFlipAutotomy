@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hu48a5dch1q3"
-path="res://.godot/imported/stoppage.png-22f7b2ff1932f68748df7a03c81cce28.ctex"
+uid="uid://2phcsgb5w5i7"
+path="res://.godot/imported/devouring_sickness.png-a246e8f85ff37f99395c1aaa334bf7dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/stoppage.png"
-dest_files=["res://.godot/imported/stoppage.png-22f7b2ff1932f68748df7a03c81cce28.ctex"]
+source_file="res://Textures/CoinParts/devouring_sickness.png"
+dest_files=["res://.godot/imported/devouring_sickness.png-a246e8f85ff37f99395c1aaa334bf7dc.ctex"]
 
 [params]
 

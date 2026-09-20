@@ -25,13 +25,13 @@ func _ready() -> void:
 
 func addAbilities():
 #	_abilityDB.add(AbilityWait)
-	_abilityDB.add(AbilityStoppage)
+	_abilityDB.add(AbilityAtrophy)
 	_abilityDB.add(AbilityClingToLife)
-	_abilityDB.add(AbilityConsumption)
+	_abilityDB.add(AbilityDevouringSickness)
 	_abilityDB.add(AbilityObliterate)
 	_abilityDB.add(AbilityHesitance)
-	_abilityDB.add(AbilityRipTide)
-	_abilityDB.add(AbilityJoinMe)
+	_abilityDB.add(AbilityOceansDescent)
+	_abilityDB.add(AbilitySirensCall)
 	_abilityDB.add(AbilityConsumeTheStars)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():

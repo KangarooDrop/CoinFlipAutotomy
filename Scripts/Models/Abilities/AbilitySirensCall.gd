@@ -1,15 +1,15 @@
 extends Ability
-class_name AbilityJoinMe
+class_name AbilitySirensCall
 
 const SPIN_DEC : int = 40
 
 ####################################################################################################
 
 func getLocID() -> String: 
-	return super.getLocID() + "JOIN_ME"
+	return super.getLocID() + "SIRENS_CALL"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "join_me.png"
+	return super.getTexturePath() + "sirens_call.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
@@ -30,7 +30,7 @@ func canActivateAbilityOfCoinPiece(matchState : MatchState, coinPieceModel : Coi
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 0:
-		push_error("ERROR: Invalid num targets given to AbilityJoinMe.activate: " + str(abilityContext.targets.size()) + " != 0.")
+		push_error("ERROR: Invalid num targets given to AbilitySirensCall.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
 	
 	var playerModel : PlayerModel = getPlayerModel(abilityContext)

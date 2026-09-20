@@ -1,13 +1,13 @@
 extends Ability
-class_name AbilityRipTide
+class_name AbilityOceansDescent
 
 ####################################################################################################
 
 func getLocID() -> String: 
-	return super.getLocID() + "RIP_TIDE"
+	return super.getLocID() + "OCEANS_DESCENT"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "rip_tide.png"
+	return super.getTexturePath() + "oceans_descent.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
@@ -25,13 +25,13 @@ func getTooltipString() -> String:
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
-		push_error("ERROR: Invalid num targets given to AbilityRipTide.activate: " + str(abilityContext.targets.size()) + " != 1.")
+		push_error("ERROR: Invalid num targets given to AbilityOceansDescent.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
 	if not abilityContext.targets[0] is CoinPieceModel:
-		push_error("ERROR: Invalid target given to AbilityRipTide.activate: " + str(abilityContext.targets[0]) + ".")
+		push_error("ERROR: Invalid target given to AbilityOceansDescent.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	if abilityContext.targets[0].getSealModel() != null:
-		push_error("ERROR: Coin Node without a seal given to AbilityRipTide.activate: " + str(abilityContext.targets[0]) + ".")
+		push_error("ERROR: Coin Node without a seal given to AbilityOceansDescent.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
 	await CmdSeal.setSeal(matchState, ModelDB.getSeal(SealBlackSulfur), abilityContext.targets[0])

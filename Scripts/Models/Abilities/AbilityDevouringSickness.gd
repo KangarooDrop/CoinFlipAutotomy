@@ -1,15 +1,15 @@
 extends Ability
-class_name AbilityConsumption
+class_name AbilityDevouringSickness
 
 const SPIN_INC : int = 20
 
 ####################################################################################################
 
 func getLocID() -> String: 
-	return super.getLocID() + "CONSUMPTION"
+	return super.getLocID() + "DEVOURING_SICKNESS"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "consumption.png"
+	return super.getTexturePath() + "devouring_sickness.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
