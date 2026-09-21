@@ -2,85 +2,53 @@
 	"ABILITY": {
 		"ALLURE_OF_FLAME": {
 			"desc": "Stamp a %s to target Coin Piece.",
+			"flavor": "",
 			"name": "Allure of Flame"
 		},
 		"ATROPHY": {
 			"desc": "Stamp a %s to target Coin Piece.",
+			"flavor": "",
 			"name": "Atrophy"
 		},
 		"CLING_TO_LIFE": {
 			"desc": "Opponent Loses Spin equal to half the difference between yours'.",
+			"flavor": "",
 			"name": "Cling to Life"
 		},
 		"CONSUME_THE_STARS": {
 			"desc": "Break the Seal on target Coin Piece and all adjacent Coin Pieces, then gain %d Spin for each Seal Broken. If %d+ Seals are Broken, Stamp a %s to another target Coin Piece.",
+			"flavor": "",
 			"name": "Consume The Stars"
 		},
 		"DEVOURING_SICKNESS": {
 			"desc": "Gain %d Spin.",
+			"flavor": "",
 			"name": "Devouring Sickness"
 		},
 		"HESITANCE": {
 			"desc": "Stamp a %s to target Coin Piece.",
+			"flavor": "",
 			"name": "Hesitance"
 		},
 		"OBLITERATE": {
 			"desc": "Destroy target Finger.",
+			"flavor": "EXODIA!",
 			"name": "Obliterate"
 		},
 		"OCEANS_DESCENT": {
 			"desc": "Stamp a %s to target Coin Piece.",
+			"flavor": "You will be crushed beneath the endless tide!",
 			"name": "Ocean's Descent"
 		},
 		"SIRENS_CALL": {
 			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
+			"flavor": "Never gonna give you up...",
 			"name": "Sirens' Call"
 		},
 		"WAIT": {
 			"desc": "Does Nothing.",
+			"flavor": "",
 			"name": "Wait"
-		}
-	},
-	"COIN_PIECE": {
-		"ABYSSAL_MAW": {
-			"flavor": "",
-			"name": "Abyssal Maw"
-		},
-		"ALLURE_OF_FLAME": {
-			"flavor": "",
-			"name": "Allure of Flame"
-		},
-		"ATROPHY": {
-			"flavor": "As the body wanes, thoughts becomes heavy.",
-			"name": "Atrophy"
-		},
-		"COUNTERWEIGHT_CORE": {
-			"flavor": "",
-			"name": "Counterweight Core"
-		},
-		"COUNTERWEIGHT_EXTERIOR": {
-			"flavor": "",
-			"name": "Counterweight Exterior"
-		},
-		"DEVOURING_SICKNESS": {
-			"flavor": "",
-			"name": "Devouring Sickness"
-		},
-		"DISMAY": {
-			"flavor": "",
-			"name": "Dismay"
-		},
-		"DROWNARDS_VICTIM": {
-			"flavor": "",
-			"name": "Drownard's Victim"
-		},
-		"OCEANS_DESCENT": {
-			"flavor": "All will be crushed beneath the tides.",
-			"name": "Oceans' Descent"
-		},
-		"SIRENS_CALL": {
-			"flavor": "Never gonna give you up...",
-			"name": "The Sirens' Call"
 		}
 	},
 	"DEMON": {
