@@ -20,10 +20,10 @@ func getBaseData() -> Dictionary:
 	}, true)
 	return baseData
 
-####################################################################################################
-
 func getTooltipString() -> String:
 	return super.getTooltipString() % SPIN_DEC
+
+####################################################################################################
 
 func canActivateAbilityOfCoinPiece(matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:
 	return matchState.getSpin(coinPieceModel.getPlayerModel()) < 0

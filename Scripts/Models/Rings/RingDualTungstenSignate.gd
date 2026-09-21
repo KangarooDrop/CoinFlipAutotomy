@@ -34,4 +34,4 @@ func onRoundStart(matchState : MatchState) -> void:
 	var abilityScript : Script = targetCoinPiece.abilityScript
 	if abilityScript == null:
 		return
-	await CmdMatch.activateAbilityScript(matchState, abilityScript, self)
+	await CmdMatch.copyAbilityScript(matchState, abilityScript, self)

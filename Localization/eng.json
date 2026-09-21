@@ -40,6 +40,11 @@
 			"flavor": "You will be crushed beneath the endless tide!",
 			"name": "Ocean's Descent"
 		},
+		"PLUNGE_INTO_DARKNESS": {
+			"desc": "Both players Lose %d Spin. Break target Seal. If you owned that Seal, gain %d Spin. Otherwise, Break another target Seal.",
+			"flavor": "",
+			"name": "Plunge into Darkness"
+		},
 		"SIRENS_CALL": {
 			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
 			"flavor": "Never gonna give you up...",
@@ -122,7 +127,7 @@
 			"name": "Preserver of the Drowned"
 		},
 		"TWIN_HEADED_OUROBOROS": {
-			"desc": "On Your First Turn, when you Activate an Ability, Copy it. You may choose new targets for the copy.\nOn Your Last Turn, when you Activate an Ability, Counter it.",
+			"desc": "On Your First Turn, after you Activate an Ability, Activate a Copy of it.\nOn Your Last Turn, when you Activate an Ability, Counter it.",
 			"name": "Twin-Headed Ouroboros"
 		},
 		"VANITY_RING": {

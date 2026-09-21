@@ -26,4 +26,4 @@ func onRoundStart(matchState : MatchState) -> void:
 	if abilityScript == null:
 		return
 	
-	await CmdMatch.activateAbilityScript(matchState, abilityScript, self)
+	await CmdMatch.copyAbilityScript(matchState, abilityScript, self)

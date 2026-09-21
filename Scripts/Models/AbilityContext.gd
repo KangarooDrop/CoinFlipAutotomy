@@ -6,6 +6,7 @@ var source : Variant = null
 var targets : Array = []
 
 var isCountered : bool = false
+var isCopy : bool = false
 
 func _init(newSource : Variant, newTargets : Array) -> void:
 	self.source = newSource

@@ -316,6 +316,8 @@ var choosingTarget : bool = false
 var canCancelTargetChoice : bool = false
 
 func _getUserTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
+	if _matchState.getValidTargets(targetType, playerModel, verifyCallable).size() == 0:
+		return null
 	choosingTarget = true
 	invalidTargetsOverlay.show()
 	_setTargetingZIndices(targetType, playerModel, verifyCallable)

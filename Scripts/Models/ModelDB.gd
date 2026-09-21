@@ -33,6 +33,7 @@ func addAbilities():
 	_abilityDB.add(AbilityOceansDescent)
 	_abilityDB.add(AbilitySirensCall)
 	_abilityDB.add(AbilityConsumeTheStars)
+	_abilityDB.add(AbilityPlungeIntoDarkness)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():
 		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)
@@ -70,8 +71,8 @@ func addDemons():
 	#_demonDB.add(DemonGreed)
 	#_demonDB.add(DemonLust)
 	#_demonDB.add(DemonPride)
-	_demonDB.add(DemonSloth)
-	#_demonDB.add(DemonWrath)
+	#_demonDB.add(DemonSloth)
+	_demonDB.add(DemonWrath)
 
 func _getFromSubByScript(subDB : SubDB, scr : Script) -> LocalizedModel:
 	return subDB.getModelByScript(scr)

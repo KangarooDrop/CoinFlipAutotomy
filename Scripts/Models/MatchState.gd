@@ -261,7 +261,7 @@ func activateAbilityScript(abilityScript : Script, context : AbilityContext) -> 
 	else:
 		await TriggerHandler.onAfterAbilityCountered(self, ability, context)
 
-func activateAbilityScriptFromSource(abilityScript : Script, source : Variant) -> bool:
+func activateAbilityScriptFromSource(abilityScript : Script, source : Variant, isCopy : bool = false) -> bool:
 	var targetType : Entities.TargetType = ModelDB.getAbilitySingleton(abilityScript).targetType
 	var context : AbilityContext = null
 	if targetType == Entities.TargetType.NONE:
@@ -271,19 +271,20 @@ func activateAbilityScriptFromSource(abilityScript : Script, source : Variant) -
 		if target == null:
 			return false
 		context = AbilityContext.new(source, [target])
+	context.isCopy = isCopy
 	await activateAbilityScript(abilityScript, context)
 	return true
 
-func activateAbilityOfCoinPieceModel(coinPieceModel : CoinPieceModel) -> bool:
+func activateAbilityOfCoinPieceModel(coinPieceModel : CoinPieceModel, isCopy : bool = false) -> bool:
 	if not hasTriggerable(coinPieceModel):
 		push_error("ERROR: Could not find Coin Piece Model given to /activateAbilityOfCoinPieceModel")
 		return false
 	if coinPieceModel.abilityScript == null:
 		return false
-	return await activateAbilityScriptFromSource(coinPieceModel.abilityScript, coinPieceModel)
+	return await activateAbilityScriptFromSource(coinPieceModel.abilityScript, coinPieceModel, isCopy)
 
-func activateAbilityByCoinFaceIndex(coinFaceModel : CoinFaceModel, socketIndex : Entities.CoinPieceSocketIndex) -> bool:
+func activateAbilityByCoinFaceIndex(coinFaceModel : CoinFaceModel, socketIndex : Entities.CoinPieceSocketIndex, isCopy : bool = false) -> bool:
 	var coinPieceModel : CoinPieceModel = coinFaceModel.getCoinPieceAtSocket(socketIndex)
 	if coinPieceModel == null:
 		return false
-	return await activateAbilityOfCoinPieceModel(coinPieceModel)
+	return await activateAbilityOfCoinPieceModel(coinPieceModel, isCopy)

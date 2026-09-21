@@ -7,6 +7,9 @@ static func addAdditionalTurn(matchState : MatchState, playerModel : PlayerModel
 static func activateAbilityScript(matchState : MatchState, abilityScript : Script, source : RefCounted) -> bool:
 	return await matchState.activateAbilityScriptFromSource(abilityScript, source)
 
+static func copyAbilityScript(matchState : MatchState, abilityScript : Script, source : RefCounted) -> bool:
+	return await matchState.activateAbilityScriptFromSource(abilityScript, source, true)
+
 #func getMatchState() -> MatchState:
 #	var matchNode : MatchNode = getMatchNode()
 #	if matchNode == null:
