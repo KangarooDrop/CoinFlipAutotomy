@@ -24,7 +24,9 @@ func _ready() -> void:
 	addDemons()
 
 func addAbilities():
-	_abilityDB.add(AbilityWait)
+#	_abilityDB.add(AbilityWait)
+	_abilityDB.add(AbilityCounterweightCore)
+	_abilityDB.add(AbilityCounterweightExterior)
 	_abilityDB.add(AbilityAtrophy)
 	_abilityDB.add(AbilityClingToLife)
 	_abilityDB.add(AbilityDevour)

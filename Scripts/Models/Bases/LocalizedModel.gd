@@ -1,7 +1,10 @@
 @abstract
 extends RefCounted
-
 class_name LocalizedModel
+
+const IS_VISIBLE_KEY : String = "is_visible"
+
+var isVisible : bool = true
 
 ####################################################################################################
 #	BUILT-IN/PRIVATE FUNCS	#
@@ -16,15 +19,22 @@ func _init(data : Dictionary = {}) -> void:
 #	OVERRIDE FUNCS	#
 
 #Initial/Additional data for/from the model
-func getBaseData() -> Dictionary: return {}
+func getBaseData() -> Dictionary:
+	return {
+		IS_VISIBLE_KEY : true
+	}
 @abstract func getLocID() -> String
 
 @warning_ignore("unused_parameter")
 func deserialize(data : Dictionary) -> LocalizedModel:
+	if data.has(IS_VISIBLE_KEY):
+		isVisible = data[IS_VISIBLE_KEY]
 	return self
 
 func serialize() -> Dictionary:
-	return {}
+	return {
+		IS_VISIBLE_KEY : isVisible
+	}
 
 ####################################################################################################
 #	PUBLIC FUNCS	#

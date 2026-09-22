@@ -15,6 +15,7 @@ func getBaseData() -> Dictionary:
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.FINGER_FRIENDLY,
 		PIECE_TYPE_KEY : Entities.CoinPieceType.EXTERIOR,
+		IS_VISIBLE_KEY : false,
 	}, true)
 	return baseData
 

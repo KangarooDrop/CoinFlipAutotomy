@@ -5,6 +5,7 @@ class_name SubDB
 var _models : Array[LocalizedModel] = []
 var _scriptToModel : Dictionary [Script, LocalizedModel] = {}
 var _scriptToIndex : Dictionary [Script, int]
+var visibleScripts : Array = []
 
 ####################################################################################################
 
@@ -20,6 +21,8 @@ func _insert(model : LocalizedModel) -> void:
 	_scriptToModel[scr] = model
 	_scriptToIndex[scr] = _models.size()
 	_models.append(model)
+	if model.isVisible:
+		visibleScripts.append(scr)
 
 ####################################################################################################
 
@@ -55,7 +58,7 @@ func getRandomScript() -> Script:
 	return getRandomScriptNoRepeat(1)[0]
 
 func getRandomScriptNoRepeat(num : int, excludes : Array[Script] = []) -> Array[Script]:
-	var scriptArray : Array = _scriptToModel.keys()
+	var scriptArray : Array = visibleScripts.duplicate()
 	for exc : Script in excludes:
 		scriptArray.erase(exc)
 	num = min(scriptArray.size(), num)

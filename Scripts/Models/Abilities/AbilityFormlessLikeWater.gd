@@ -40,4 +40,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		await CmdSpin.addSpin(matchState, targetPlayerModel, -SPIN_DEC)
 	
 	if not abilityContext.isCopy:
-		await CmdMatch.copyAbilityScript(matchState, targetCoinPieceModel.abilityScript, abilityContext.source)
+		await CmdMatch.copyAbilityScript(matchState, targetCoinPieceModel.abilityScript, abilityContext)

@@ -25,6 +25,16 @@
 			"flavor": "",
 			"name": "Consume The Stars"
 		},
+		"COUNTERWEIGHT_CORE": {
+			"desc": "Does Nothing.",
+			"flavor": "",
+			"name": "Counterweight Core"
+		},
+		"COUNTERWEIGHT_EXTERIOR": {
+			"desc": "Does Nothing.",
+			"flavor": "",
+			"name": "Counterweight Exterior"
+		},
 		"DEVOUR": {
 			"desc": "The owner of targe Coin Piece Gains %d Spin. If it has a Seal, Break it and Stamp a %s on that Coin Piece.",
 			"flavor": "",

@@ -9,8 +9,8 @@ func getDirName() -> String:
 
 func getStartingAbilityTypes() -> Array[Script]: 
 	return [AbilityConsumeTheStars, 
-		AbilityDevour, AbilityPlayWithYourFood, AbilityWait, AbilityHorrorVacui,
-		AbilityWait, AbilityWait, AbilityWait, AbilityWait]
+		AbilityDevour, AbilityPlayWithYourFood, AbilityCounterweightExterior, AbilityHorrorVacui,
+		AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior]
 
 func getStartingRingTypes() -> Array[Script]: 
 	return [RingVanityRing, RingVanityRing, RingVanityRing]
