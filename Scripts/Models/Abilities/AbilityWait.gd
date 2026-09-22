@@ -18,6 +18,9 @@ func getBaseData() -> Dictionary:
 	}, true)
 	return baseData
 
+func getTooltipString() -> String:
+	return super.getTooltipString()
+
 ####################################################################################################
 
 func activate(_matchState : MatchState, _abilityContext : AbilityContext) -> void:

@@ -9,7 +9,7 @@ func getDirName() -> String:
 
 func getStartingAbilityTypes() -> Array[Script]: 
 	return [AbilityFormlessLikeWater, 
-		AbilityOceansDescent, AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior, 
+		AbilityPhaseChange, AbilityDragToSea, AbilityUnchartedWaters, AbilityCounterweightExterior, 
 		AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior]
 
 func getStartingRingTypes() -> Array[Script]: 

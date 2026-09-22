@@ -1,13 +1,13 @@
 extends Ability
-class_name AbilitySealAway
+class_name AbilityUnchartedWaters
 
 ####################################################################################################
 
 func getLocID() -> String: 
-	return super.getLocID() + "SEAL_AWAY"
+	return super.getLocID() + "UNCHARTED_WATERS"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "seal_away.png"
+	return super.getTexturePath() + "uncharted_waters.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
@@ -19,7 +19,7 @@ func getBaseData() -> Dictionary:
 	return baseData
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % [ModelDB.getSealSingleton(SealWax).getName()]
+	return super.getTooltipString() % ModelDB.getSealSingleton(SealBlackSulfur).getName()
 
 ####################################################################################################
 
@@ -36,9 +36,5 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Coin Piece with Seal given to AbilitySealAway.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
 		return
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealWax), targetCoinPieceModel)
-	
-	var sourceCoinPieceModel : CoinPieceModel = null
-	if abilityContext.source is CoinPieceModel:
-		sourceCoinPieceModel = abilityContext.source
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealWax), sourceCoinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealBlackSulfur), targetCoinPieceModel)
+	await CmdMatch.copyAbilityScript(matchState, targetCoinPieceModel.abilityScript, abilityContext)

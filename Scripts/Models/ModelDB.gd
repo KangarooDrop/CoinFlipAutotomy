@@ -43,6 +43,9 @@ func addAbilities():
 	_abilityDB.add(AbilityHorrorVacui)
 	_abilityDB.add(AbilitySealAway)
 	_abilityDB.add(AbilitySaltTheEarth)
+	_abilityDB.add(AbilityPhaseChange)
+	_abilityDB.add(AbilityDragToSea)
+	_abilityDB.add(AbilityUnchartedWaters)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():
 		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)

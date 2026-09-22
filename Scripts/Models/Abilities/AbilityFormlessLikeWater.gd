@@ -29,6 +29,9 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityFormlessLikeWater.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
+	if not abilityContext.targets[0] is CoinPieceModel:
+		push_error("ERROR: Invalid target given to AbilityFormlessLikeWater.activate: " + str(abilityContext.targets[0]) + ".")
+		return
 	
 	var abilityPlayerModel : PlayerModel = abilityContext.getPlayerModel()
 	var targetCoinPieceModel : CoinPieceModel = abilityContext.targets[0]

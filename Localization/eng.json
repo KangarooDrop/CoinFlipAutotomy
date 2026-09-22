@@ -40,13 +40,18 @@
 			"flavor": "",
 			"name": "Devour"
 		},
+		"DRAG_TO_SEA": {
+			"desc": "Break target Seal. Then Stamp a Copy of that Seal to this Coin Piece.",
+			"flavor": "",
+			"name": "Drag to Sea"
+		},
 		"FOG_OF_MIND": {
 			"desc": "Stamp a %s on target Coin Piece and a %s on a random adjacent Coin Piece. Then Stamp a %s on this Coin Piece.",
 			"flavor": "",
 			"name": "Fog of Mind"
 		},
 		"FORMLESS_LIKE_WATER": {
-			"desc": "If you own target Coin Piece, Break its Seal. Otherwise, its owner Loses %d Spin. Then activate a Copy of its Ability.",
+			"desc": "If you own target Coin Piece, Break its Seal. Otherwise, its owner Loses %d Spin. Then activate a Copy of its Ability if this Ability is not a Copy.",
 			"flavor": "",
 			"name": "Formless, Like Water"
 		},
@@ -69,6 +74,11 @@
 			"desc": "Stamp a %s to target Coin Piece.",
 			"flavor": "You will be crushed beneath the endless tide!",
 			"name": "Ocean's Descent"
+		},
+		"PHASE_CHANGE": {
+			"desc": "If this Ability is not a Copy, Opponent Loses %d Spin. Otherwise, Break target Seal.",
+			"flavor": "",
+			"name": "Phase Change"
 		},
 		"PLAY_WITH_YOUR_FOOD": {
 			"desc": "Stamp a %s on target Coin Piece and a %s to a random Coin Piece adjacent to it.",
@@ -94,6 +104,11 @@
 			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
 			"flavor": "Never gonna give you up...",
 			"name": "Sirens' Call"
+		},
+		"UNCHARTED_WATERS": {
+			"desc": "Stamp a %s to target Coin Piece. Then activate a Copy of its Ability.",
+			"flavor": "",
+			"name": "Uncharted Waters"
 		},
 		"WAIT": {
 			"desc": "Does Nothing.",

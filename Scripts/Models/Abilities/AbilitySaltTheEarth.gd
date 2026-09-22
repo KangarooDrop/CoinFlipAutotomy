@@ -27,10 +27,17 @@ func getTooltipString() -> String:
 
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
-		push_error("ERROR: Invalid num targets given to AbilitySealAway.activate: " + str(abilityContext.targets.size()) + " != 1.")
+		push_error("ERROR: Invalid num targets given to AbilitySaltTheEarth.activate: " + str(abilityContext.targets.size()) + " != 1.")
+		return
+	if not abilityContext.targets[0] is CoinPieceModel:
+		push_error("ERROR: Invalid target given to AbilitySaltTheEarth.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
 	var targetCoinPieceModel : CoinPieceModel = abilityContext.targets[0]
+	if targetCoinPieceModel.hasSeal():
+		push_error("ERROR: Coin Piece with Seal given to AbilitySaltTheEarth.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
+		return
+	
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealArsenic), targetCoinPieceModel)
 	
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
