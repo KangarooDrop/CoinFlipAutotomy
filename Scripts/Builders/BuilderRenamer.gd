@@ -14,7 +14,34 @@ func getAllFolderPaths() -> Array[String]:
 	return [folderPathAbilities, folderPathRings, folderPathDemons, folderPathSeals]
 
 @export_group("Ops")
-@export_file_path("*.gd") var fileToRename : String = ""
+@export_file_path("*.gd") var fileToRename : String = "":
+	set(val):
+		fileToRename = val
+		if not FileAccess.file_exists(fileToRename):
+			return
+		if not fileToRename.ends_with(".gd"):
+			return
+		var fileScript : Script = load(fileToRename)
+		var canCreate : bool = false
+		var scriptMethodList : Array[Dictionary] = fileScript.get_script_method_list()
+		for methodDict : Dictionary in scriptMethodList:
+			if methodDict["name"] != "_init":
+				continue
+			if methodDict["args"].size() != methodDict["default_args"].size():
+				continue
+			canCreate = true
+		if not canCreate:
+			push_error("ERROR: Cannot create an instance of given type.")
+			return
+		var obj : Object = fileScript.new()
+		if not obj is LocalizedModel:
+			obj.free()
+			push_error("ERROR: Unsupported type attempting to be loaded.")
+			return
+		var locID : String = (obj as LocalizedModel).getLocID() + ".name"
+		renameDisplayName = LocalizationClass.getLocalizationFromPathStatic(locID, engLocPath)
+		renamedPascaleCase = fileToRename.get_file().get_basename()
+
 @export var renamedPascaleCase : String = ""
 @export var renameDisplayName : String = ""
 @export_tool_button("Rename", "Callable") var renameButton = onRenamePressed

@@ -52,7 +52,7 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		await CmdSeal.removeSeal(matchState, coinPieceToBreak)
 		breakCounter += 1
 	
-	var playerModel : PlayerModel = getPlayerModel(abilityContext)
+	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	await CmdSpin.addSpin(matchState, playerModel, SPIN_PER_BREAK * breakCounter)
 	
 	if breakCounter >= BREAKS_TO_STAMP:

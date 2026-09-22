@@ -1,4 +1,5 @@
 extends Node
+class_name LocalizationClass
 
 var _listenerToCallable : Dictionary = {}
 
@@ -17,7 +18,7 @@ const _defLang : String = "eng"
 func _ready() -> void:
 	setLanguage(_defLang)
 
-func _getTableFromPath(path : String) -> Dictionary:
+static func _getTableFromPath(path : String) -> Dictionary:
 	if not FileAccess.file_exists(path):
 		push_error("ERROR: Could not find table at path ", path)
 		return {}
@@ -53,11 +54,20 @@ func setLanguage(lang : String) -> void:
 	_loadTable(lang)
 
 func getLocalizedData(locID : String) -> String:
+	return getLocalizationStatic(locID, _table)
+
+static func getLocalizationStatic(locID : String, tableData : Dictionary) -> String:
 	var locKeys : PackedStringArray = locID.rsplit(".")
-	var d = _table
+	var d = tableData
 	for subID : String in locKeys:
 		if not d.has(subID):
-			push_error("ERROR: Could not find locID=", locID, " in table=", _langString)
+			push_error("ERROR: Could not find locID=", locID, " in table")
 			return ""
 		d = d[subID]
+	if typeof(d) != TYPE_STRING:
+		push_error("ERROR: Did not reach a leaf from dictionary: locID=", locID)
+		return ""
 	return d
+
+static func getLocalizationFromPathStatic(locID : String, tablePath : String) -> String:
+	return getLocalizationStatic(locID, _getTableFromPath(tablePath))

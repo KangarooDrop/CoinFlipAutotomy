@@ -54,7 +54,7 @@ func _initMatch():
 
 func getRandomOpponentPlayerModel() -> PlayerModel:
 	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
-	#playerModelOpponent.isControlledCPU = true
+	playerModelOpponent.isControlledCPU = true
 	return playerModelOpponent
 
 func _attachPlayerModel(playerModel : PlayerModel, isUser : bool) -> void:

@@ -25,7 +25,7 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Invalid num targets given to AbilityClingToLife.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
 	
-	var playerModel : PlayerModel = getPlayerModel(abilityContext)
+	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	var opponentPlayerModel : PlayerModel = matchState.getOtherPlayerModel(playerModel)
 	var spinDiff : int = abs(matchState.getSpin(opponentPlayerModel) - matchState.getSpin(playerModel))
 	await CmdSpin.addSpin(matchState, opponentPlayerModel, -spinDiff/2)

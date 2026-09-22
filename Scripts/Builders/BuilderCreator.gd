@@ -177,7 +177,8 @@ func onCreatePressed() -> void:
 	for i in range(oldDBLines.size()):
 		var line : String = oldDBLines[i]
 		if line.contains("(" + baseClassName + ")"):
-			line = line.substr(1)		#Removes leading # from line
+			if line.begins_with("#"):
+				line = line.substr(1)		#Removes leading # from line
 			dbCheck = line.left(line.find("(" + baseClassName + ")"))
 			baseModelDBAddLine = line
 		if not dbCheck.is_empty() and line.contains(dbCheck):

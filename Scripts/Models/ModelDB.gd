@@ -24,16 +24,21 @@ func _ready() -> void:
 	addDemons()
 
 func addAbilities():
-#	_abilityDB.add(AbilityWait)
+	_abilityDB.add(AbilityWait)
 	_abilityDB.add(AbilityAtrophy)
 	_abilityDB.add(AbilityClingToLife)
-	_abilityDB.add(AbilityDevouringSickness)
+	_abilityDB.add(AbilityDevour)
 	_abilityDB.add(AbilityObliterate)
 	_abilityDB.add(AbilityHesitance)
 	_abilityDB.add(AbilityOceansDescent)
 	_abilityDB.add(AbilitySirensCall)
 	_abilityDB.add(AbilityConsumeTheStars)
 	_abilityDB.add(AbilityPlungeIntoDarkness)
+	_abilityDB.add(AbilityFormlessLikeWater)
+	_abilityDB.add(AbilityFogOfMind)
+	_abilityDB.add(AbilityBurningObsession)
+	_abilityDB.add(AbilityPlayWithYourFood)
+	_abilityDB.add(AbilityHorrorVacui)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():
 		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)
@@ -68,10 +73,10 @@ func addDemons():
 #	_demonDB.add(DemonNameless)
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)
-	#_demonDB.add(DemonGreed)
-	#_demonDB.add(DemonLust)
-	#_demonDB.add(DemonPride)
-	#_demonDB.add(DemonSloth)
+	_demonDB.add(DemonGreed)
+	_demonDB.add(DemonLust)
+	_demonDB.add(DemonPride)
+	_demonDB.add(DemonSloth)
 	_demonDB.add(DemonWrath)
 
 func _getFromSubByScript(subDB : SubDB, scr : Script) -> LocalizedModel:
@@ -129,5 +134,5 @@ func getRandomRingScript() -> Script:
 func getRandomDemonScript() -> Script:
 	return _demonDB.getRandomScript()
 
-func getRandomDemonScriptsNoRepeat(num : int) -> Array[Script]:
-	return _demonDB.getRandomScriptNoRepeat(num)
+func getRandomDemonScriptsNoRepeat(num : int, excludes : Array[Script] = []) -> Array[Script]:
+	return _demonDB.getRandomScriptNoRepeat(num, excludes)

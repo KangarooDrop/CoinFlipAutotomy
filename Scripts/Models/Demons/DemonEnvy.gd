@@ -8,8 +8,9 @@ func getDirName() -> String:
 	return "envy"
 
 func getStartingAbilityTypes() -> Array[Script]: 
-	return [AbilityClingToLife, 
-		AbilityOceansDescent, AbilityHesitance, AbilitySirensCall]
+	return [AbilityFormlessLikeWater, 
+		AbilityOceansDescent, AbilityWait, AbilityWait, AbilityWait, 
+		AbilityWait, AbilityWait, AbilityWait, AbilityWait]
 
 func getStartingRingTypes() -> Array[Script]: 
 	return [RingDualTungstenSignate]

@@ -13,7 +13,7 @@ func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(
 	{
-		BACKGROUND_TYPE : Entities.SealBackgroundType.PURPLE,
+		BACKGROUND_TYPE : Entities.SealBackgroundType.RED,
 	}, true)
 	return baseData
 

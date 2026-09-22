@@ -10,6 +10,11 @@
 			"flavor": "",
 			"name": "Atrophy"
 		},
+		"BURNING_OBSESSION": {
+			"desc": "Gain %sx Total Spin. If %d+ Spin was Gained and this Ability is not a Copy, Activate a Copy of target Coin Piece's Ability. Otherwise, Stamp a %s on target Coin Piece.",
+			"flavor": "",
+			"name": "Burning Obsession"
+		},
 		"CLING_TO_LIFE": {
 			"desc": "Opponent Loses Spin equal to half the difference between yours'.",
 			"flavor": "",
@@ -20,15 +25,30 @@
 			"flavor": "",
 			"name": "Consume The Stars"
 		},
-		"DEVOURING_SICKNESS": {
-			"desc": "Gain %d Spin.",
+		"DEVOUR": {
+			"desc": "The owner of targe Coin Piece Gains %d Spin. If it has a Seal, Break it and Stamp a %s on that Coin Piece.",
 			"flavor": "",
-			"name": "Devouring Sickness"
+			"name": "Devour"
+		},
+		"FOG_OF_MIND": {
+			"desc": "Stamp a %s on target Coin Piece and a %s on a random adjacent Coin Piece. Then Stamp a %s on this Coin Piece and a %s to a random adjacent Coin Piece.",
+			"flavor": "",
+			"name": "Fog of Mind"
+		},
+		"FORMLESS_LIKE_WATER": {
+			"desc": "If you own target Coin Piece, Break its Seal. Otherwise, its owner Loses %d Spin. Then activate a Copy of its Ability.",
+			"flavor": "",
+			"name": "Formless, Like Water"
 		},
 		"HESITANCE": {
 			"desc": "Stamp a %s to target Coin Piece.",
 			"flavor": "",
 			"name": "Hesitance"
+		},
+		"HORROR_VACUI": {
+			"desc": "Gain %d Spin. Stamp a %s on this and all adjacent Coin Pieces.",
+			"flavor": "",
+			"name": "Horror Vacui"
 		},
 		"OBLITERATE": {
 			"desc": "Destroy target Finger.",
@@ -39,6 +59,11 @@
 			"desc": "Stamp a %s to target Coin Piece.",
 			"flavor": "You will be crushed beneath the endless tide!",
 			"name": "Ocean's Descent"
+		},
+		"PLAY_WITH_YOUR_FOOD": {
+			"desc": "Stamp a %s on target Coin Piece and a %s to a random Coin Piece adjacent to it.",
+			"flavor": "",
+			"name": "Play With Your Food"
 		},
 		"PLUNGE_INTO_DARKNESS": {
 			"desc": "Both players Lose %d Spin. Break target Seal. If you owned that Seal, gain %d Spin. Otherwise, Break another target Seal.",
@@ -137,7 +162,7 @@
 	},
 	"SEAL": {
 		"AQUA_FORTIS": {
-			"desc": "Does Nothing.",
+			"desc": "At the Start of your Turn, Gain %d Spin.",
 			"name": "Aqua Fortis"
 		},
 		"BLACK_SULFUR": {

@@ -8,8 +8,9 @@ func getDirName() -> String:
 	return "wrath"
 
 func getStartingAbilityTypes() -> Array[Script]: 
-	return [AbilityPlungeIntoDarkness, \
-		AbilityOceansDescent]
+	return [AbilityPlungeIntoDarkness, 
+		AbilityOceansDescent, AbilityWait, AbilityWait, AbilityWait, 
+		AbilityWait, AbilityWait, AbilityWait, AbilityWait]
 
 func getStartingRingTypes() -> Array[Script]: 
 	return []

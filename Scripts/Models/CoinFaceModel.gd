@@ -95,6 +95,19 @@ func getAllSeals() -> Array[SealModel]:
 			rtn.append(sealModel)
 	return rtn
 
+func getAdjacentCoinPieces(fromModel : CoinPieceModel) -> Array[CoinPieceModel]:
+	var socketIndex : Entities.CoinPieceSocketIndex = getSocketIndexFromCoinPieceModel(fromModel)
+	if socketIndex == Entities.CoinPieceSocketIndex.NONE:
+		return []
+	var rtn : Array[CoinPieceModel] = []
+	var adjacentSocketIndices : Array[Entities.CoinPieceSocketIndex] = Entities.CoinPieceSocketScript.getAllAdjacent(socketIndex)
+	for adjIndex : Entities.CoinPieceSocketIndex in adjacentSocketIndices:
+		var adjacentCoinPieceModel : CoinPieceModel = getCoinPieceAtSocket(adjIndex)
+		if adjacentCoinPieceModel == null:
+			continue
+		rtn.append(adjacentCoinPieceModel)
+	return rtn
+
 func getCoinPieceAtSocket(socketIndex : Entities.CoinPieceSocketIndex) -> CoinPieceModel:
 	if not _socketIndexToPiece.has(socketIndex):
 		return null

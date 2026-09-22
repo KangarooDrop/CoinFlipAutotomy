@@ -54,8 +54,10 @@ func getIndexByScript(scr : Script) -> int:
 func getRandomScript() -> Script:
 	return getRandomScriptNoRepeat(1)[0]
 
-func getRandomScriptNoRepeat(num : int) -> Array[Script]:
+func getRandomScriptNoRepeat(num : int, excludes : Array[Script] = []) -> Array[Script]:
 	var scriptArray : Array = _scriptToModel.keys()
+	for exc : Script in excludes:
+		scriptArray.erase(exc)
 	num = min(scriptArray.size(), num)
 	var rtn : Array[Script] = []
 	for i in range(num):

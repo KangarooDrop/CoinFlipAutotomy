@@ -52,8 +52,3 @@ func canActivateAbilityOfCoinPiece(_matchState : MatchState, _coinPieceModel : C
 	return true
 
 ####################################################################################################
-
-func getPlayerModel(abilityContext : AbilityContext) -> PlayerModel:
-	if abilityContext.source.has_method("getPlayerModel"):
-		return abilityContext.source.getPlayerModel()
-	return null

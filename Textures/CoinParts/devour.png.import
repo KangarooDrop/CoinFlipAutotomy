@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2phcsgb5w5i7"
-path="res://.godot/imported/devouring_sickness.png-a246e8f85ff37f99395c1aaa334bf7dc.ctex"
+uid="uid://iqayellapcey"
+path="res://.godot/imported/devour.png-aecb65c5eb6f2715d11269a9c972a149.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CoinParts/devouring_sickness.png"
-dest_files=["res://.godot/imported/devouring_sickness.png-a246e8f85ff37f99395c1aaa334bf7dc.ctex"]
+source_file="res://Textures/CoinParts/devour.png"
+dest_files=["res://.godot/imported/devour.png-aecb65c5eb6f2715d11269a9c972a149.ctex"]
 
 [params]
 

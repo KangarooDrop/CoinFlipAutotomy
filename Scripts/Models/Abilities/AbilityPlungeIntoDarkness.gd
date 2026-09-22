@@ -34,7 +34,7 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	for playerModel : PlayerModel in matchState.getAllPlayerModels():
 		await CmdSpin.addSpin(matchState, playerModel, -SPIN_DEC)
 	
-	var playerModel : PlayerModel = getPlayerModel(abilityContext)
+	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	var coinPieceModelToRemove : CoinPieceModel = await matchState.getTarget(Entities.TargetType.SEAL_ANY, playerModel)
 	if coinPieceModelToRemove == null:
 		return
