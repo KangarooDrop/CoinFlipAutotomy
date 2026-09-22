@@ -21,7 +21,7 @@ func getBaseData() -> Dictionary:
 func getTooltipString() -> String:
 	return super.getTooltipString() % \
 		[ModelDB.getSealSingleton(SealLead).getName(), ModelDB.getSealSingleton(SealBlackSulfur).getName(), \
-		ModelDB.getSealSingleton(SealCrystallization).getName(), ModelDB.getSealSingleton(SealAquaFortis).getName()]
+		ModelDB.getSealSingleton(SealCrystallization).getName()]
 
 ####################################################################################################
 
@@ -44,18 +44,14 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		return
 	
 	var targetCoinPieceModel : CoinPieceModel = abilityContext.targets[0]
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPieceModel)
+	
 	var adjacentTarget : CoinPieceModel = _getRandomAdjacentNonSeal(targetCoinPieceModel)
+	if adjacentTarget != null:
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealBlackSulfur), adjacentTarget)
 	
 	var sourceCoinPieceModel : CoinPieceModel = null
 	if abilityContext.source is CoinPieceModel:
 		sourceCoinPieceModel = abilityContext.source
-	var adjacentSource : CoinPieceModel = _getRandomAdjacentNonSeal(sourceCoinPieceModel)
-	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPieceModel)
-	if adjacentTarget != null:
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealBlackSulfur), adjacentTarget)
 	if sourceCoinPieceModel != null:
 		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), sourceCoinPieceModel)
-	if adjacentSource != null:
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), adjacentSource)
-	

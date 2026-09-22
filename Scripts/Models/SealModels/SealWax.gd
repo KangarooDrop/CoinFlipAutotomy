@@ -1,13 +1,13 @@
 extends SealModel
 
-class_name SealLead
+class_name SealWax
 
 ####################################################################################################
 
-func getLocID() -> String: return super.getLocID() + "LEAD"
+func getLocID() -> String: return super.getLocID() + "WAX"
 
 func getTexturePath() -> String:
-	return super.getTexturePath() + "lead.png"
+	return super.getTexturePath() + "wax.png"
 
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
@@ -19,12 +19,13 @@ func getBaseData() -> Dictionary:
 
 ####################################################################################################
 
-func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func canActivateAbilityOfCoinPiece(_matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:
+	if coinPieceModel == getCoinPieceModel():
+		return false
+	return true
+
+func onBeforeTurnSkipped(matchState : MatchState) -> void:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
-	if context.source != coinPieceModel:
+	if not matchState.getActivePlayerModel() == coinPieceModel.getPlayerModel():
 		return
-	if context.isCountered:
-		return
-	
-	context.isCountered = true
 	await CmdSeal.removeSeal(matchState, coinPieceModel)

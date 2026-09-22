@@ -9,8 +9,8 @@ func getDirName() -> String:
 
 func getStartingAbilityTypes() -> Array[Script]: 
 	return [AbilityFogOfMind, 
-		AbilityAtrophy, AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior, 
+		AbilitySealAway, AbilitySaltTheEarth, AbilityCounterweightExterior, AbilityCounterweightExterior, 
 		AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior, AbilityCounterweightExterior]
 
 func getStartingRingTypes() -> Array[Script]:
-	return [RingAmazoniteClusterRing, RingBlankBand]
+	return [RingAzuriteFacetRing, RingBandOfAThousandCuts]

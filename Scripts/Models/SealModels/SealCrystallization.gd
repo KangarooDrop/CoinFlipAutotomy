@@ -4,6 +4,8 @@ class_name SealCrystallization
 
 var presentSinceStart : bool = false
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "CRYSTALLIZATION"
 
 func getTexturePath() -> String:
@@ -16,6 +18,8 @@ func getBaseData() -> Dictionary:
 		BACKGROUND_TYPE : Entities.SealBackgroundType.YELLOW,
 	}, true)
 	return baseData
+
+####################################################################################################
 
 func canActivateAbilityOfCoinPiece(_matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:
 	if coinPieceModel == getCoinPieceModel():

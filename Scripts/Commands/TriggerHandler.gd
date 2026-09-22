@@ -45,10 +45,10 @@ func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amo
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
 		await trig.onBeforeSpinChanged(matchState, playerModel, amountPointer)
-func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel) -> void:
+func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer) -> void:
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		await trig.onAfterSpinChanged(matchState, playerModel)
+		await trig.onAfterSpinChanged(matchState, playerModel, amountPointer)
 
 #	Ability Triggers	#
 func onBeforeAbilityCheck(matchState : MatchState, ability : Ability, context : AbilityContext) -> void:

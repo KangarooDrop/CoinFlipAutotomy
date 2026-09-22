@@ -2,6 +2,8 @@ extends RingModel
 
 class_name RingVanityRing
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "VANITY_RING"
 
 func getBaseData() -> Dictionary:
@@ -14,3 +16,5 @@ func getBaseData() -> Dictionary:
 
 func getTexturePath() -> String:
 	return super.getTexturePath() + "vanity_ring.png"
+
+####################################################################################################

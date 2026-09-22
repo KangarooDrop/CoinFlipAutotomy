@@ -4,6 +4,8 @@ class_name SealAquaFortis
 
 const SPIN_GAIN_BASE : int = 5
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "AQUA_FORTIS"
 
 func getTexturePath() -> String:
@@ -19,6 +21,8 @@ func getBaseData() -> Dictionary:
 
 func getTooltipString() -> String:
 	return super.getTooltipString() % SPIN_GAIN_BASE
+
+####################################################################################################
 
 func onTurnStart(matchState : MatchState) -> void:
 	var playerModel : PlayerModel = getPlayerModel()

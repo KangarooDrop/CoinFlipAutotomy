@@ -41,6 +41,8 @@ func addAbilities():
 	_abilityDB.add(AbilityBurningObsession)
 	_abilityDB.add(AbilityPlayWithYourFood)
 	_abilityDB.add(AbilityHorrorVacui)
+	_abilityDB.add(AbilitySealAway)
+	_abilityDB.add(AbilitySaltTheEarth)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():
 		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)
@@ -58,6 +60,8 @@ func addSeals():
 	_sealDB.add(SealCopper)
 	_sealDB.add(SealCrystallization)
 	_sealDB.add(SealAquaFortis)
+	_sealDB.add(SealArsenic)
+	_sealDB.add(SealWax)
 
 func addRings():
 #	_ringDB.add(RingVanityRing)
@@ -70,6 +74,8 @@ func addRings():
 	_ringDB.add(RingDualTungstenSignate)
 	_ringDB.add(RingAmazoniteClusterRing)
 	_ringDB.add(RingBlankBand)
+	_ringDB.add(RingAzuriteFacetRing)
+	_ringDB.add(RingBandOfAThousandCuts)
 
 func addDemons():
 #	_demonDB.add(DemonNameless)

@@ -6,9 +6,12 @@ var _matchState : MatchState = null
 
 @onready var leftRect : Control = get_node("%LeftRect")
 @onready var playerNumberLabel0 : Label = get_node("%PlayerNumberLabel0")
+@onready var popperNode0 : PopperNode = playerNumberLabel0.get_node("PopperNode")
 @onready var playerNumberLabel1 : Label = get_node("%PlayerNumberLabel1")
+@onready var popperNode1 : PopperNode = playerNumberLabel1.get_node("PopperNode")
 
 const RECT_MIN_SIZE : float = 16.0
+const WAIT_MAX_TIME : float = 0.1
 
 ####################################################################################################
 
@@ -37,23 +40,29 @@ func _updateBar() -> void:
 
 func _setSpinUser() -> void:
 	playerNumberLabel0.text = str(_matchState.getSpinUser())
+	playerNumberLabel0.size.x = 0.0
+	popperNode0.popNode()
 	_updateBar()
+	await get_tree().create_timer(WAIT_MAX_TIME).timeout
 
 func _setSpinOpponent() -> void:
-	playerNumberLabel1.text = str( _matchState.getSpinOpponent())
+	playerNumberLabel1.text = str(_matchState.getSpinOpponent())
+	playerNumberLabel1.size.x = 0.0
+	popperNode1.popNode()
 	_updateBar()
+	await get_tree().create_timer(WAIT_MAX_TIME).timeout
 
 func _onSpinChanged(playerModel : PlayerModel) -> void:
 	if playerModel == _matchState.getPlayerModelUser():
-		_setSpinUser()
+		await _setSpinUser()
 	else:
-		_setSpinOpponent()
+		await _setSpinOpponent()
 
 func _attachMatchState() -> void:
-	_matchState.spin_changed.connect(_onSpinChanged)
+	_matchState.spin_changed.connectSignal(_onSpinChanged)
 	
 func _unattachMatchState() -> void:
-	_matchState.spin_changed.disconnect(_onSpinChanged)
+	_matchState.spin_changed.disconnectSignal(_onSpinChanged)
 
 ####################################################################################################
 

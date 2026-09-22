@@ -29,16 +29,17 @@ var _spinUser : int = STARTING_SPIN
 var _spinOpponent : int = STARTING_SPIN
 var _additionalTurnQueue : Array = []
 
-signal spin_changed(playerModel : PlayerModel)
+#signal spin_changed(playerModel : PlayerModel)
+var spin_changed : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(playerModel : PlayerModel)
 
 ####################################################################################################
 
 func _setSpinUserInternal(amount : int) -> void:
 	_spinUser = amount
-	spin_changed.emit(_playerModelUser)
+	await spin_changed.emitSignal(_playerModelUser)
 func _setSpinOpponentInternal(amount : int) -> void:
 	_spinOpponent = amount
-	spin_changed.emit(_playerModelOpponent)
+	await spin_changed.emitSignal(_playerModelOpponent)
 
 ####################################################################################################
 
@@ -85,6 +86,7 @@ func onTurnStart() -> void:
 	currentTurnTime = TURN_MAX_TIME
 	await TriggerHandler.onTurnStart(self)
 	isActionable = true
+	print("Player may take action now")
 
 func onTurnEnd() -> void:
 	currentTurnNumber += 1
@@ -172,12 +174,12 @@ func setSpin(playerModel : PlayerModel, amount : int) -> Pointer:
 	var amountChangedPointer : Pointer = Pointer.new(amount - originalAmount)
 	await TriggerHandler.onBeforeSpinChanged(self, playerModel, amountChangedPointer)
 	if playerModel == _playerModelUser:
-		_setSpinUserInternal(originalAmount + amountChangedPointer.val)
+		await _setSpinUserInternal(originalAmount + amountChangedPointer.val)
 	elif playerModel == _playerModelOpponent:
-		_setSpinOpponentInternal(originalAmount + amountChangedPointer.val)
+		await _setSpinOpponentInternal(originalAmount + amountChangedPointer.val)
 	else:
 		push_error("ERROR: Unknown player model given to /setSpinByPlayerModel")
-	await TriggerHandler.onAfterSpinChanged(self, playerModel)
+	await TriggerHandler.onAfterSpinChanged(self, playerModel, amountChangedPointer)
 	return amountChangedPointer
 func setSpinUser(amount : int) -> Pointer:
 	return await setSpin(_playerModelUser, amount)

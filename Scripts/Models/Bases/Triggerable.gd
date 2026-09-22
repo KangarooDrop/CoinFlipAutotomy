@@ -35,7 +35,7 @@ func onBeforeTurnSkipped(_matchState : MatchState) -> void:
 #	Spin Change Triggers	#
 func onBeforeSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> void:
 	pass
-func onAfterSpinChanged(_matchState : MatchState, _playerModel : PlayerModel) -> void:
+func onAfterSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> void:
 	pass
 
 #	Ability Triggers	#

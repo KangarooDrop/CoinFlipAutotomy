@@ -29,7 +29,7 @@ func getTooltipString() -> String:
 func onRoundStart(_matchState : MatchState) -> void:
 	_canActivate = true
 
-func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel) -> void:
+func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, _amountPointer : Pointer) -> void:
 	if not _canActivate:
 		return
 	

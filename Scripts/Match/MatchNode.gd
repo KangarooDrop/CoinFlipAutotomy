@@ -204,6 +204,8 @@ func _onMatchEndInernal() -> void:
 ####################################################################################################
 
 func _userActivateAbility(coinPieceModel : CoinPieceModel) -> void:
+	if not _matchState.isActionable:
+		return
 	if not TriggerHandler.canActivateAbilityOfCoinPiece(_matchState, coinPieceModel):
 		return
 	canCancelTargetChoice = true

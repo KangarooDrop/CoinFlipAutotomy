@@ -43,7 +43,7 @@ func _onSealRemoved(_sealModel : SealModel) -> void:
 	_sealNode.queue_free()
 	_sealNode = null
 	if visible:
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(0.1).timeout
 
 func _onSealReplaced(newSealModel : SealModel, oldSealModel : SealModel) -> void:
 	if _sealNode == null:

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://boe80pf05wqd0" path="res://Textures/CoinParts/_counterweight_core.png" id="2_iaf06"]
 [ext_resource type="Texture2D" uid="uid://dixiv3pq56lr3" path="res://Textures/CoinParts/_counterweight_exterior.png" id="3_rc7fx"]
 [ext_resource type="Theme" uid="uid://domns0ab573dx" path="res://Themes/label_theme.tres" id="3_srpxl"]
+[ext_resource type="PackedScene" uid="uid://bpagw5yyns6fr" path="res://Scenes/PopperNode.tscn" id="6_rc7fx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rc7fx"]
 atlas = ExtResource("1_ta6vh")
@@ -135,11 +136,14 @@ offset_right = 16.0
 [node name="PlayerNumberLabel0" type="Label" parent="NumberOffset/NumberHolder0" unique_id=52358993]
 unique_name_in_owner = true
 layout_mode = 0
-offset_right = 96.0
+offset_right = 64.0
 offset_bottom = 44.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme = ExtResource("3_srpxl")
 theme_override_font_sizes/font_size = 32
 text = "433"
+
+[node name="PopperNode" parent="NumberOffset/NumberHolder0/PlayerNumberLabel0" unique_id=1113026430 instance=ExtResource("6_rc7fx")]
 
 [node name="NumberHolder1" type="Control" parent="NumberOffset" unique_id=258700864]
 layout_mode = 1
@@ -152,10 +156,15 @@ grow_horizontal = 0
 
 [node name="PlayerNumberLabel1" type="Label" parent="NumberOffset/NumberHolder1" unique_id=1278142977]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = -96.0
+layout_mode = 1
+anchors_preset = -1
+offset_left = -64.0
 offset_bottom = 44.0
+grow_horizontal = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme = ExtResource("3_srpxl")
 theme_override_font_sizes/font_size = 32
 text = "445"
 horizontal_alignment = 2
+
+[node name="PopperNode" parent="NumberOffset/NumberHolder1/PlayerNumberLabel1" unique_id=1195059932 instance=ExtResource("6_rc7fx")]

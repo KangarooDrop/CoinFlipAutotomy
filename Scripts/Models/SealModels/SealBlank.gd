@@ -2,6 +2,8 @@ extends SealModel
 
 class_name SealBlank
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "BLANK"
 
 func getTexturePath() -> String:
@@ -14,3 +16,5 @@ func getBaseData() -> Dictionary:
 		BACKGROUND_TYPE : Entities.SealBackgroundType.PURPLE,
 	}, true)
 	return baseData
+
+####################################################################################################

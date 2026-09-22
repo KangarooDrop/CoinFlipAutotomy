@@ -4,6 +4,8 @@ class_name SealQuicksilver
 
 const SPIN_LOSS_BASE : int = 10
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "QUICKSILVER"
 
 func getTexturePath() -> String:
@@ -19,6 +21,8 @@ func getBaseData() -> Dictionary:
 
 func getTooltipString() -> String:
 	return super.getTooltipString() % SPIN_LOSS_BASE
+
+####################################################################################################
 
 func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()

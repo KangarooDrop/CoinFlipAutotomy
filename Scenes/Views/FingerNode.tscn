@@ -14,3 +14,4 @@ region_rect = Rect2(0, 0, 128, 128)
 
 [node name="RingHolder" type="Node2D" parent="." unique_id=463475844]
 unique_name_in_owner = true
+z_index = 1

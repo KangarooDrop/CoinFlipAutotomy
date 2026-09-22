@@ -4,6 +4,8 @@ class_name SealBlackSulfur
 
 const SPIN_LOSS_BASE : int = 5
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "BLACK_SULFUR"
 
 func getTexturePath() -> String:
@@ -19,6 +21,8 @@ func getBaseData() -> Dictionary:
 
 func getTooltipString() -> String:
 	return super.getTooltipString() % SPIN_LOSS_BASE
+
+####################################################################################################
 
 func onTurnStart(matchState : MatchState) -> void:
 	var playerModel : PlayerModel = getPlayerModel()

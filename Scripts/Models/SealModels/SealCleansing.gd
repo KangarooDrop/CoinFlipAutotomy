@@ -2,6 +2,8 @@ extends SealModel
 
 class_name SealCleansing
 
+####################################################################################################
+
 func getLocID() -> String: return super.getLocID() + "CLEANSING"
 
 func getTexturePath() -> String:
@@ -14,6 +16,8 @@ func getBaseData() -> Dictionary:
 		BACKGROUND_TYPE : Entities.SealBackgroundType.ORANGE,
 	}, true)
 	return baseData
+
+####################################################################################################
 
 func onBeforeTurnEnd(matchState : MatchState) -> void:
 	if matchState.getActivePlayerModel() != getPlayerModel():

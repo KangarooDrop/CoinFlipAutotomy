@@ -41,7 +41,7 @@
 			"name": "Devour"
 		},
 		"FOG_OF_MIND": {
-			"desc": "Stamp a %s on target Coin Piece and a %s on a random adjacent Coin Piece. Then Stamp a %s on this Coin Piece and a %s to a random adjacent Coin Piece.",
+			"desc": "Stamp a %s on target Coin Piece and a %s on a random adjacent Coin Piece. Then Stamp a %s on this Coin Piece.",
 			"flavor": "",
 			"name": "Fog of Mind"
 		},
@@ -79,6 +79,16 @@
 			"desc": "Both players Lose %d Spin. Break target Seal. If you owned that Seal, gain %d Spin. Otherwise, Break another target Seal.",
 			"flavor": "",
 			"name": "Plunge into Darkness"
+		},
+		"SALT_THE_EARTH": {
+			"desc": "Stamp a %s on target Coin Piece, then Lose %d Spin.",
+			"flavor": "",
+			"name": "Salt the Earth"
+		},
+		"SEAL_AWAY": {
+			"desc": "Stamp a %s on target Coin Piece and this Coin Piece.",
+			"flavor": "",
+			"name": "Seal Away"
 		},
 		"SIRENS_CALL": {
 			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
@@ -131,77 +141,115 @@
 	"RING": {
 		"AMAZONITE_CLUSTER_RING": {
 			"desc": "At the Start of each Round, for each Player, Stamp a %s to a random Coin Piece they own, %d times.",
+			"flavor": "",
 			"name": "Amazonite Cluster Ring"
+		},
+		"AZURITE_FACET_RING": {
+			"desc": "After a player Skips their Turn, Stamp a %s on a random Coin Piece you own.",
+			"flavor": "",
+			"name": "Azurite Facet Ring"
+		},
+		"BAND_OF_A_THOUSAND_CUTS": {
+			"desc": "When a player Loses Spin, Gain %d Spin.",
+			"flavor": "",
+			"name": "Band of a Thousand Cuts"
 		},
 		"BLANK_BAND": {
 			"desc": "When an Ability is Countered or a Turn is Skipped, gain %d Spin.",
+			"flavor": "",
 			"name": "Blank Brand"
 		},
 		"BOW_OF_BELLS_END": {
 			"desc": "At the Start of each Round, Stamp a %s to each Coin Piece you own.\nOn Your Last Turn, take an Additional Turn after that.",
+			"flavor": "",
 			"name": "Bow of Bell's End"
 		},
 		"BUCKET_BRIM_CRUSTACEAN": {
 			"desc": "When you would Lose Spin on your Turn, %d%% chance to gain that much instead.",
+			"flavor": "",
 			"name": "Bucket Brim Crustacean"
 		},
 		"CIRCLE_OF_LEECHES": {
 			"desc": "After an Ability of a Coin Piece you own is Activated, Stamp a %s to it.\nAfter a %s is Broken from a Coin Piece you own, Stamp a %s to it.",
+			"flavor": "",
 			"name": "Circle of Leeches"
 		},
 		"CROWN_OF_PRIMAE_NOCTIS": {
 			"desc": "At the Start of each Round, Choose an Opponent's Coin Piece and Activate a Copy of its Ability.",
+			"flavor": "",
 			"name": "Crown of Primae Noctis"
 		},
 		"DUAL_TUNGSTEN_SIGNATE": {
 			"desc": "At the Start of each Round, lose %d Spin and Activate a Copy of an Ability of target Coin Piece you own.",
+			"flavor": "",
 			"name": "Dual Tungsten Signate"
 		},
 		"PRESERVER_OF_THE_DROWNED": {
 			"desc": "The first time each Round your Spin becomes less than 0, gain %d Spin.",
+			"flavor": "",
 			"name": "Preserver of the Drowned"
 		},
 		"TWIN_HEADED_OUROBOROS": {
 			"desc": "On Your First Turn, after you Activate an Ability, Activate a Copy of it.\nOn Your Last Turn, when you Activate an Ability, Counter it.",
+			"flavor": "",
 			"name": "Twin-Headed Ouroboros"
 		},
 		"VANITY_RING": {
 			"desc": "Useless",
+			"flavor": "",
 			"name": "Vanity Ring"
 		}
 	},
 	"SEAL": {
 		"AQUA_FORTIS": {
 			"desc": "At the Start of your Turn, Gain %d Spin.",
+			"flavor": "",
 			"name": "Aqua Fortis"
+		},
+		"ARSENIC": {
+			"desc": "After the Ability of this Coin Piece is activated, Break this Seal and Lose %d Spin.",
+			"flavor": "",
+			"name": "Arsenic"
 		},
 		"BLACK_SULFUR": {
 			"desc": "At the Start of your Turn, Lose %d Spin.",
+			"flavor": "",
 			"name": "Black Sulfur"
 		},
 		"BLANK": {
 			"desc": "Does Nothing.",
+			"flavor": "",
 			"name": "Blank"
 		},
 		"CLEANSING": {
 			"desc": "At the End of your Turn, Break this and all adjacent Seals.",
+			"flavor": "",
 			"name": "Cleansing"
 		},
 		"COPPER": {
 			"desc": "At the End of your Turn, if an Ability of this Coin Piece was Activated, Lose %d Spin and Break this Seal. Otherwise, gain %d Spin.",
+			"flavor": "",
 			"name": "Copper"
 		},
 		"CRYSTALLIZATION": {
 			"desc": "The Ability of this Coin Piece cannot be Activated. At the End of your next Turn, Break this Seal.",
+			"flavor": "",
 			"name": "Crystallization"
 		},
 		"LEAD": {
 			"desc": "The next time an Ability of this Coin Piece would be Activated, Counter that Activation and Break this Seal.",
+			"flavor": "",
 			"name": "Lead"
 		},
 		"QUICKSILVER": {
 			"desc": "After an Ability of this Coin Piece is Activated, Lose %d Spin.",
+			"flavor": "",
 			"name": "Quicksilver"
+		},
+		"WAX": {
+			"desc": "The Ability of this Coin Piece can't be Activated. After you Skip your Turn, Break this Seal.",
+			"flavor": "",
+			"name": "Wax"
 		}
 	}
 }
