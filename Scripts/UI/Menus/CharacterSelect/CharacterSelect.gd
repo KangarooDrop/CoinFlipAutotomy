@@ -38,7 +38,7 @@ func _ready() -> void:
 		portrait.queue_free()
 	characterPortraits.clear()
 	
-	var optionTypes : Array[Script] = [DemonGluttony]
+	var optionTypes : Array[Script] = [DemonLust, DemonSloth, DemonWrath]
 	optionTypes.append_array(ModelDB.getRandomDemonScriptsNoRepeat(NUM_OPTIONS - optionTypes.size(), optionTypes))
 	
 	for i in range(optionTypes.size()):
