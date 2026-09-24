@@ -45,6 +45,11 @@
 			"flavor": "",
 			"name": "Drag to Sea"
 		},
+		"FLARING_EMOTIONS": {
+			"desc": "Stamp a %s on target Coin Seal Opponent owns. Gain %d Spin.",
+			"flavor": "",
+			"name": "Flaring Emotions"
+		},
 		"FOG_OF_MIND": {
 			"desc": "Stamp a %s on target Coin Piece and a %s on a random adjacent Coin Piece. Then Stamp a %s on this Coin Piece.",
 			"flavor": "",
@@ -64,6 +69,11 @@
 			"desc": "Gain %d Spin. Stamp a %s on this and all adjacent Coin Pieces.",
 			"flavor": "",
 			"name": "Horror Vacui"
+		},
+		"I_WILL_HAVE_YOU": {
+			"desc": "If this Ability is not a Copy, Activate a Copy of target Coin Piece with a Seal. Otherwise, Gain %d Spin.",
+			"flavor": "",
+			"name": "I Will Have You"
 		},
 		"OBLITERATE": {
 			"desc": "Destroy target Finger.",
@@ -104,6 +114,11 @@
 			"desc": "Opponent loses %d Spin. Can only be Activated if your Spin is less than 0.",
 			"flavor": "Never gonna give you up...",
 			"name": "Sirens' Call"
+		},
+		"TAKE_WHATS_MINE": {
+			"desc": "Break all %ss. Both Players Gain %d Spin per Seal.",
+			"flavor": "",
+			"name": "Take What's Mine"
 		},
 		"UNCHARTED_WATERS": {
 			"desc": "Stamp a %s to target Coin Piece. Then activate a Copy of its Ability.",

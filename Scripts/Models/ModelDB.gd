@@ -46,6 +46,9 @@ func addAbilities():
 	_abilityDB.add(AbilityPhaseChange)
 	_abilityDB.add(AbilityDragToSea)
 	_abilityDB.add(AbilityUnchartedWaters)
+	_abilityDB.add(AbilityFlaringEmotions)
+	_abilityDB.add(AbilityIWillHaveYou)
+	_abilityDB.add(AbilityTakeWhatsMine)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():
 		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)
@@ -84,11 +87,11 @@ func addDemons():
 #	_demonDB.add(DemonNameless)
 	_demonDB.add(DemonEnvy)
 	_demonDB.add(DemonGluttony)
-	_demonDB.add(DemonGreed)
+	#_demonDB.add(DemonGreed)
 	_demonDB.add(DemonLust)
-	_demonDB.add(DemonPride)
+	#_demonDB.add(DemonPride)
 	_demonDB.add(DemonSloth)
-	_demonDB.add(DemonWrath)
+	#_demonDB.add(DemonWrath)
 
 func _getFromSubByScript(subDB : SubDB, scr : Script) -> LocalizedModel:
 	return subDB.getModelByScript(scr)

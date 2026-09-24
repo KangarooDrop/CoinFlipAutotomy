@@ -4,6 +4,6 @@
 
 [node name="BuilderRenamer" type="Node2D" unique_id=735560264]
 script = ExtResource("1_b24c3")
-fileToRename = "res://Scripts/Models/Abilities/AbilityDevour.gd"
-renamedPascaleCase = "AbilityDevour"
-renameDisplayName = "Devour"
+fileToRename = "res://Scripts/Models/Abilities/AbilityTakeWhatsMine.gd"
+renamedPascaleCase = "AbilityTakeWhatsMine"
+renameDisplayName = "Take What's Mine"

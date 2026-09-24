@@ -5,7 +5,7 @@ class_name MatchState
 #Gameplay variants and constants
 const STARTING_SPIN : int = 100
 const PREGAME_MAX_TIME : float = 10.0
-const TURN_MAX_TIME : float = 10.0
+const TURN_MAX_TIME : float = 20.0
 const NUM_TURNS_MAX : int = 20
 
 var roundNumber : int = 0
@@ -86,7 +86,6 @@ func onTurnStart() -> void:
 	currentTurnTime = TURN_MAX_TIME
 	await TriggerHandler.onTurnStart(self)
 	isActionable = true
-	print("Player may take action now")
 
 func onTurnEnd() -> void:
 	currentTurnNumber += 1

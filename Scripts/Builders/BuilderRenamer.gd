@@ -35,7 +35,8 @@ func getAllFolderPaths() -> Array[String]:
 			return
 		var obj : Object = fileScript.new()
 		if not obj is LocalizedModel:
-			obj.free()
+			if not obj is RefCounted:
+				obj.free()
 			push_error("ERROR: Unsupported type attempting to be loaded.")
 			return
 		var locID : String = (obj as LocalizedModel).getLocID() + ".name"
