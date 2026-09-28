@@ -145,13 +145,15 @@ func _onTweenWinnerFinished() -> void:
 
 ####################################################################################################
 
-func setUser(demon : DemonModel) -> void:
+func setUser(demonScript : Script) -> void:
+	var demon : DemonModel = ModelDB.getDemonSingleton(demonScript)
 	poseRectUser.texture = demon.poseTexture
 	nameLabelUser.text = demon.getName()
 	epithetLabelUser.text = demon.getEpithet()
 	_userDemon = demon
 
-func setOpponent(demon : DemonModel) -> void:
+func setOpponent(demonScript : Script) -> void:
+	var demon : DemonModel = ModelDB.getDemonSingleton(demonScript)
 	poseRectOpponent.texture = demon.poseTexture
 	nameLabelOpponent.text = demon.getName()
 	epithetLabelOpponent.text = demon.getEpithet()

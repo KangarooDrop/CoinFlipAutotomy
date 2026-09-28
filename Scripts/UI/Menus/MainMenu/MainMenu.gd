@@ -55,3 +55,37 @@ func onSettingsPressed() -> void:
 
 func onExitPressed() -> void:
 	get_tree().quit()
+
+####################################################################################################
+
+func _getRandomPlayerModel() -> PlayerModel:
+	var demonScript : Script = ModelDB.getRandomDemonScript()
+	var handModel : HandModel = HandModel.new(demonScript)
+	for i in range(handModel.getTotalNumFingers()):
+		handModel.addRing(ModelDB.getRing(ModelDB.getRandomRingScript()))
+	var coinFaceModel : CoinFaceModel = CoinFaceModel.new()
+	for i in range(9):
+		var abilityScript = null
+		if i == 0:
+			abilityScript = ModelDB.getRandomAbilityCoreScript()
+		else:
+			abilityScript = ModelDB.getRandomAbilityExteriorScript()
+		coinFaceModel.addCoinPieceToNextSocket(CoinPieceModel.new().setAbilityScript(abilityScript))
+	return PlayerModel.new(demonScript, handModel, coinFaceModel)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.is_pressed() and not event.is_echo():
+		return
+		var matchState : MatchState = MatchState.new()
+		var playerModelUser : PlayerModel = _getRandomPlayerModel()
+		var playerModelOpponent : PlayerModel = _getRandomPlayerModel()
+		matchState.setPlayerModels(playerModelUser, playerModelOpponent)
+		
+		
+		var usecs : int = Time.get_ticks_usec()
+		var n : int = 1000
+		for i in range(n):
+			var data : Dictionary = matchState.serialize()
+			var decision : MatchStateDecision = MatchStateDecision.new()
+			decision.deserialize(data)
+		print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")

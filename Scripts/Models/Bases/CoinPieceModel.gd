@@ -17,6 +17,15 @@ var seal_replaced : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(newSe
 
 ####################################################################################################
 
+func clone() -> CoinPieceModel:
+	var copy : CoinPieceModel = super.clone()
+	if hasSeal():
+		copy.setSealModel(getSealModel().clone())
+		copy.getSealModel().setCoinPieceModel(copy)
+	return copy
+
+####################################################################################################
+
 func getBaseData() -> Dictionary:
 	var baseData : Dictionary = super.getBaseData()
 	baseData.merge(

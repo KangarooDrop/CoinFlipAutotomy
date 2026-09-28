@@ -46,11 +46,11 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	
 	var targetCoinPieceModel : CoinPieceModel = abilityContext.targets[0]
 	if targetCoinPieceModel.hasSeal():
-		push_error("ERROR: Coin Piece with Seal given to AbilityFogOfMind.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
+		push_error("ERROR: Coin Piece with Seal given to AbilityPlayWithYourFood.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
 		return
 	
 	var adjacentTarget : CoinPieceModel = _getRandomAdjacentNonSeal(targetCoinPieceModel)
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), targetCoinPieceModel)
 	if adjacentTarget != null:
 		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), adjacentTarget)

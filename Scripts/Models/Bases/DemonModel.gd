@@ -50,7 +50,7 @@ func getTotalNumFingers() -> int:
 	return rotDataArr.size()
 
 func getStarterData() -> StarterData:
-	return StarterData.new(self, getStartingAbilityTypes(), getStartingRingTypes())
+	return StarterData.new(get_script(), getStartingAbilityTypes(), getStartingRingTypes())
 
 func getName() -> String:
 	return getLocalizedString("name")

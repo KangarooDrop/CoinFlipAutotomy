@@ -56,5 +56,6 @@ func clone() -> FingerModel:
 	var copy : FingerModel = get_script().new()
 	if _ringModel != null:
 		copy.setRingModel(_ringModel.clone())
+		copy.getRingModel().setFingerModel(copy)
 	copy.destroyed = destroyed
 	return copy

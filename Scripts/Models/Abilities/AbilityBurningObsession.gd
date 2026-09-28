@@ -37,6 +37,8 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	
 	if actualIncPointer.val >= SPIN_REQ and not abilityContext.isCopy:
 		var copyTarget : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.COIN_PIECE_ANY, playerModel)
+		if copyTarget == null:
+			return
 		await CmdMatch.copyAbilityScript(matchState, copyTarget.abilityScript, abilityContext)
 	else:
 		var sealTarget : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.NON_SEAL_ANY, playerModel)

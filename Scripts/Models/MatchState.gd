@@ -18,8 +18,8 @@ var currentTurnNumber : int = 0
 var currentTurnsRemaining : int = 0
 var activePlayerOnStart : PlayerModel = null
 var winnerLastRound : PlayerModel = null
-var isActionable : bool = false
 var winningPlayers : Array[PlayerModel] = []
+var isActionable : bool = false
 
 var _matchNode : MatchNode = null
 var _activePlayer : PlayerModel = null
@@ -28,6 +28,11 @@ var _playerModelOpponent : PlayerModel
 var _spinUser : int = STARTING_SPIN
 var _spinOpponent : int = STARTING_SPIN
 var _additionalTurnQueue : Array = []
+
+#CPU Targeting Info
+func resetCPUTargetData() -> void:
+	targetQueue.clear()
+var targetQueue : Array[Variant] = []
 
 #signal spin_changed(playerModel : PlayerModel)
 var spin_changed : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(playerModel : PlayerModel)
@@ -40,6 +45,73 @@ func _setSpinUserInternal(amount : int) -> void:
 func _setSpinOpponentInternal(amount : int) -> void:
 	_spinOpponent = amount
 	await spin_changed.emitSignal(_playerModelOpponent)
+
+####################################################################################################
+
+func _getCloneCounterpart(comp : PlayerModel, userClone : PlayerModel, opponentClone : PlayerModel) -> PlayerModel:
+	if comp == null:
+		return null
+	elif comp == _playerModelUser:
+		return userClone
+	elif comp == _playerModelOpponent:
+		return opponentClone
+	else:
+		return null
+
+func serialize() -> Dictionary:
+	var playerModelUserClone : PlayerModel = _playerModelUser.clone()
+	var playerModelOpponentClone : PlayerModel = _playerModelOpponent.clone()
+	var activePlayerClone : PlayerModel = _getCloneCounterpart(_activePlayer, playerModelUserClone, playerModelOpponentClone)
+	var additionalTurnQueueClone : Array[PlayerModel] = []
+	for addTurnPlayerModel : PlayerModel in additionalTurnQueueClone:
+		additionalTurnQueueClone.append(_getCloneCounterpart(addTurnPlayerModel, playerModelUserClone, playerModelOpponentClone))
+	var activePlayerOnStartClone : PlayerModel = _getCloneCounterpart(activePlayerOnStart, playerModelUserClone, playerModelOpponentClone)
+	var winnerLastRoundClone : PlayerModel = _getCloneCounterpart(winnerLastRound, playerModelUserClone, playerModelOpponentClone)
+	var winningPlayersClone : Array[PlayerModel] = []
+	for winningPlayerModel : PlayerModel in winningPlayers:
+		winningPlayersClone.append(_getCloneCounterpart(winningPlayerModel, playerModelUserClone, playerModelOpponentClone))
+	return {
+		"player_model_user" : playerModelUserClone,
+		"player_model_opponent" : playerModelOpponentClone,
+		"active_player" : activePlayerClone,
+		"spin_user" : _spinUser,
+		"spin_opponent" : _spinOpponent,
+		"add_turn_queue" : additionalTurnQueueClone,
+
+		"round_num" : roundNumber,
+		"pregame_started" : pregameStarted,
+		"match_started" : matchStarted,
+		"round_started" : roundStarted,
+		"pregame_timer" : pregameTime,
+		"current_turn_time" : currentTurnTime,
+		"current_turn_num" : currentTurnNumber,
+		"current_turns_remaining" : currentTurnsRemaining,
+		"active_player_on_start" : activePlayerOnStartClone,
+		"winner_last_round" : winnerLastRoundClone,
+		"winning_players" : winningPlayersClone,
+		"is_actionable" : isActionable,
+	}
+
+func deserialize(data : Dictionary) -> void:
+	_playerModelUser = data["player_model_user"]
+	_playerModelOpponent = data["player_model_opponent"]
+	_activePlayer = data["active_player"]
+	_spinUser = data["spin_user"]
+	_spinOpponent = data["spin_opponent"]
+	_additionalTurnQueue = data["add_turn_queue"]
+	
+	roundNumber = data["round_num"]
+	pregameStarted = data["pregame_started"]
+	matchStarted = data["match_started"]
+	roundStarted = data["round_started"]
+	pregameTime = data["pregame_timer"]
+	currentTurnTime = data["current_turn_time"]
+	currentTurnNumber = data["current_turn_num"]
+	currentTurnsRemaining = data["current_turns_remaining"]
+	activePlayerOnStart = data["active_player_on_start"]
+	winnerLastRound = data["winner_last_round"]
+	winningPlayers = data["winning_players"]
+	isActionable = data["is_actionable"]
 
 ####################################################################################################
 
@@ -85,12 +157,14 @@ func onRoundStart() -> void:
 func onTurnStart() -> void:
 	currentTurnTime = TURN_MAX_TIME
 	await TriggerHandler.onTurnStart(self)
+
+func onTurnActionable() -> void:
 	isActionable = true
+	resetCPUTargetData()
 
 func onTurnEnd() -> void:
 	currentTurnNumber += 1
 	currentTurnsRemaining -= 1
-	isActionable = false
 	await TriggerHandler.onBeforeTurnEnd(self)
 	if currentTurnsRemaining > 0:
 		if _additionalTurnQueue.size() > 0:
@@ -99,6 +173,7 @@ func onTurnEnd() -> void:
 			_activePlayer = getOtherPlayerModel(_activePlayer)
 
 func onTurnSkipped() -> void:
+	isActionable = false
 	await TriggerHandler.onBeforeTurnSkipped(self)
 
 func onRoundEnd() -> void:
@@ -107,13 +182,13 @@ func onRoundEnd() -> void:
 	winnerLastRound = null
 	if _spinUser == _spinOpponent:
 		winnerLastRound = _playerModelUser if RNG.getRandi() % 2 == 0 else _playerModelOpponent
-		print("EQUAL SPIN: RANDOM WINNER IS ", "" if winnerLastRound == _playerModelUser else "NOT ", "YOU.")
+		#print("EQUAL SPIN: RANDOM WINNER IS ", "" if winnerLastRound == _playerModelUser else "NOT ", "YOU.")
 	elif _spinUser > _spinOpponent:
 		winnerLastRound = _playerModelUser
-		print("USER IS WINNER")
+		#print("USER IS WINNER")
 	else:
 		winnerLastRound = _playerModelOpponent
-		print("OPPONENT IS WINNER")
+		#print("OPPONENT IS WINNER")
 	
 	activePlayerOnStart = getOtherPlayerModel(winnerLastRound)
 	_activePlayer = null
@@ -202,15 +277,15 @@ func getSpinOpponent() -> int: return _spinOpponent
 func addAdditionalTurn(playerModel : PlayerModel) -> void:
 	_additionalTurnQueue.append(playerModel)
 
-var _targetCallableTrue : Callable = func(_target): return true
-var _targetCallableCanActivate : Callable = func(target):
+func _targetFuncTrue(_target): return true
+func _targetFuncCanActivate(target):
 	if not TriggerHandler.canActivateAbilityOfCoinPiece(self, target):
 		return false
 	if getValidTargets(ModelDB.getAbility(target.abilityScript).targetType, target.getPlayerModel()).size() == 0:
 		return false
 	return true
 
-func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetCallableTrue) -> Array:
+func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetFuncTrue) -> Array:
 	var allTargets : Array[RefCounted] = []
 	for currentPlayerModel : PlayerModel in getAllPlayerModels():
 		allTargets.append_array(currentPlayerModel.getCoinFaceModel().getAllPieces())
@@ -223,7 +298,7 @@ func getValidTargets(targetType : Entities.TargetType, playerModel : PlayerModel
 
 func getCoinPiecesThatCanActivate(playerModel : PlayerModel) -> Array[CoinPieceModel]:
 	var allCoinPieces : Array[CoinPieceModel] = []
-	allCoinPieces.append_array(getValidTargets(Entities.TargetType.ABILITY_PIECE_FRIENDLY, playerModel, _targetCallableCanActivate))
+	allCoinPieces.append_array(getValidTargets(Entities.TargetType.ABILITY_PIECE_FRIENDLY, playerModel, _targetFuncCanActivate))
 	for i in range(allCoinPieces.size()-1, -1, -1):
 		var abilitySingleton : Ability = ModelDB.getAbility(allCoinPieces[i].abilityScript)
 		if getValidTargets(abilitySingleton.targetType, playerModel).size() == 0:
@@ -232,15 +307,18 @@ func getCoinPiecesThatCanActivate(playerModel : PlayerModel) -> Array[CoinPieceM
 	return allCoinPieces
 
 func getTargetCoinPieceCanActivate(playerModel : PlayerModel) -> CoinPieceModel:
-	return await getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, playerModel, _targetCallableCanActivate)
+	return await getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, playerModel, _targetFuncCanActivate)
 
-func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetCallableTrue) -> Variant:
+func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetFuncTrue) -> Variant:
 	var target : RefCounted = null
-	if _matchNode != null and isUserControlled(playerModel):
-		while target == null or not Entities.TargetScript.isValidModel(targetType, playerModel, target) or not verifyCallable.call(target):
-			target = await _matchNode.getTarget(targetType, playerModel, verifyCallable)
-			if target == null:
-				break
+	if _matchNode != null:
+		if isUserControlled(playerModel):
+			while target == null or not Entities.TargetScript.isValidModel(targetType, playerModel, target) or not verifyCallable.call(target):
+				target = await _matchNode.getTarget(targetType, playerModel, verifyCallable)
+				if target == null:
+					break
+		else:
+			return _matchNode.getTargetCPU(targetType, playerModel, verifyCallable)
 	else:
 		var validTargets : Array = getValidTargets(targetType, playerModel, verifyCallable)
 		if validTargets.size() != 0:
@@ -250,7 +328,6 @@ func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, veri
 	return target
 
 func activateAbilityScript(abilityScript : Script, context : AbilityContext) -> void:
-	isActionable = false
 	var ability : Ability = ModelDB.getAbility(abilityScript)
 	await TriggerHandler.onBeforeAbilityCheck(self, ability, context)
 	if context.isCountered:
@@ -273,10 +350,13 @@ func activateAbilityScriptFromSource(abilityScript : Script, source : Variant, i
 			return false
 		context = AbilityContext.new(source, [target])
 	context.isCopy = isCopy
+	isActionable = false
 	await activateAbilityScript(abilityScript, context)
 	return true
 
 func activateAbilityOfCoinPieceModel(coinPieceModel : CoinPieceModel, isCopy : bool = false) -> bool:
+	if coinPieceModel == null:
+		return false
 	if not hasTriggerable(coinPieceModel):
 		push_error("ERROR: Could not find Coin Piece Model given to /activateAbilityOfCoinPieceModel")
 		return false

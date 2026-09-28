@@ -29,4 +29,5 @@ func onTurnStart(matchState : MatchState) -> void:
 	if playerModel != matchState.getActivePlayerModel():
 		return
 	
+	popNode()
 	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE)

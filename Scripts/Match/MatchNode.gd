@@ -2,7 +2,8 @@ extends Node2D
 
 class_name MatchNode
 
-var _matchState : MatchState
+var _matchState : MatchState = null
+var _phaseHandler : PhaseHandler = null
 
 var _flippingCoinToNextPlayer : bool = false
 
@@ -38,6 +39,20 @@ func _initMatch():
 	_matchState = MatchState.new()
 	_matchState.setMatchNode(self)
 	advantageBar.setMatchState(_matchState)
+	_phaseHandler = PhaseHandler.new()
+	_phaseHandler.setMatchState(_matchState)
+	_phaseHandler.setBinds(
+		{
+			PhaseHandler.MATCH_PHASE.RESET : 			_onResetRoundInternal,
+			PhaseHandler.MATCH_PHASE.MATCH_START : 		_onMatchStartInternal,
+			PhaseHandler.MATCH_PHASE.ROUND_START : 		_onRoundStartInternal,
+			PhaseHandler.MATCH_PHASE.TURN_START : 		_onTurnStartInternal,
+			PhaseHandler.MATCH_PHASE.TURN_ACTIONABLE : 	_onTurnActionable,
+			PhaseHandler.MATCH_PHASE.TURN_END : 		_onTurnEndInternal,
+			PhaseHandler.MATCH_PHASE.ROUND_END : 		_onRoundEndInternal,
+			PhaseHandler.MATCH_PHASE.MATCH_END : 		_onMatchEndInernal,
+		})
+	
 	gearHolderUser.position.x = -gearHolderUser.size.x
 	gearHolderOpponent.position.x = opponentGearEndPosX+gearHolderOpponent.size.x
 	
@@ -50,7 +65,7 @@ func _initMatch():
 	_showGearUser()
 	_showGearOpponent()
 	
-	await _onMatchStartInternal()
+	_phaseHandler.iterPhaseDeferred()
 
 func getRandomOpponentPlayerModel() -> PlayerModel:
 	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
@@ -91,7 +106,7 @@ func _process(delta: float) -> void:
 		if ceilVal != turnTimer.getTime():
 			turnTimer.setTime(ceilVal)
 		if _matchState.pregameTime <= 0.0:
-			_onRoundStartInternal()
+			_phaseHandler.iterPhaseDeferred()
 	
 	if not _matchState.roundStarted:
 		return
@@ -99,21 +114,19 @@ func _process(delta: float) -> void:
 		return
 	if _matchState.currentTurnTime <= 0.0:
 		return
-	if not _matchState.isActionable:
-		return
 	
-	if _matchState.currentTurnTime > 0.0:
+	if _matchState.isActionable and _matchState.currentTurnTime > 0.0:
 		_matchState.currentTurnTime -= delta
 		var ceilVal : int = Util.betterFloor(_matchState.currentTurnTime)
 		if ceilVal != turnTimer.getTime():
 			turnTimer.setTime(ceilVal)
 		if _matchState.currentTurnTime <= 0.0:
-			_onTurnSkippedInternal()
+			skipTurn()
 
 func _onMatchStartInternal() -> void:
 	await _matchState.onMatchStart()
 	background.isTurning = true
-	await _onResetRoundInternal()
+	_phaseHandler.iterPhaseDeferred()
 
 func _onResetRoundInternal() -> void:
 	await _matchState.onResetRound()
@@ -139,20 +152,24 @@ func _onResetRoundInternal() -> void:
 
 func _onRoundStartInternal() -> void:
 	await _matchState.onRoundStart()
-	await _onTurnStartInternal()
+	_phaseHandler.iterPhaseDeferred()
 
 func _onTurnStartInternal() -> void:
-	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	await _matchState.onTurnStart()
-	if (activePlayer == _matchState.getActivePlayerModel()) and not _matchState.isUserControlled():
+	_updateBackgroundScale()
+	_phaseHandler.iterPhaseDeferred()
+
+func _onTurnActionable() -> void:
+	await _matchState.onTurnActionable()
+	if not _matchState.isUserControlled():
+		var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 		var coinPieceModelsCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
 		if coinPieceModelsCanActivate.size() == 0:
 			await skipTurn()
 		else:
 			var targetToActivate : CoinPieceModel = coinPieceModelsCanActivate[RNG.getRandi() % coinPieceModelsCanActivate.size()]
 			await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
-			await _onTurnEndInternal()
-	_updateBackgroundScale()
+			_phaseHandler.iterPhaseDeferred()
 
 func _onTurnEndInternal() -> void:
 	if choosingTarget:
@@ -164,13 +181,11 @@ func _onTurnEndInternal() -> void:
 		_flippingCoinToNextPlayer = true
 		await coinNode.flipToModel(_matchState.getActivePlayerModel().getCoinFaceModel())
 		_flippingCoinToNextPlayer = false
-		await _onTurnStartInternal()
-	else:
-		await _onRoundEndInternal()
+	_phaseHandler.iterPhaseDeferred()
 
 func _onTurnSkippedInternal() -> void:
 	await _matchState.onTurnSkipped()
-	await _onTurnEndInternal()
+	_phaseHandler.iterPhaseDeferred()
 
 func _onRoundEndInternal() -> void:
 	_matchState.onRoundEnd()
@@ -196,7 +211,7 @@ func _onRoundEndInternal() -> void:
 		return
 	
 	background.isTurning = true
-	await _onResetRoundInternal()
+	_phaseHandler.iterPhaseDeferred()
 
 func _onMatchEndInernal() -> void:
 	RunManager.onMatchEnded(_matchState)
@@ -212,7 +227,7 @@ func _userActivateAbility(coinPieceModel : CoinPieceModel) -> void:
 	var successfullyActivated : bool = await _matchState.activateAbilityOfCoinPieceModel(coinPieceModel)
 	canCancelTargetChoice = false
 	if successfullyActivated:
-		await _onTurnEndInternal()
+		_phaseHandler.iterPhaseDeferred()
 
 func _input(event: InputEvent) -> void:
 	if _flippingCoinToNextPlayer:
@@ -253,6 +268,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		if choosingTarget and canCancelTargetChoice and _matchState.isUserControlled():
 			_cancelTargeting()
 		else:
+			var decision : MatchStateDecision = MatchStateDecision.new()
+			decision.copyFromMatchState(_matchState)
+			decision.setPhase(_phaseHandler.currentPhase)
+			decision._perspectiveIndex = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
+			
+			decision.initTest()
+			var currentDecision : MatchStateDecision = decision
+			while currentDecision != null and not currentDecision.outputTarget.is_empty():
+				print(currentDecision.getTargetSerToReadable(currentDecision.outputTarget))
+				currentDecision = currentDecision.bestDecision
+			
 			print("ESCAPING")
 		return
 	
@@ -261,7 +287,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _flippingCoinToNextPlayer:
 		return
 	if event.is_action_pressed("skip"):
-		_onTurnSkippedInternal()
+		skipTurn()
 		return
 	for i in range(1, 10):
 		if event.is_action_pressed("action_" + str(i)):
@@ -285,7 +311,7 @@ func setPlayerModelUser(playerModel : PlayerModel) -> void:
 	
 	handNodeUser.setHandModel(playerModel.getHandModel())
 	coinFaceNodeUser.setModel(playerModel.getCoinFaceModel())
-	faceOffNode.setUser(playerModel.getDemon())
+	faceOffNode.setUser(playerModel.getDemonScript())
 	coinNode.setCoinFaceModelUser(playerModel.getCoinFaceModel())
 
 func setPlayerModelOpponent(playerModel : PlayerModel) -> void:
@@ -296,7 +322,7 @@ func setPlayerModelOpponent(playerModel : PlayerModel) -> void:
 	
 	handNodeOpponent.setHandModel(playerModel.getHandModel())
 	coinFaceNodeOpponent.setModel(playerModel.getCoinFaceModel())
-	faceOffNode.setOpponent(playerModel.getDemon())
+	faceOffNode.setOpponent(playerModel.getDemonScript())
 	coinNode.setCoinFaceModelOpponent(playerModel.getCoinFaceModel())
 
 func getMatchState() -> MatchState:
@@ -308,10 +334,18 @@ func getMatchState() -> MatchState:
 ################################################################################################################
 
 func skipTurn() -> void:
+	if not _matchState.isActionable:
+		return
 	await _onTurnSkippedInternal()
 
 func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
 	return await _getUserTarget(targetType, playerModel, verifyCallable)
+
+func getTargetCPU(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
+	var validTargets : Array = _matchState.getValidTargets(targetType, playerModel, verifyCallable)
+	if validTargets.size() == 0:
+		return null
+	return validTargets[RNG.getRandi() % validTargets.size()]
 
 signal target_node_chosen_or_forced_skip
 var choosingTarget : bool = false

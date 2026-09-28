@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dk3e2678opqm6"]
 
 [ext_resource type="Script" uid="uid://dly4akx8gqmxi" path="res://Scripts/Views/CoinFaceNode.gd" id="1_c76kg"]
-[ext_resource type="Texture2D" uid="uid://1l76q2qbdf44" path="res://Textures/CoinParts/none_back.png" id="2_dy5gx"]
+[ext_resource type="Texture2D" uid="uid://00enn4ttrj2g" path="res://Textures/CoinParts/none_back.png" id="2_dy5gx"]
 
 [node name="CoinFaceNode" type="Node2D" unique_id=1660564807]
 script = ExtResource("1_c76kg")

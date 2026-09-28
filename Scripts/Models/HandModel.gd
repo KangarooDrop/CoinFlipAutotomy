@@ -2,16 +2,16 @@ extends RefCounted
 
 class_name HandModel
 
-var _demon : DemonModel = null
+var _demonScript : Script = null
 var _fingerModels : Array[FingerModel] = []
 
 var _playerModelRef : WeakRef = null
 
 ####################################################################################################
 
-func _init(demon : DemonModel) -> void:
-	_demon = demon
-	for i in range(demon.getTotalNumFingers()):
+func _init(newDemonScript : Script) -> void:
+	_demonScript = newDemonScript
+	for i in range(ModelDB.getDemonSingleton(_demonScript).getTotalNumFingers()):
 		var fingerModel : FingerModel = FingerModel.new()
 		fingerModel.setHandModel(self)
 		_fingerModels.append(fingerModel)
@@ -31,12 +31,13 @@ func _hasIndex(index : int) -> bool:
 ####################################################################################################
 
 func clone() -> HandModel:
-	var cloneModel : HandModel = get_script().new(_demon)
+	var cloneModel : HandModel = get_script().new(_demonScript)
 	cloneModel.setPlayerModel(getPlayerModel())
 	for i in range(_fingerModels.size()):
 		if _fingerModels[i] == null:
 			continue
 		cloneModel._setFingerInternal(i, _fingerModels[i].clone())
+		cloneModel.getFinger(i).setHandModel(cloneModel)
 	return cloneModel
 
 ####################################################################################################
@@ -50,7 +51,7 @@ func getPlayerModel() -> PlayerModel:
 	return _playerModelRef.get_ref()
 
 func getTextureAtlas() -> Texture2D:
-	return _demon.handAtlas
+	return ModelDB.getDemonSingleton(_demonScript).handAtlas
 
 func getFingers() -> Array[FingerModel]:
 	return _fingerModels
@@ -66,10 +67,10 @@ func getRings() -> Array[RingModel]:
 	return rtn
 
 func getRotData() -> Array[RingRotData]:
-	return _demon.rotDataArr
+	return ModelDB.getDemonSingleton(_demonScript).rotDataArr
 
 func getTotalNumFingers() -> int:
-	return _demon.rotDataArr.size()
+	return ModelDB.getDemonSingleton(_demonScript).rotDataArr.size()
 
 func getNextRingIndex() -> int:
 	for i in range(getTotalNumFingers()):

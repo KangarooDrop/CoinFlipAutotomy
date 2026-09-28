@@ -37,6 +37,7 @@ func clone() -> CoinFaceModel:
 		if _socketIndexToPiece[socketIndex] == null:
 			continue
 		cloneModel.insertCoinPiece(socketIndex, _socketIndexToPiece[socketIndex].clone())
+		cloneModel.getCoinPieceAtSocket(socketIndex).setCoinFaceModel(cloneModel)
 	return cloneModel
 
 ####################################################################################################
