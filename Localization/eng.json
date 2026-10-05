@@ -36,7 +36,7 @@
 			"name": "Counterweight Exterior"
 		},
 		"DEVOUR": {
-			"desc": "The owner of targe Coin Piece Gains %d Spin. If it has a Seal, Break it and Stamp a %s on that Coin Piece.",
+			"desc": "If target Coin Piece has a Seal, Break it and Stamp a %s on that Coin Piece. Then Gains %d Spin.",
 			"flavor": "",
 			"name": "Devour"
 		},
@@ -99,6 +99,16 @@
 			"desc": "Both players Lose %d Spin. Break target Seal. If you owned that Seal, gain %d Spin. Otherwise, Break another target Seal.",
 			"flavor": "",
 			"name": "Plunge into Darkness"
+		},
+		"RANDOM_CORE": {
+			"desc": "When selected, this Coin Piece transforms into a random Coin Piece.",
+			"flavor": "",
+			"name": "Random Core"
+		},
+		"RANDOM_EXTERIOR": {
+			"desc": "When selected, this Coin Piece transforms into a random Coin Piece.",
+			"flavor": "",
+			"name": "Random Exterior"
 		},
 		"SALT_THE_EARTH": {
 			"desc": "Stamp a %s on target Coin Piece, then Lose %d Spin.",

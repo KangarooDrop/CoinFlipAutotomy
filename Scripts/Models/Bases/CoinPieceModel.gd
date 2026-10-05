@@ -18,10 +18,12 @@ var seal_replaced : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(newSe
 ####################################################################################################
 
 func clone() -> CoinPieceModel:
+	var usecs : int = Time.get_ticks_usec()
 	var copy : CoinPieceModel = super.clone()
 	if hasSeal():
 		copy.setSealModel(getSealModel().clone())
 		copy.getSealModel().setCoinPieceModel(copy)
+	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.COIN_PIECE_SERIALIZE, Time.get_ticks_usec() - usecs)
 	return copy
 
 ####################################################################################################
@@ -75,6 +77,7 @@ func setAbilityScript(newAbilityScript : Script) -> CoinPieceModel:
 	var abilitySingleton : Ability = ModelDB.getAbilitySingleton(abilityScript)
 	coinPieceType = abilitySingleton.coinPieceType
 	texPath = abilitySingleton.getTexturePath()
+	_textureAtlas = null
 	return self
 
 ####################################################################################################

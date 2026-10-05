@@ -2,6 +2,34 @@ extends MatchState
 
 class_name MatchStateDecision
 
+#Input vars
+#Base information source of the source to call its function in the cloned match state
+var testSource : Array = []		#[model source, "function name", [parameters]
+#List of targets given since the source was activated
+#e.g. [Ability -> Target -> Second Target late in exectution]
+#If the depth if less than testTargetQueue.size(), then choose testTargetQueue[depth] as the target. Otherwise, recur
+var targetQueueSerialized : Array[Variant] = []
+var targetDepth : int = 0
+var _perspectiveIndex : int = 0
+
+####################################################################################################
+
+var baseMatchStateRef : WeakRef = null
+func setBaseMatchStateRef(matchState : MatchState) -> void:
+	baseMatchStateRef = weakref(matchState)
+func getBaseMatchState() -> MatchState:
+	return baseMatchStateRef.get_ref()
+
+#Output vars
+var validTargets : Array[RefCounted] = []
+var targetToDecision : Dictionary[RefCounted, MatchStateDecision] = {}
+var hasTargeted : bool = false
+var hasChecked : bool = false
+#var hasInitialized : bool = false
+#var hasCheckedDecisions : bool = false
+
+####################################################################################################
+
 const FINGER_TARGET : int = 0
 const COIN_PIECE_TARGET : int = 1
 func getModelToTargetSer(model : RefCounted) -> Array[int]:
@@ -33,34 +61,25 @@ func getTargetSerToReadable(data : Array[int]) -> String:
 	rtn += str(data[2])
 	return rtn
 
-var baseMatchStateRef : WeakRef = null
-func getBaseMatchState() -> MatchState:
-	return baseMatchStateRef.get_ref()
+func clone() -> MatchStateDecision:
+	var cloneDecision : MatchStateDecision = MatchStateDecision.new()
+	cloneDecision.deserialize(getBaseMatchState().serialize())
+	cloneDecision.baseMatchStateRef = baseMatchStateRef
+	cloneDecision.targetQueueSerialized = targetQueueSerialized.duplicate()
+	cloneDecision._perspectiveIndex = _perspectiveIndex
+	return cloneDecision
 
-var _phaseHandler : PhaseHandler = null
+func getPerspectivePlayerModel(perspective : int) -> PlayerModel:
+	return _playerModelUser if perspective == 0 else _playerModelOpponent
 
-#Base information source of the source to call its function in the cloned match state
-var testSource : Array = []		#[model source, "function name", [parameters]
-#List of targets given since the source was activated
-#e.g. [Ability -> Target -> Second Target late in exectution]
-#If the depth if less than testTargetQueue.size(), then choose testTargetQueue[depth] as the target. Otherwise, recur
-var testTargetQueue : Array[Variant] = []
-var targetDepth : int = 0
+func printEval() -> void:
+	print(eval())
 
-var iterationDepth : int = 0
-var maxIterationDepth : int = 3
-
-var outputTarget : Array[int] = []
-var bestDecision : MatchStateDecision = null
-
-var _perspectiveIndex : int = 0
-func getPerspectivePlayerModel(perspecive : int = _perspectiveIndex) -> PlayerModel:
-	return _playerModelUser if perspecive == 0 else _playerModelOpponent
+####################################################################################################
 
 func _init() -> void:
-	_phaseHandler = PhaseHandler.new()
-	_phaseHandler.setMatchState(self)
-	_phaseHandler.setBinds(
+	super._init()
+	phaseHandler.setBinds(
 		{
 			PhaseHandler.MATCH_PHASE.RESET : 			onResetRound,
 			PhaseHandler.MATCH_PHASE.MATCH_START : 		onMatchStart,
@@ -72,120 +91,117 @@ func _init() -> void:
 			PhaseHandler.MATCH_PHASE.MATCH_END : 		onMatchEnd,
 		})
 
-func setPhase(matchPhase : PhaseHandler.MATCH_PHASE) -> MatchStateDecision:
-	_phaseHandler.currentPhase = matchPhase
-	return self
+func initDecision() -> void:
+	phaseHandler.callBound()
 
-func initTest() -> Array[int]:
-	if _phaseHandler.currentPhase == PhaseHandler.MATCH_PHASE.TURN_ACTIONABLE:
-		await activateAbilityOfCoinPieceModel(getTarget(Entities.TargetType.COIN_PIECE_FRIENDLY, _activePlayer, _targetFuncCanActivate))
-		_phaseHandler.iterPhase()
+func iterDecision() -> void:
+	if not hasChecked:
+		hasChecked = true
+		for target : RefCounted in validTargets:
+			var decision : MatchStateDecision = clone()
+			decision.targetQueueSerialized.append(getModelToTargetSer(target))
+			targetToDecision[target] = decision
+			decision.initDecision()
 	else:
-		testSource[0].callv(testSource[1], testSource[2])
-	return outputTarget
+		for decision : MatchStateDecision in targetToDecision.values():
+			decision.iterDecision()
 
-func getHighestEval(targetToEval : Dictionary[Variant, int]) -> Array[Variant]:
-	if targetToEval.size() == 0:
-		return [null]
-	var bestScore : int = -Util.INT_MAX
-	var bestTargets : Array = []
-	for target : Variant in targetToEval.keys():
-		if targetToEval[target] > bestScore:
-			bestTargets = [target]
-			bestScore = targetToEval[target]
-		elif targetToEval[target] == bestScore:
-			bestTargets.append(target)
-	return bestTargets
+func eval() -> int:
+	#No valid targets (e.g. ability targets seal but there are none)
+	if hasTargeted and validTargets.size() == 0:
+		return -Util.INT_MAX
+	#hasTargeted and not hasChecked -> the decision is a leaf
+	#not hasTargeted and hasChecked -> end of round
+	elif not hasTargeted or not hasChecked:
+		var perspectivePlayerModel : PlayerModel = getPerspectivePlayerModel(_perspectiveIndex)
+		return getSpin(perspectivePlayerModel) - getSpin(getOtherPlayerModel(perspectivePlayerModel))
+	#Otherwise, check child decisions
+	else:
+		var highestScore : int = -Util.INT_MAX
+		for target : RefCounted in targetToDecision.keys():
+			var evalScore : int = targetToDecision[target].eval()
+			if targetToDecision[target]._perspectiveIndex != _perspectiveIndex and evalScore != -Util.INT_MAX:
+				evalScore = -evalScore
+			if evalScore > highestScore:
+				highestScore = evalScore
+		return highestScore
+
+func getEvalDict() -> Dictionary[MatchStateDecision, int]:
+	var rtn : Dictionary[MatchStateDecision, int]
+	for target : RefCounted in targetToDecision.keys():
+		var evalScore : int = targetToDecision[target].eval()
+		if targetToDecision[target]._perspectiveIndex != _perspectiveIndex and evalScore != -Util.INT_MAX:
+			evalScore = -evalScore
+		rtn[targetToDecision[target]] = evalScore
+	return rtn
+
+var _decisionToScore : Dictionary[MatchStateDecision, int] = {}
+func getBestDecision() -> MatchStateDecision:
+	if not hasChecked:
+		return self
+	var evalDict : Dictionary = getEvalDict()
+	#print(targetDepth, " ", self, ": ", evalDict)
+	_decisionToScore = evalDict
+	var highestScore : int = -Util.INT_MAX
+	var highestDecision : MatchStateDecision = self
+	for decision : MatchStateDecision in evalDict.keys():
+		decision.getBestDecision()
+		if evalDict[decision] > highestScore:
+			highestScore = evalDict[decision]
+			highestDecision = decision.getBestDecision()
+	return highestDecision
+
+####################################################################################################
 
 func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable = _targetFuncTrue) -> Variant:
-	if getPerspectivePlayerModel() != playerModel:
+	if playerModel != getPerspectivePlayerModel(_perspectiveIndex):
 		_perspectiveIndex = 1 - _perspectiveIndex
-		#print("Swapping perspective at depth=", iterationDepth)
-	if not outputTarget.is_empty():
-		return null
-	elif targetDepth < testTargetQueue.size():
+	if targetDepth < targetQueueSerialized.size():
 		targetDepth += 1
-		return getTargetSerToModel(testTargetQueue[targetDepth-1])
-	elif iterationDepth >= maxIterationDepth:
-		return null
+		return getTargetSerToModel(targetQueueSerialized[targetDepth-1])
 	else:
-		var validTargets : Array[Variant] = getValidTargets(targetType, playerModel, verifyCallable)
-		if validTargets.size() == 0:
-			return null
-		#Append the target to be tested to a copy of testTargetQueue, clone this match state, set test data, and let 'er rip
-		var targetToEval : Dictionary[Variant, int] = {}
-		var targetToDecision : Dictionary[Variant, MatchStateDecision] = {}
-		for newTarget : Variant in validTargets:
-			var decision : MatchStateDecision = clone()
-			decision.testTargetQueue.append(getModelToTargetSer(newTarget))
-			decision.initTest()
-			targetToEval[newTarget] = decision.eval(_perspectiveIndex)
-			targetToDecision[newTarget] = decision
-		var bestTargets : Array[Variant] = getHighestEval(targetToEval)
-		#if true:
-		if iterationDepth == 0:
-			print(iterationDepth)
-			print(targetToEval)
-		var target : Variant = bestTargets[randi() % bestTargets.size()]
-		outputTarget = getModelToTargetSer(target)
-		bestDecision = targetToDecision[target]
-		return target
-
-func copyFromMatchState(matchState : MatchState) -> void:
-	deserialize(matchState.serialize())
-	baseMatchStateRef = weakref(matchState)
-
-func clone() -> MatchStateDecision:
-	var cloneDecision : MatchStateDecision = MatchStateDecision.new()
-	cloneDecision.copyFromMatchState(getBaseMatchState())
-	cloneDecision.setPhase(_phaseHandler.currentPhase)
-	cloneDecision.testTargetQueue = testTargetQueue.duplicate()
-	cloneDecision.iterationDepth = iterationDepth + 1
-	cloneDecision._perspectiveIndex = _perspectiveIndex
-	return cloneDecision
-
-func eval(_evalPerspective : int) -> int:
-	var perspectivePlayerModel : PlayerModel = getPerspectivePlayerModel(_evalPerspective)
-	return getSpin(perspectivePlayerModel) - getSpin(getOtherPlayerModel(perspectivePlayerModel))
+		hasTargeted = true
+		validTargets = getValidTargets(targetType, playerModel, verifyCallable)
+		#setBaseMatchStateRef(self)
+		return null
 
 ####################################################################################################
 
 func onResetRound() -> void:
 	await super.onResetRound()
-	_phaseHandler.iterPhase()
+	phaseHandler.iterPhase()
 
 func onMatchStart() -> void:
 	await super.onMatchStart()
-	_phaseHandler.iterPhase()
+	phaseHandler.iterPhase()
 
 func onRoundStart() -> void:
 	await super.onRoundStart()
-	_phaseHandler.iterPhase()
+	phaseHandler.iterPhase()
 
 func onTurnStart() -> void:
 	await super.onTurnStart()
-	_phaseHandler.iterPhase()
+	phaseHandler.iterPhase()
 
 func onTurnActionable() -> void:
 	await super.onTurnActionable()
-	if outputTarget.is_empty():
-		initTest()
-	else:
-		_phaseHandler.iterPhase()
+	if not hasTargeted:
+		await activateAbilityOfCoinPieceModel(getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, _activePlayer, _targetFuncCanActivate))
+	phaseHandler.iterPhase()
 
 func onTurnEnd() -> void:
 	await super.onTurnEnd()
-	_phaseHandler.iterPhase()
+	phaseHandler.iterPhase()
 
 func onTurnSkipped() -> void:
 	await super.onTurnSkipped()
-	_phaseHandler.iterPhase()
+	phaseHandler.iterPhase()
 
 func onRoundEnd() -> void:
 	await super.onRoundEnd()
 	#print("End of Round Decision: ", _spinUser, " ", _spinOpponent)
 	#print(_playerModelUser.getCoinFaceModel().getAllSeals(), " ", _playerModelOpponent.getCoinFaceModel().getAllSeals())
-	#_phaseHandler.iterPhase()
+	#phaseHandler.iterPhase()
 
 func onMatchEnd() -> void:
 	pass

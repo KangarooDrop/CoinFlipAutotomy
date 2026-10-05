@@ -21,7 +21,7 @@ func getBaseData() -> Dictionary:
 	return baseData
 
 func getTooltipString() -> String:
-	return super.getTooltipString() % [SPIN_INC, ModelDB.getSealSingleton(SealLead).getName()]
+	return super.getTooltipString() % [ModelDB.getSealSingleton(SealLead).getName(), SPIN_INC]
 
 ####################################################################################################
 
@@ -33,10 +33,8 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Invalid target given to AbilityDevour.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSpin.addSpin(matchState, abilityContext.getPlayerModel(), SPIN_INC)
-	
 	var targetCoinPiece : CoinPieceModel = abilityContext.targets[0]
-	if not targetCoinPiece.hasSeal():
-		return
-	await CmdSeal.removeSeal(matchState, targetCoinPiece)
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPiece)
+	if targetCoinPiece.hasSeal():
+		await CmdSeal.removeSeal(matchState, targetCoinPiece)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPiece)
+	await CmdSpin.addSpin(matchState, abilityContext.getPlayerModel(), SPIN_INC)

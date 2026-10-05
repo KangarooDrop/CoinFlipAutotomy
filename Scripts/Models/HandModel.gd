@@ -31,6 +31,7 @@ func _hasIndex(index : int) -> bool:
 ####################################################################################################
 
 func clone() -> HandModel:
+	var usecs : int = Time.get_ticks_usec()
 	var cloneModel : HandModel = get_script().new(_demonScript)
 	cloneModel.setPlayerModel(getPlayerModel())
 	for i in range(_fingerModels.size()):
@@ -38,6 +39,7 @@ func clone() -> HandModel:
 			continue
 		cloneModel._setFingerInternal(i, _fingerModels[i].clone())
 		cloneModel.getFinger(i).setHandModel(cloneModel)
+	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.HAND_SERIALIZE, Time.get_ticks_usec() - usecs)
 	return cloneModel
 
 ####################################################################################################

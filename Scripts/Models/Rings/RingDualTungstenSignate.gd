@@ -31,6 +31,8 @@ func onRoundStart(matchState : MatchState) -> void:
 	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS)
 	
 	var targetCoinPiece : CoinPieceModel = await CmdAction.getCoinPieceToActivate(matchState, playerModel)
+	if targetCoinPiece == null:
+		return
 	var abilityScript : Script = targetCoinPiece.abilityScript
 	if abilityScript == null:
 		return

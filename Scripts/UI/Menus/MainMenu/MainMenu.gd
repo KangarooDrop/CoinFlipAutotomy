@@ -75,7 +75,6 @@ func _getRandomPlayerModel() -> PlayerModel:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.is_pressed() and not event.is_echo():
-		return
 		var matchState : MatchState = MatchState.new()
 		var playerModelUser : PlayerModel = _getRandomPlayerModel()
 		var playerModelOpponent : PlayerModel = _getRandomPlayerModel()
@@ -89,3 +88,5 @@ func _input(event: InputEvent) -> void:
 			var decision : MatchStateDecision = MatchStateDecision.new()
 			decision.deserialize(data)
 		print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+		Tracker.printTimes()
+		Tracker.clear()

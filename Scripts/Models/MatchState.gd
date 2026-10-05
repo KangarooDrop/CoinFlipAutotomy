@@ -5,7 +5,7 @@ class_name MatchState
 #Gameplay variants and constants
 const STARTING_SPIN : int = 100
 const PREGAME_MAX_TIME : float = 10.0
-const TURN_MAX_TIME : float = 20.0
+const TURN_MAX_TIME : float = 999.0
 const NUM_TURNS_MAX : int = 20
 
 var roundNumber : int = 0
@@ -29,6 +29,8 @@ var _spinUser : int = STARTING_SPIN
 var _spinOpponent : int = STARTING_SPIN
 var _additionalTurnQueue : Array = []
 
+var phaseHandler : PhaseHandler = null
+
 #CPU Targeting Info
 func resetCPUTargetData() -> void:
 	targetQueue.clear()
@@ -48,6 +50,10 @@ func _setSpinOpponentInternal(amount : int) -> void:
 
 ####################################################################################################
 
+func _init() -> void:
+	phaseHandler = PhaseHandler.new()
+	phaseHandler.setMatchState(self)
+
 func _getCloneCounterpart(comp : PlayerModel, userClone : PlayerModel, opponentClone : PlayerModel) -> PlayerModel:
 	if comp == null:
 		return null
@@ -59,6 +65,8 @@ func _getCloneCounterpart(comp : PlayerModel, userClone : PlayerModel, opponentC
 		return null
 
 func serialize() -> Dictionary:
+	var usecs : int = Time.get_ticks_usec()
+	
 	var playerModelUserClone : PlayerModel = _playerModelUser.clone()
 	var playerModelOpponentClone : PlayerModel = _playerModelOpponent.clone()
 	var activePlayerClone : PlayerModel = _getCloneCounterpart(_activePlayer, playerModelUserClone, playerModelOpponentClone)
@@ -70,7 +78,7 @@ func serialize() -> Dictionary:
 	var winningPlayersClone : Array[PlayerModel] = []
 	for winningPlayerModel : PlayerModel in winningPlayers:
 		winningPlayersClone.append(_getCloneCounterpart(winningPlayerModel, playerModelUserClone, playerModelOpponentClone))
-	return {
+	var rtn : Dictionary[String, Variant] = {
 		"player_model_user" : playerModelUserClone,
 		"player_model_opponent" : playerModelOpponentClone,
 		"active_player" : activePlayerClone,
@@ -90,7 +98,10 @@ func serialize() -> Dictionary:
 		"winner_last_round" : winnerLastRoundClone,
 		"winning_players" : winningPlayersClone,
 		"is_actionable" : isActionable,
+		"current_phase" : phaseHandler.currentPhase,
 	}
+	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.MATCH_STATE_SERIALIZE, Time.get_ticks_usec() - usecs)
+	return rtn
 
 func deserialize(data : Dictionary) -> void:
 	_playerModelUser = data["player_model_user"]
@@ -112,6 +123,7 @@ func deserialize(data : Dictionary) -> void:
 	winnerLastRound = data["winner_last_round"]
 	winningPlayers = data["winning_players"]
 	isActionable = data["is_actionable"]
+	phaseHandler.currentPhase = data["current_phase"]
 
 ####################################################################################################
 

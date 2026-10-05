@@ -53,9 +53,11 @@ func destroyFinger() -> void:
 	after_finger_destroyed.emit()
 
 func clone() -> FingerModel:
+	var usecs : int = Time.get_ticks_usec()
 	var copy : FingerModel = get_script().new()
 	if _ringModel != null:
 		copy.setRingModel(_ringModel.clone())
 		copy.getRingModel().setFingerModel(copy)
 	copy.destroyed = destroyed
+	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.FINGER_SERIALIZE, Time.get_ticks_usec() - usecs)
 	return copy

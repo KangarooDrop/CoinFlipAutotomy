@@ -3,7 +3,6 @@ extends Node2D
 class_name MatchNode
 
 var _matchState : MatchState = null
-var _phaseHandler : PhaseHandler = null
 
 var _flippingCoinToNextPlayer : bool = false
 
@@ -39,9 +38,7 @@ func _initMatch():
 	_matchState = MatchState.new()
 	_matchState.setMatchNode(self)
 	advantageBar.setMatchState(_matchState)
-	_phaseHandler = PhaseHandler.new()
-	_phaseHandler.setMatchState(_matchState)
-	_phaseHandler.setBinds(
+	_matchState.phaseHandler.setBinds(
 		{
 			PhaseHandler.MATCH_PHASE.RESET : 			_onResetRoundInternal,
 			PhaseHandler.MATCH_PHASE.MATCH_START : 		_onMatchStartInternal,
@@ -65,7 +62,7 @@ func _initMatch():
 	_showGearUser()
 	_showGearOpponent()
 	
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func getRandomOpponentPlayerModel() -> PlayerModel:
 	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
@@ -106,7 +103,7 @@ func _process(delta: float) -> void:
 		if ceilVal != turnTimer.getTime():
 			turnTimer.setTime(ceilVal)
 		if _matchState.pregameTime <= 0.0:
-			_phaseHandler.iterPhaseDeferred()
+			_matchState.phaseHandler.iterPhaseDeferred()
 	
 	if not _matchState.roundStarted:
 		return
@@ -126,7 +123,7 @@ func _process(delta: float) -> void:
 func _onMatchStartInternal() -> void:
 	await _matchState.onMatchStart()
 	background.isTurning = true
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onResetRoundInternal() -> void:
 	await _matchState.onResetRound()
@@ -152,14 +149,15 @@ func _onResetRoundInternal() -> void:
 
 func _onRoundStartInternal() -> void:
 	await _matchState.onRoundStart()
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onTurnStartInternal() -> void:
 	await _matchState.onTurnStart()
 	_updateBackgroundScale()
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onTurnActionable() -> void:
+	currentDecision = null
 	await _matchState.onTurnActionable()
 	if not _matchState.isUserControlled():
 		var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
@@ -169,7 +167,7 @@ func _onTurnActionable() -> void:
 		else:
 			var targetToActivate : CoinPieceModel = coinPieceModelsCanActivate[RNG.getRandi() % coinPieceModelsCanActivate.size()]
 			await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
-			_phaseHandler.iterPhaseDeferred()
+			_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onTurnEndInternal() -> void:
 	if choosingTarget:
@@ -181,11 +179,11 @@ func _onTurnEndInternal() -> void:
 		_flippingCoinToNextPlayer = true
 		await coinNode.flipToModel(_matchState.getActivePlayerModel().getCoinFaceModel())
 		_flippingCoinToNextPlayer = false
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onTurnSkippedInternal() -> void:
 	await _matchState.onTurnSkipped()
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onRoundEndInternal() -> void:
 	_matchState.onRoundEnd()
@@ -211,7 +209,7 @@ func _onRoundEndInternal() -> void:
 		return
 	
 	background.isTurning = true
-	_phaseHandler.iterPhaseDeferred()
+	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onMatchEndInernal() -> void:
 	RunManager.onMatchEnded(_matchState)
@@ -227,7 +225,7 @@ func _userActivateAbility(coinPieceModel : CoinPieceModel) -> void:
 	var successfullyActivated : bool = await _matchState.activateAbilityOfCoinPieceModel(coinPieceModel)
 	canCancelTargetChoice = false
 	if successfullyActivated:
-		_phaseHandler.iterPhaseDeferred()
+		_matchState.phaseHandler.iterPhaseDeferred()
 
 func _input(event: InputEvent) -> void:
 	if _flippingCoinToNextPlayer:
@@ -263,24 +261,37 @@ func _input(event: InputEvent) -> void:
 					target_node_chosen_or_forced_skip.emit(fingerNode)
 					return
 
+var currentDecision : MatchStateDecision = null
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		if choosingTarget and canCancelTargetChoice and _matchState.isUserControlled():
 			_cancelTargeting()
 		else:
-			var decision : MatchStateDecision = MatchStateDecision.new()
-			decision.copyFromMatchState(_matchState)
-			decision.setPhase(_phaseHandler.currentPhase)
-			decision._perspectiveIndex = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
+			if currentDecision == null:
+				currentDecision = MatchStateDecision.new()
+				currentDecision.deserialize(_matchState.serialize())
+				currentDecision.setBaseMatchStateRef(_matchState)
+				currentDecision._perspectiveIndex = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
+				currentDecision.initDecision()
+			else:
+				currentDecision.iterDecision()
+			#while currentDecision != null and not currentDecision.outputTarget.is_empty():
+			#	print(currentDecision.getTargetSerToReadable(currentDecision.outputTarget))
+			#	currentDecision = currentDecision.bestDecision
 			
-			decision.initTest()
-			var currentDecision : MatchStateDecision = decision
-			while currentDecision != null and not currentDecision.outputTarget.is_empty():
-				print(currentDecision.getTargetSerToReadable(currentDecision.outputTarget))
-				currentDecision = currentDecision.bestDecision
-			
+			print(currentDecision.getEvalDict())
+			var bestDecision : MatchStateDecision = currentDecision.getBestDecision()
+			pass
+			print(bestDecision.targetQueueSerialized)
 			print("ESCAPING")
 		return
+	
+	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_TAB and not event.is_echo():
+		pass
+		print(currentDecision.getEvalDict())
+		var bestDecision : MatchStateDecision = currentDecision.getBestDecision()
+		print(bestDecision.targetQueueSerialized)
 	
 	if not _matchState.isUserControlled():
 		return

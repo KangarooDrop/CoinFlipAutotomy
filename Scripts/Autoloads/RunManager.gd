@@ -38,9 +38,29 @@ func getNumLives() -> int:
 
 ####################################################################################################
 
+func randomizeCoinPieces() -> void:
+	var coinFaceModel : CoinFaceModel = _userPlayerModel.getOriginalCoinFaceModel()
+	var isCoreRandom : bool = coinFaceModel.getCoinPieceAtSocket(Entities.CoinPieceSocketIndex.CORE).abilityScript == AbilityRandomCore
+	var randomExteriorSocketIndices : Array[Entities.CoinPieceSocketIndex] = []
+	for socketIndex : Entities.CoinPieceSocketIndex in coinFaceModel.getUsedSocketIndices():
+		if socketIndex == Entities.CoinPieceSocketIndex.CORE:
+			continue
+		var coinPieceModel : CoinPieceModel = coinFaceModel.getCoinPieceAtSocket(socketIndex)
+		if coinPieceModel.abilityScript != AbilityRandomExterior:
+			continue
+		randomExteriorSocketIndices.append(socketIndex)
+	if isCoreRandom:
+		coinFaceModel.getCoinPieceAtSocket(Entities.CoinPieceSocketIndex.CORE).setAbilityScript(ModelDB.getRandomAbilityCoreScript())
+	if randomExteriorSocketIndices.size() > 0:
+		var abilityScripts : Array[Script] = ModelDB.getRandomAbilityExteriorScriptsNoRepeat(randomExteriorSocketIndices.size())
+		for i in range(randomExteriorSocketIndices.size()):
+			coinFaceModel.getCoinPieceAtSocket(randomExteriorSocketIndices[i]).setAbilityScript(abilityScripts[i])
+
 func onCharacterChosen(demonScript : Script) -> void:
 	_userPlayerModel = ModelDB.getDemonSingleton(demonScript).getStarterData().createPlayerModel()
 	_userPlayerModel.isHuman = true
+	randomizeCoinPieces()
+	
 	#get_tree().change_scene_to_packed(Preloader.matchNodePacked)
 	get_tree().change_scene_to_packed(Preloader.venderPacked)
 
@@ -53,4 +73,5 @@ func onMatchEnded(matchState : MatchState) -> void:
 		get_tree().change_scene_to_packed(Preloader.venderPacked)
 
 func onVenderExited() -> void:
+	_userPlayerModel.getOriginalCoinFaceModel().fillEmptySockets()
 	get_tree().change_scene_to_packed(Preloader.matchNodePacked)

@@ -49,6 +49,8 @@ func addAbilities():
 	_abilityDB.add(AbilityFlaringEmotions)
 	_abilityDB.add(AbilityIWillHaveYou)
 	_abilityDB.add(AbilityTakeWhatsMine)
+	_abilityDB.add(AbilityRandomCore)
+	_abilityDB.add(AbilityRandomExterior)
 	
 	for abilityScript : Script in _abilityDB.getAllScripts():
 		var abilityModel : Ability = _abilityDB.getModelByScriptSingleton(abilityScript)
@@ -89,7 +91,7 @@ func addDemons():
 	_demonDB.add(DemonGluttony)
 	#_demonDB.add(DemonGreed)
 	_demonDB.add(DemonLust)
-	#_demonDB.add(DemonPride)
+	_demonDB.add(DemonPride)
 	_demonDB.add(DemonSloth)
 	#_demonDB.add(DemonWrath)
 
@@ -141,6 +143,9 @@ func getRandomAbilityCoreScript() -> Script:
 
 func getRandomAbilityExteriorScript() -> Script:
 	return _abilityExteriorDB.getRandomScript()
+
+func getRandomAbilityExteriorScriptsNoRepeat(num : int, excludes : Array[Script] = []) -> Array[Script]:
+	return _abilityExteriorDB.getRandomScriptNoRepeat(num, excludes)
 
 func getRandomRingScript() -> Script:
 	return _ringDB.getRandomScript()

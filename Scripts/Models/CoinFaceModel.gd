@@ -31,13 +31,13 @@ func _hasSocket(socketIndex : Entities.CoinPieceSocketIndex) -> bool:
 ####################################################################################################
 
 func clone() -> CoinFaceModel:
+	var usecs : int = Time.get_ticks_usec()
 	var cloneModel : CoinFaceModel = get_script().new()
 	cloneModel.setPlayerModel(getPlayerModel())
-	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
-		if _socketIndexToPiece[socketIndex] == null:
-			continue
+	for socketIndex : Entities.CoinPieceSocketIndex in getUsedSocketIndices():
 		cloneModel.insertCoinPiece(socketIndex, _socketIndexToPiece[socketIndex].clone())
 		cloneModel.getCoinPieceAtSocket(socketIndex).setCoinFaceModel(cloneModel)
+	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.COIN_FACE_SERIALIZE, Time.get_ticks_usec() - usecs)
 	return cloneModel
 
 ####################################################################################################
@@ -70,6 +70,22 @@ func getUsedSocketIndices() -> Array[Entities.CoinPieceSocketIndex]:
 		if getCoinPieceAtSocket(socketIndex) != null:
 			rtn.append(socketIndex)
 	return rtn
+
+func getEmptySocketIndices() -> Array[Entities.CoinPieceSocketIndex]:
+	var rtn : Array[Entities.CoinPieceSocketIndex] = []
+	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
+		if getCoinPieceAtSocket(socketIndex) == null:
+			rtn.append(socketIndex)
+	return rtn
+
+func fillEmptySockets() -> void:
+	for socketIndex : Entities.CoinPieceSocketIndex in getEmptySocketIndices():
+		var counterweightCoinPiece : CoinPieceModel = CoinPieceModel.new()
+		if socketIndex == Entities.CoinPieceSocketIndex.CORE:
+			counterweightCoinPiece.setAbilityScript(AbilityCounterweightCore)
+		else:
+			counterweightCoinPiece.setAbilityScript(AbilityCounterweightExterior)
+		insertCoinPiece(socketIndex, counterweightCoinPiece)
 
 func getCore() -> CoinPieceModel:
 	return _socketIndexToPiece[Entities.CoinPieceSocketIndex.CORE]

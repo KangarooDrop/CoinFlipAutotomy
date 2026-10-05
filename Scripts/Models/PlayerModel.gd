@@ -40,6 +40,7 @@ func getCoinFaceModel() -> CoinFaceModel:
 	return _coinFaceModelMatch
 
 func clone() -> PlayerModel:
+	var usecs : int = Time.get_ticks_usec()
 	var playerModelClone : PlayerModel = PlayerModel.new(_demonScript, _handModelOriginal.clone(), _coinFaceModelOriginal.clone())
 	playerModelClone._handModelOriginal.setPlayerModel(playerModelClone)
 	playerModelClone._coinFaceModelOriginal.setPlayerModel(playerModelClone)
@@ -49,4 +50,5 @@ func clone() -> PlayerModel:
 	playerModelClone._coinFaceModelMatch.setPlayerModel(playerModelClone)
 	playerModelClone.isHuman = isHuman
 	playerModelClone.isControlledCPU = isControlledCPU
+	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.PLAYER_SERIALIZE, Time.get_ticks_usec() - usecs)
 	return playerModelClone
