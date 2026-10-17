@@ -31,13 +31,41 @@ var _additionalTurnQueue : Array = []
 
 var phaseHandler : PhaseHandler = null
 
-#CPU Targeting Info
-func resetCPUTargetData() -> void:
-	targetQueue.clear()
-var targetQueue : Array[Variant] = []
-
 #signal spin_changed(playerModel : PlayerModel)
 var spin_changed : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(playerModel : PlayerModel)
+
+####################################################################################################
+
+const FINGER_TARGET_INDEX : int = 0
+const COIN_PIECE_TARGET_INDEX : int = 1
+func getModelToTargetSerialized(model : RefCounted) -> Array[int]:
+	var playerModels : Array[PlayerModel] = [_playerModelUser, _playerModelOpponent]
+	for i in range(playerModels.size()):
+		var fingerModels : Array[FingerModel] = playerModels[i].getHandModel().getFingers()
+		for j in range(fingerModels.size()):
+			if model == fingerModels[j] or model == fingerModels[j].getRingModel():
+				return [i, FINGER_TARGET_INDEX, j]
+		var coinPieceModels : Array[CoinPieceModel] = playerModels[i].getCoinFaceModel().getAllPieces()
+		for j in range(coinPieceModels.size()):
+			if model == coinPieceModels[j] or model == coinPieceModels[j].getSealModel():
+				return [i, COIN_PIECE_TARGET_INDEX, j]
+	return []
+func getTargetSerializedToModel(data : Array[int]) -> RefCounted:
+	var playerModel : PlayerModel = _playerModelUser if data[0]==0 else _playerModelOpponent
+	if data[1] == FINGER_TARGET_INDEX:
+		return playerModel.getHandModel().getFinger(data[2])
+	elif data[1] == COIN_PIECE_TARGET_INDEX:
+		return playerModel.getCoinFaceModel().getAllPieces()[data[2]]
+	return null
+func getTargetSerializedToReadable(data : Array[int]) -> String:
+	var rtn : String = ""
+	var isUser : bool = data[0] == 0
+	var isCoinPiece : bool = data[1] == COIN_PIECE_TARGET_INDEX
+	rtn += "Best Target: "
+	rtn += "Your " if isUser else "Opponent's "
+	rtn += "Coin Piece Socket#" if isCoinPiece else "Finger #"
+	rtn += str(data[2])
+	return rtn
 
 ####################################################################################################
 
@@ -172,7 +200,6 @@ func onTurnStart() -> void:
 
 func onTurnActionable() -> void:
 	isActionable = true
-	resetCPUTargetData()
 
 func onTurnEnd() -> void:
 	currentTurnNumber += 1
@@ -330,7 +357,7 @@ func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, veri
 				if target == null:
 					break
 		else:
-			return _matchNode.getTargetCPU(targetType, playerModel, verifyCallable)
+			target = await _matchNode.getTargetCPU(targetType, playerModel, verifyCallable)
 	else:
 		var validTargets : Array = getValidTargets(targetType, playerModel, verifyCallable)
 		if validTargets.size() != 0:

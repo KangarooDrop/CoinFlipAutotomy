@@ -4,6 +4,7 @@ class_name PhaseHandler
 
 enum MATCH_PHASE {
 	NONE,
+	
 	RESET,
 	MATCH_START,
 	ROUND_START,
@@ -16,7 +17,7 @@ enum MATCH_PHASE {
 
 var binds : Dictionary[MATCH_PHASE, Callable] = {}
 func setBinds(newBinds : Dictionary[MATCH_PHASE, Callable]) -> void:
-	if not newBinds.size() == MATCH_PHASE.size()-1:
+	if newBinds.size() != MATCH_PHASE.size()-1:
 		push_warning("WARNING: Phase Handler binds size != number of phases.")
 	binds = newBinds
 

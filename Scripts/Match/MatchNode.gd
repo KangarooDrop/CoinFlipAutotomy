@@ -3,6 +3,7 @@ extends Node2D
 class_name MatchNode
 
 var _matchState : MatchState = null
+var _cpuDecider : CPUDecider = null
 
 var _flippingCoinToNextPlayer : bool = false
 
@@ -37,6 +38,8 @@ func _ready() -> void:
 func _initMatch():
 	_matchState = MatchState.new()
 	_matchState.setMatchNode(self)
+	_cpuDecider = CPUDecider.new()
+	_cpuDecider.setMatchState(_matchState)
 	advantageBar.setMatchState(_matchState)
 	_matchState.phaseHandler.setBinds(
 		{
@@ -66,7 +69,7 @@ func _initMatch():
 
 func getRandomOpponentPlayerModel() -> PlayerModel:
 	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
-	playerModelOpponent.isControlledCPU = true
+	#playerModelOpponent.isControlledCPU = true
 	return playerModelOpponent
 
 func _attachPlayerModel(playerModel : PlayerModel, isUser : bool) -> void:
@@ -111,6 +114,8 @@ func _process(delta: float) -> void:
 		return
 	if _matchState.currentTurnTime <= 0.0:
 		return
+	
+	_cpuDecider._process(delta)
 	
 	if _matchState.isActionable and _matchState.currentTurnTime > 0.0:
 		_matchState.currentTurnTime -= delta
@@ -157,15 +162,14 @@ func _onTurnStartInternal() -> void:
 	_matchState.phaseHandler.iterPhaseDeferred()
 
 func _onTurnActionable() -> void:
-	currentDecision = null
 	await _matchState.onTurnActionable()
+	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	if not _matchState.isUserControlled():
-		var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 		var coinPieceModelsCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
 		if coinPieceModelsCanActivate.size() == 0:
 			await skipTurn()
 		else:
-			var targetToActivate : CoinPieceModel = coinPieceModelsCanActivate[RNG.getRandi() % coinPieceModelsCanActivate.size()]
+			var targetToActivate : CoinPieceModel = await _matchState.getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, activePlayer)
 			await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
 			_matchState.phaseHandler.iterPhaseDeferred()
 
@@ -261,37 +265,20 @@ func _input(event: InputEvent) -> void:
 					target_node_chosen_or_forced_skip.emit(fingerNode)
 					return
 
-var currentDecision : MatchStateDecision = null
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		if choosingTarget and canCancelTargetChoice and _matchState.isUserControlled():
 			_cancelTargeting()
 		else:
-			if currentDecision == null:
-				currentDecision = MatchStateDecision.new()
-				currentDecision.deserialize(_matchState.serialize())
-				currentDecision.setBaseMatchStateRef(_matchState)
-				currentDecision._perspectiveIndex = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
-				currentDecision.initDecision()
-			else:
-				currentDecision.iterDecision()
-			#while currentDecision != null and not currentDecision.outputTarget.is_empty():
-			#	print(currentDecision.getTargetSerToReadable(currentDecision.outputTarget))
-			#	currentDecision = currentDecision.bestDecision
-			
-			print(currentDecision.getEvalDict())
-			var bestDecision : MatchStateDecision = currentDecision.getBestDecision()
-			pass
-			print(bestDecision.targetQueueSerialized)
+			_cpuDecider.initCPUTargetThread()
 			print("ESCAPING")
 		return
 	
 	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_TAB and not event.is_echo():
 		pass
-		print(currentDecision.getEvalDict())
-		var bestDecision : MatchStateDecision = currentDecision.getBestDecision()
-		print(bestDecision.targetQueueSerialized)
+		#print(currentDecision.getEvalDict())
+		#var bestDecision : MatchStateDecision = currentDecision.getBestDecision()
+		#print(bestDecision.targetQueueSerialized)
 	
 	if not _matchState.isUserControlled():
 		return
@@ -304,6 +291,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("action_" + str(i)):
 			_userActivateAbility(_matchState.getActivePlayerModel().getCoinFaceModel().getCoinPieceAtSocket(i-1))
 			return
+
+################################################################################################################
+
+func _exit_tree() -> void:
+	_cpuDecider.forceKill()
+	_cpuDecider.clearCPUTargetThread()
 
 ####################################################################################################
 
@@ -350,13 +343,24 @@ func skipTurn() -> void:
 	await _onTurnSkippedInternal()
 
 func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
-	return await _getUserTarget(targetType, playerModel, verifyCallable)
+	var target : RefCounted = await _getUserTarget(targetType, playerModel, verifyCallable)
+	#var targetSerialized : Array[int] = _matchState.getModelToTargetSerialized(target)
+	#_cpuDecider.traverseDecisionTree(targetSerialized)
+	_cpuDecider.targetQueueSerialized.clear()
+	return target
 
 func getTargetCPU(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
-	var validTargets : Array = _matchState.getValidTargets(targetType, playerModel, verifyCallable)
-	if validTargets.size() == 0:
-		return null
-	return validTargets[RNG.getRandi() % validTargets.size()]
+	var nextTargetSerialized : Array[int] = await _cpuDecider.initCPUTargetThread()
+	_cpuDecider.targetQueueSerialized.append(nextTargetSerialized)
+	return _matchState.getTargetSerializedToModel(nextTargetSerialized)
+	
+	#var validTargets : Array = _matchState.getValidTargets(targetType, playerModel, verifyCallable)
+	#if validTargets.size() == 0:
+	#	return null
+	#return validTargets[RNG.getRandi() % validTargets.size()]
+
+################################################################################################################
+
 
 signal target_node_chosen_or_forced_skip
 var choosingTarget : bool = false
