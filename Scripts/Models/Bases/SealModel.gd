@@ -19,8 +19,11 @@ var _coinPieceModelRef : WeakRef = null
 
 func getLocID() -> String: return "SEAL."
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func getTexturePath() -> String:
+	return Preloader.texturePath + "Seals/"
+
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		TEXTURE_KEY : _texture,
@@ -29,27 +32,14 @@ func getBaseData() -> Dictionary:
 	}, true)
 	return baseData
 
-func getTexturePath() -> String:
-	return Preloader.texturePath + "Seals/"
-
-func deserialize(data : Dictionary) -> LocalizedModel:
-	super.deserialize(data)
+func _initBaseData(data : Dictionary) -> void:
+	super._initBaseData(data)
 	if data.has(TEXTURE_KEY):
 		_texture = data[TEXTURE_KEY]
 	if data.has(TEX_PATH_KEY):
 		texPath = data[TEX_PATH_KEY]
 	if data.has(BACKGROUND_TYPE):
 		_bgType = data[BACKGROUND_TYPE]
-	return self
-
-func serialize() -> Dictionary:
-	var rtn : Dictionary = super.serialize()
-	rtn.merge({
-		TEXTURE_KEY : _texture,
-		TEX_PATH_KEY : texPath,
-		BACKGROUND_TYPE : _bgType,
-	}, true)
-	return rtn
 
 func getName() -> String:
 	return getLocalizedString("name") + " Seal"
@@ -65,7 +55,8 @@ func setCoinPieceModel(newCoinPieceModel : CoinPieceModel) -> void:
 func getCoinPieceModel() -> CoinPieceModel:
 	if not _coinPieceModelRef:
 		return null
-	return _coinPieceModelRef.get_ref()
+	var rtn = _coinPieceModelRef.get_ref()
+	return rtn
 
 func getPlayerModel() -> PlayerModel:
 	if not _coinPieceModelRef:

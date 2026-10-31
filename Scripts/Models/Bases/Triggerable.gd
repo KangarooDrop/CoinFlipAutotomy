@@ -14,50 +14,50 @@ func canActivateAbilityOfCoinPiece(_matchState : MatchState, _coinPieceModel : C
 	return true
 
 #	Match Time Triggers	#
-func onMatchStart(_matchState : MatchState) -> void:
-	pass
-func onBeforeMatchEnd(_matchState : MatchState) -> void:
-	pass
+func onMatchStart(_matchState : MatchState) -> bool:
+	return false
+func onBeforeMatchEnd(_matchState : MatchState) -> bool:
+	return false
 
-func onRoundStart(_matchState : MatchState) -> void:
-	pass
-func onBeforeRoundEnd(_matchState : MatchState) -> void:
-	pass
+func onRoundStart(_matchState : MatchState) -> bool:
+	return false
+func onBeforeRoundEnd(_matchState : MatchState) -> bool:
+	return false
 
-func onTurnStart(_matchState : MatchState) -> void:
-	pass
-func onBeforeTurnEnd(_matchState : MatchState) -> void:
-	pass
+func onTurnStart(_matchState : MatchState) -> bool:
+	return false
+func onBeforeTurnEnd(_matchState : MatchState) -> bool:
+	return false
 
-func onBeforeTurnSkipped(_matchState : MatchState) -> void:
-	pass
+func onBeforeTurnSkipped(_matchState : MatchState) -> bool:
+	return false
 
 #	Spin Change Triggers	#
-func onBeforeSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> void:
-	pass
-func onAfterSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> void:
-	pass
+func onBeforeSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> bool:
+	return false
+func onAfterSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> bool:
+	return false
 
 #	Ability Triggers	#
-func onBeforeAbilityCheck(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> void:
-	pass
-func onBeforeAbilityActivated(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> void:
-	pass
-func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> void:
-	pass
-func onBeforeAbilityCountered(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> void:
-	pass
-func onAfterAbilityCountered(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> void:
-	pass
+func onBeforeAbilityCheck(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+	return false
+func onBeforeAbilityActivated(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+	return false
+func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+	return false
+func onBeforeAbilityCountered(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+	return false
+func onAfterAbilityCountered(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+	return false
 
 #	Seal Triggers	#
-func onBeforeSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _newSealModelPointer : Pointer) -> void:
-	pass
-func onAfterSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _oldSealModel : SealModel) -> void:
-	pass
+func onBeforeSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _newSealModelPointer : Pointer) -> bool:
+	return false
+func onAfterSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _oldSealModel : SealModel) -> bool:
+	return false
 
 #	Finger Ring Triggers	#
-func onBeforeFingerDestroyed(_matchState : MatchState, _fingerModel : FingerModel) -> void:
-	pass
-func onAfterFingerDestroyed(_matchState : MatchState, _fingerodel : FingerModel) -> void:
-	pass
+func onBeforeFingerDestroyed(_matchState : MatchState, _fingerModel : FingerModel) -> bool:
+	return false
+func onAfterFingerDestroyed(_matchState : MatchState, _fingerodel : FingerModel) -> bool:
+	return false

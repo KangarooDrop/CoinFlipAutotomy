@@ -8,8 +8,8 @@ const SPIN_GAIN : int = 10
 
 func getLocID() -> String: return super.getLocID() + "BLANK_BAND"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -24,8 +24,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityCountered(matchState : MatchState, _ability : Ability, _context : AbilityContext) -> void:
+func onAfterAbilityCountered(matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
 	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_GAIN)
+	return true
 
-func onBeforeTurnSkipped(matchState : MatchState) -> void:
+func onBeforeTurnSkipped(matchState : MatchState) -> bool:
 	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_GAIN)
+	return true

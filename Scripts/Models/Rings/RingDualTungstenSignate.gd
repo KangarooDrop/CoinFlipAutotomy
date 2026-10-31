@@ -8,8 +8,8 @@ const SPIN_LOSS : int = 20
 
 func getLocID() -> String: return super.getLocID() + "DUAL_TUNGSTEN_SIGNATE"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -24,7 +24,7 @@ func getTexturePath() -> String:
 func getTooltipString() -> String:
 	return super.getTooltipString() % SPIN_LOSS
 
-func onRoundStart(matchState : MatchState) -> void:
+func onRoundStart(matchState : MatchState) -> bool:
 	popNode()
 	
 	var playerModel : PlayerModel = getPlayerModel()
@@ -32,8 +32,9 @@ func onRoundStart(matchState : MatchState) -> void:
 	
 	var targetCoinPiece : CoinPieceModel = await CmdAction.getCoinPieceToActivate(matchState, playerModel)
 	if targetCoinPiece == null:
-		return
+		return true
 	var abilityScript : Script = targetCoinPiece.abilityScript
 	if abilityScript == null:
-		return
+		return true
 	await CmdMatch.copyAbilityScript(matchState, abilityScript, self)
+	return true

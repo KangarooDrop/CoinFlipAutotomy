@@ -1,5 +1,5 @@
 @abstract
-extends RefCounted
+extends Serializable
 class_name LocalizedModel
 
 const IS_VISIBLE_KEY : String = "is_visible"
@@ -7,40 +7,32 @@ const IS_VISIBLE_KEY : String = "is_visible"
 var isVisible : bool = true
 
 ####################################################################################################
-#	BUILT-IN/PRIVATE FUNCS	#
-
-func _init(data : Dictionary = {}) -> void:
-	if data.is_empty():
-		deserialize(getBaseData())
-	else:
-		deserialize(data)
-
-####################################################################################################
 #	OVERRIDE FUNCS	#
 
-#Initial/Additional data for/from the model
-func getBaseData() -> Dictionary:
-	return {
-		IS_VISIBLE_KEY : true
-	}
 @abstract func getLocID() -> String
 
-@warning_ignore("unused_parameter")
-func deserialize(data : Dictionary) -> LocalizedModel:
+#Initial/Additional data for/from the model
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
+	baseData.merge(
+	{
+		IS_VISIBLE_KEY : true,
+	}, true)
+	return baseData
+
+func _initBaseData(data : Dictionary) -> void:
+	super._initBaseData(data)
 	if data.has(IS_VISIBLE_KEY):
 		isVisible = data[IS_VISIBLE_KEY]
-	return self
 
 func serialize() -> Dictionary:
-	return {
-		IS_VISIBLE_KEY : isVisible
-	}
+	var rtn : Dictionary = super.serialize()
+	rtn[ModelDB.DB_INDEX_KEY] = ModelDB.getModelToDBIndex(self)
+	return rtn
 
-####################################################################################################
-#	PUBLIC FUNCS	#
-
-func isSame(other : LocalizedModel) -> bool:
-	return get_script() == other.get_script()
+func deserialize(data : Dictionary) -> Serializable:
+	super.deserialize(data)
+	return self
 
 func clone() -> LocalizedModel:
 	var cloneModel : LocalizedModel = cloneBase()
@@ -54,6 +46,12 @@ func cloneBase() -> LocalizedModel:
 		return model
 	else:
 		return selfScript.new()
+
+####################################################################################################
+#	PUBLIC FUNCS	#
+
+func isSame(other : LocalizedModel) -> bool:
+	return get_script() == other.get_script()
 
 func getLocalizedString(key : String) -> String:
 	return Localization.getLocalizedData(getLocID() + "." + key)

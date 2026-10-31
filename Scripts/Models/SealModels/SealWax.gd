@@ -9,8 +9,8 @@ func getLocID() -> String: return super.getLocID() + "WAX"
 func getTexturePath() -> String:
 	return super.getTexturePath() + "wax.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		BACKGROUND_TYPE : Entities.SealBackgroundType.YELLOW,
@@ -24,8 +24,9 @@ func canActivateAbilityOfCoinPiece(_matchState : MatchState, coinPieceModel : Co
 		return false
 	return true
 
-func onBeforeTurnSkipped(matchState : MatchState) -> void:
+func onBeforeTurnSkipped(matchState : MatchState) -> bool:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
 	if not matchState.getActivePlayerModel() == coinPieceModel.getPlayerModel():
-		return
+		return false
 	await CmdSeal.removeSeal(matchState, coinPieceModel)
+	return true

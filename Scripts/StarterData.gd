@@ -12,7 +12,8 @@ func _init(newDemonScript : Script, abilityTypes : Array[Script], ringTypes : Ar
 	startingRingTypes = ringTypes
 
 func createHandModel() -> HandModel:
-	var handModel : HandModel = HandModel.new(demonScript)
+	var handModel : HandModel = HandModel.new()
+	handModel.setDemonScript(demonScript)
 	for ringType : Script in startingRingTypes:
 		handModel.addRing(ModelDB.getRing(ringType))
 	return handModel
@@ -24,4 +25,4 @@ func createCoinFaceModel() -> CoinFaceModel:
 	return coinFaceModel
 
 func createPlayerModel() -> PlayerModel:
-	return PlayerModel.new(demonScript, createHandModel(), createCoinFaceModel())
+	return PlayerModel.new().setHandModel(createHandModel()).setCoinFaceModel(createCoinFaceModel())

@@ -11,8 +11,8 @@ func getLocID() -> String:
 func getTexturePath() -> String:
 	return super.getTexturePath() + "horror_vacui.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NONE,
@@ -38,4 +38,6 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	var coinPiecesToStamp : Array[CoinPieceModel] = coinPieceSource.getCoinFaceModel().getAdjacentCoinPieces(coinPieceSource)
 	coinPiecesToStamp.insert(0, coinPieceSource)
 	for coinPiece : CoinPieceModel in coinPiecesToStamp:
+		if coinPiece.hasSeal():
+			continue
 		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), coinPiece)

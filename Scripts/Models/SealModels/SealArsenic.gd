@@ -11,8 +11,8 @@ func getLocID() -> String: return super.getLocID() + "ARSENIC"
 func getTexturePath() -> String:
 	return super.getTexturePath() + "arsenic.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		BACKGROUND_TYPE : Entities.SealBackgroundType.PURPLE,
@@ -24,10 +24,11 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
 	if context.source != coinPieceModel:
-		return
+		return false
 	var playerModel : PlayerModel = getPlayerModel()
 	await CmdSeal.removeSeal(matchState, coinPieceModel)
 	await CmdSpin.addSpin(matchState, playerModel, -SPIN_DEC)
+	return true

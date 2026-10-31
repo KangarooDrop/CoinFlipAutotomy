@@ -9,8 +9,8 @@ func getLocID() -> String:
 func getTexturePath() -> String:
 	return super.getTexturePath() + "play_with_your_food.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NON_SEAL_ANY,
@@ -23,7 +23,7 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func _getRandomAdjacentNonSeal(coinPieceModel : CoinPieceModel) -> CoinPieceModel:
+func _getRandomAdjacentNonSeal(matchState : MatchState, coinPieceModel : CoinPieceModel) -> CoinPieceModel:
 	if coinPieceModel == null:
 		return null
 	var adjacentCoinPieceModels : Array[CoinPieceModel] = coinPieceModel.getCoinFaceModel().getAdjacentCoinPieces(coinPieceModel)
@@ -32,7 +32,7 @@ func _getRandomAdjacentNonSeal(coinPieceModel : CoinPieceModel) -> CoinPieceMode
 			continue
 		adjacentCoinPieceModels.remove_at(i)
 	if adjacentCoinPieceModels.size() > 0:
-		return adjacentCoinPieceModels[RNG.getRandi() % adjacentCoinPieceModels.size()]
+		return RNG.select(matchState, adjacentCoinPieceModels, self)
 	else:
 		return null
 
@@ -46,10 +46,10 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	
 	var targetCoinPieceModel : CoinPieceModel = abilityContext.targets[0]
 	if targetCoinPieceModel.hasSeal():
+		pass
 		push_error("ERROR: Coin Piece with Seal given to AbilityPlayWithYourFood.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
 		return
-	
-	var adjacentTarget : CoinPieceModel = _getRandomAdjacentNonSeal(targetCoinPieceModel)
+	var adjacentTarget : CoinPieceModel = _getRandomAdjacentNonSeal(matchState, targetCoinPieceModel)
 	
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), targetCoinPieceModel)
 	if adjacentTarget != null:

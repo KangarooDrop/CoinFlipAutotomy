@@ -12,25 +12,6 @@ func getLocID() -> String: return "RING."
 func getTexturePath() -> String:
 	return Preloader.texturePath + "Rings/"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
-	baseData.merge(
-	{
-		
-	}, true)
-	return baseData
-
-func deserialize(data : Dictionary) -> LocalizedModel:
-	super.deserialize(data)
-	return self
-
-func serialize() -> Dictionary:
-	var rtn : Dictionary = super.serialize()
-	rtn.merge({
-		
-	}, true)
-	return rtn
-
 func getTooltipString() -> String:
 	return getLocalizedString("name") + ": " + getLocalizedString("desc")
 

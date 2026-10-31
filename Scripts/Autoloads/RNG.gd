@@ -17,8 +17,10 @@ var setNextToCurrent : bool = false
 const outputVerbose : bool = true
 """
 
-signal start_rng_accumulator()
-signal end_rng_accumulator()
+var start_rng_accumulator : CFSignal = CFSignal.new()
+var rng_enqueued : CFSignal = CFSignal.new()
+var rng_queue_finished : CFSignal = CFSignal.new()
+var end_rng_accumulator : CFSignal = CFSignal.new()
 
 
 var isDeciding : bool = false
@@ -28,15 +30,22 @@ var decisionIndices : Array[int] = []
 var decisionSizes : Array[int] = []
 var currentIndex : int = 0
 
-func select(from : Array, source : Variant) -> Variant:
-	if not isDeciding:
+func select(matchState : MatchState, from : Array, source : Variant) -> Variant:
+	if matchState is MatchStateDecision and matchState.targetQueueSerialized.size() == 4 and matchState.targetQueueSerialized[0] == [1, 1, 2]  and matchState.targetQueueSerialized[1] == [1, 1, 0] and matchState.targetQueueSerialized[2] == [0, 1, 1] and matchState.targetQueueSerialized[3] == [1, 1, 2]:
+		pass
+	
+	if matchState != null and matchState.rngQueue.size() > 0:
+		return from[matchState.rngQueue.pop_front() % from.size()]
+	elif not isDeciding:
 		return from[randi() % from.size()]
 	else:
 		if finishedDeciding:
 			return null
 		if lastSource == null:
-			start_rng_accumulator.emit()
+			start_rng_accumulator.emitSignal()
 		if source != lastSource:
+			if lastSource != null:
+				rng_queue_finished.emitSignal()
 			lastSource = source
 			currentIndex = 0
 		if currentIndex >= decisionIndices.size():
@@ -55,6 +64,7 @@ func select(from : Array, source : Variant) -> Variant:
 		var ended = currentIndex >= decisionIndices.size()
 		if not ended:
 			rtn = from[decisionIndices[currentIndex]]
+			rng_enqueued.emitSignal(decisionIndices[currentIndex])
 			if currentIndex == decisionIndices.size()-1:
 				decisionIndices[currentIndex] += 1
 			currentIndex += 1
@@ -71,7 +81,7 @@ func select(from : Array, source : Variant) -> Variant:
 		if ended:
 			lastSource = null
 			finishedDeciding = true
-			end_rng_accumulator.emit()
+			end_rng_accumulator.emitSignal()
 		
 		return rtn
 

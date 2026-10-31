@@ -14,8 +14,8 @@ func getLocID() -> String: return super.getLocID() + "COPPER"
 func getTexturePath() -> String:
 	return super.getTexturePath() + "copper.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		BACKGROUND_TYPE : Entities.SealBackgroundType.YELLOW_DARK,
@@ -27,19 +27,21 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
 	if context.source != getCoinPieceModel():
-		return
+		return false
 	
 	_wasAbilityActivated = true
+	return true
 
-func onBeforeTurnEnd(matchState : MatchState) -> void:
+func onBeforeTurnEnd(matchState : MatchState) -> bool:
 	var ownPlayerModel : PlayerModel = getPlayerModel()
 	if matchState.getActivePlayerModel() != ownPlayerModel:
-		return
+		return false
 	
 	if not _wasAbilityActivated:
 		await CmdSpin.addSpin(matchState, ownPlayerModel, SPIN_INC)
 	else:
 		await CmdSpin.addSpin(matchState, ownPlayerModel, -SPIN_DEC)
 		await CmdSeal.removeSeal(matchState, getCoinPieceModel())
+	return true

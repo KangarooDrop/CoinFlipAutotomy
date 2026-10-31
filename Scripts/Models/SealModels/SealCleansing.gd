@@ -9,8 +9,8 @@ func getLocID() -> String: return super.getLocID() + "CLEANSING"
 func getTexturePath() -> String:
 	return super.getTexturePath() + "cleansing.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		BACKGROUND_TYPE : Entities.SealBackgroundType.ORANGE,
@@ -19,15 +19,15 @@ func getBaseData() -> Dictionary:
 
 ####################################################################################################
 
-func onBeforeTurnEnd(matchState : MatchState) -> void:
+func onBeforeTurnEnd(matchState : MatchState) -> bool:
 	if matchState.getActivePlayerModel() != getPlayerModel():
-		return
+		return false
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
 	if coinPieceModel == null:
-		return
+		return false
 	var coinFaceModel : CoinFaceModel = coinPieceModel.getCoinFaceModel()
 	if coinFaceModel == null:
-		return
+		return false
 	
 	var coinPieceSocketIndex : Entities.CoinPieceSocketIndex = coinPieceModel.getSocketIndex()
 	for adjacentSocketIndex : Entities.CoinPieceSocketIndex in Entities.CoinPieceSocketScript.getAllAdjacent(coinPieceSocketIndex):
@@ -36,3 +36,4 @@ func onBeforeTurnEnd(matchState : MatchState) -> void:
 			continue
 		await CmdSeal.removeSeal(matchState, adjacentCoinPieceModel)
 	await CmdSeal.removeSeal(matchState, coinPieceModel)
+	return true

@@ -8,8 +8,8 @@ const PERCENT_CHANCE : float = 0.1
 
 func getLocID() -> String: return super.getLocID() + "BUCKET_BRIM_CRUSTACEAN"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -24,14 +24,15 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer) -> void:
+func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer) -> bool:
 	var myPlayerModel : PlayerModel = getPlayerModel()
 	if not matchState.isPlayerTurn(myPlayerModel):
-		return
+		return false
 	if playerModel != myPlayerModel:
-		return
+		return false
 	if RNG.getRandf() > PERCENT_CHANCE:
-		return
+		return false
 	
 	popNode()
 	amountPointer.val = abs(amountPointer.val)
+	return true

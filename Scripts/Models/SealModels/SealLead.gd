@@ -9,8 +9,8 @@ func getLocID() -> String: return super.getLocID() + "LEAD"
 func getTexturePath() -> String:
 	return super.getTexturePath() + "lead.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		BACKGROUND_TYPE : Entities.SealBackgroundType.YELLOW,
@@ -19,12 +19,13 @@ func getBaseData() -> Dictionary:
 
 ####################################################################################################
 
-func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
 	if context.source != coinPieceModel:
-		return
+		return false
 	if context.isCountered:
-		return
+		return false
 	
 	context.isCountered = true
 	await CmdSeal.removeSeal(matchState, coinPieceModel)
+	return true

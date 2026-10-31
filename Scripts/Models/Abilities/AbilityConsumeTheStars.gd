@@ -12,8 +12,8 @@ func getLocID() -> String:
 func getTexturePath() -> String:
 	return super.getTexturePath() + "consume_the_stars.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.COIN_PIECE_ANY,

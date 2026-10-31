@@ -1,5 +1,7 @@
 extends Node
 
+const DB_INDEX_KEY : String = "db_index"
+
 var _abilityDB : SubDB = SubDB.new()
 var _sealDB : SubDB = SubDB.new()
 var _ringDB : SubDB = SubDB.new()
@@ -14,6 +16,14 @@ var _scriptToSubDB : Dictionary = {
 	RingModel : _ringDB,
 	DemonModel : _demonDB,
 }
+
+var _subDBs : Array = [
+	_abilityCoreDB,
+	_abilityExteriorDB,
+	_sealDB,
+	_ringDB,
+	_demonDB,
+]
 
 ####################################################################################################
 
@@ -103,6 +113,30 @@ func _getFromSubByScriptSingleton(subDB : SubDB, scr : Script) -> LocalizedModel
 
 ####################################################################################################
 
+func getModelToDBIndex(model : LocalizedModel) -> Array[int]:
+	var modelDB : SubDB = null
+	if model is SealModel:
+		modelDB = _sealDB
+	elif model is RingModel:
+		modelDB = _ringDB
+	elif model is DemonModel:
+		modelDB = _demonDB
+	elif model is Ability:
+		if model.coinPieceType == Entities.CoinPieceType.CORE:
+			modelDB = _abilityCoreDB
+		else:
+			modelDB = _abilityExteriorDB
+	else:
+		return []
+	return [_subDBs.find(modelDB), modelDB.getModelToDBIndex(model)]
+
+func getModelFromSerialized(data : Dictionary) -> LocalizedModel:
+	if not data.has(DB_INDEX_KEY):
+		return null
+	var dbData : Array = data[DB_INDEX_KEY]
+	var subDB : SubDB = _subDBs[dbData[0]]
+	return subDB.getByIndex(dbData[1]).deserialize(data)
+
 func getModel(modelScript : Script) -> LocalizedModel:
 	var inheretedScript = modelScript.get_base_script()
 	while inheretedScript != null:
@@ -146,6 +180,9 @@ func getRandomAbilityExteriorScript() -> Script:
 
 func getRandomAbilityExteriorScriptsNoRepeat(num : int, excludes : Array[Script] = []) -> Array[Script]:
 	return _abilityExteriorDB.getRandomScriptNoRepeat(num, excludes)
+
+func getRandomSealScript() -> Script:
+	return _sealDB.getRandomScript()
 
 func getRandomRingScript() -> Script:
 	return _ringDB.getRandomScript()

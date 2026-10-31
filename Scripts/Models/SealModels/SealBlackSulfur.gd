@@ -11,8 +11,8 @@ func getLocID() -> String: return super.getLocID() + "BLACK_SULFUR"
 func getTexturePath() -> String:
 	return super.getTexturePath() + "black_sulfur.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		BACKGROUND_TYPE : Entities.SealBackgroundType.PURPLE,
@@ -24,10 +24,11 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onTurnStart(matchState : MatchState) -> void:
+func onTurnStart(matchState : MatchState) -> bool:
 	var playerModel : PlayerModel = getPlayerModel()
 	if playerModel != matchState.getActivePlayerModel():
-		return
+		return false
 	
 	popNode()
 	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE)
+	return true

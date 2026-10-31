@@ -1,6 +1,8 @@
-extends RefCounted
+extends Serializable
 
 class_name CoinFaceModel
+
+const SOCKET_DATA_KEY : String = "socket_data"
 
 var _playerModelRef : WeakRef = null
 
@@ -12,9 +14,10 @@ signal coin_piece_replaced(socketIndex : Entities.CoinPieceSocketIndex, newCoinP
 
 ####################################################################################################
 
-func _init() -> void:
+func _init(data : Dictionary = {}) -> void:
 	for socketIndex : Entities.CoinPieceSocketIndex in Entities.getAllNonNone(Entities.CoinPieceSocketIndex):
 		_socketIndexToPiece[socketIndex] = null
+	super._init(data)
 
 func _setCoinPieceInternal(socketIndex : Entities.CoinPieceSocketIndex, coinPieceModel : CoinPieceModel) -> CoinPieceModel:
 	var oldCoinPieceModel = getCoinPieceAtSocket(socketIndex)
@@ -30,15 +33,23 @@ func _hasSocket(socketIndex : Entities.CoinPieceSocketIndex) -> bool:
 
 ####################################################################################################
 
-func clone() -> CoinFaceModel:
-	var usecs : int = Time.get_ticks_usec()
-	var cloneModel : CoinFaceModel = get_script().new()
-	cloneModel.setPlayerModel(getPlayerModel())
-	for socketIndex : Entities.CoinPieceSocketIndex in getUsedSocketIndices():
-		cloneModel.insertCoinPiece(socketIndex, _socketIndexToPiece[socketIndex].clone())
-		cloneModel.getCoinPieceAtSocket(socketIndex).setCoinFaceModel(cloneModel)
-	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.COIN_FACE_SERIALIZE, Time.get_ticks_usec() - usecs)
-	return cloneModel
+func serialize() -> Dictionary:
+	var rtn : Dictionary = super.serialize()
+	rtn[SOCKET_DATA_KEY] = {}
+	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
+		if _socketIndexToPiece[socketIndex] == null:
+			rtn[SOCKET_DATA_KEY][socketIndex] = null
+		else:
+			rtn[SOCKET_DATA_KEY][socketIndex] = _socketIndexToPiece[socketIndex].serialize()
+	return rtn
+
+func deserialize(data : Dictionary) -> Serializable:
+	super.deserialize(data)
+	for socketIndex : Entities.CoinPieceSocketIndex in data[SOCKET_DATA_KEY]:
+		if data[SOCKET_DATA_KEY][socketIndex] != null:
+			insertCoinPiece(socketIndex, CoinPieceModel.new(data[SOCKET_DATA_KEY][socketIndex]))
+			_socketIndexToPiece[socketIndex].setCoinFaceModel(self)
+	return self
 
 ####################################################################################################
 

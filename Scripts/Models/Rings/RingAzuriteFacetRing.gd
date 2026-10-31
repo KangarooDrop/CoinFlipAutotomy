@@ -6,8 +6,8 @@ class_name RingAzuriteFacetRing
 
 func getLocID() -> String: return super.getLocID() + "AZURITE_FACET_RING"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -22,7 +22,7 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onBeforeTurnSkipped(matchState : MatchState) -> void:
+func onBeforeTurnSkipped(matchState : MatchState) -> bool:
 	var playerModel : PlayerModel = getPlayerModel()
 	var coinFaceModel : CoinFaceModel = playerModel.getCoinFaceModel()
 	var coinPiecesNoSeal : Array[CoinPieceModel] = []
@@ -31,7 +31,8 @@ func onBeforeTurnSkipped(matchState : MatchState) -> void:
 			continue
 		coinPiecesNoSeal.append(coinPieceModel)
 	if coinPiecesNoSeal.size() == 0:
-		return
+		return false
 	var coinPieceToStamp : CoinPieceModel = coinPiecesNoSeal[RNG.getRandi() % coinPiecesNoSeal.size()]
 	popNode()
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), coinPieceToStamp)
+	return true

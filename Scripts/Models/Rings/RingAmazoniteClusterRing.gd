@@ -8,8 +8,8 @@ const NUM_SEALS_PER_PLAYER : int = 2
 
 func getLocID() -> String: return super.getLocID() + "AMAZONITE_CLUSTER_RING"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -24,7 +24,7 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onRoundStart(matchState : MatchState) -> void:
+func onRoundStart(matchState : MatchState) -> bool:
 	popNode()
 	
 	var playerModelToCoinPieces : Dictionary[PlayerModel, Array] = {}
@@ -40,3 +40,4 @@ func onRoundStart(matchState : MatchState) -> void:
 	for playerModel : PlayerModel in matchState.getAllPlayerModels():
 		for coinPieceModel : CoinPieceModel in playerModelToCoinPieces[playerModel]:
 			await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)
+	return true

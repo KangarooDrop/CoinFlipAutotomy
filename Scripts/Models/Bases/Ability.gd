@@ -11,37 +11,34 @@ var coinPieceType : Entities.CoinPieceType = Entities.CoinPieceType.NONE
 
 ####################################################################################################
 
-func deserialize(data : Dictionary) -> LocalizedModel:
-	super.deserialize(data)
-	if data.has(TARGET_TYPE_KEY):
-		targetType = data[TARGET_TYPE_KEY]
-	if data.has(PIECE_TYPE_KEY):
-		coinPieceType = data[PIECE_TYPE_KEY]
-	return self
-
-func serialize() -> Dictionary:
-	var rtn : Dictionary = super.serialize()
-	rtn.merge({
-		TARGET_TYPE_KEY : targetType,
-		PIECE_TYPE_KEY : coinPieceType,
-	}, true)
-	return rtn
-
-####################################################################################################
-
 func getLocID() -> String: return "ABILITY."
 
 func getTexturePath() -> String:
 	return Preloader.texturePath + "CoinParts/"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NONE,
 		PIECE_TYPE_KEY : Entities.CoinPieceType.NONE,
 	}, true)
 	return baseData
+
+func _initBaseData(data : Dictionary) -> void:
+	super._initBaseData(data)
+	if data.has(TARGET_TYPE_KEY):
+		targetType = data[TARGET_TYPE_KEY]
+	if data.has(PIECE_TYPE_KEY):
+		coinPieceType = data[PIECE_TYPE_KEY]
+
+func serialize() -> Dictionary:
+	var rtn : Dictionary = super.serialize()
+	return rtn
+
+func deserialize(data : Dictionary) -> Serializable:
+	super.deserialize(data)
+	return self
 
 @abstract func activate(matchState : MatchState, abilityContext : AbilityContext) -> void
 

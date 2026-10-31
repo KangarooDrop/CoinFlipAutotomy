@@ -10,8 +10,8 @@ var _canActivate : bool = true
 
 func getLocID() -> String: return super.getLocID() + "PRESERVER_OF_THE_DROWNED"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -26,20 +26,22 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onRoundStart(_matchState : MatchState) -> void:
+func onRoundStart(_matchState : MatchState) -> bool:
 	_canActivate = true
+	return true
 
-func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, _amountPointer : Pointer) -> void:
+func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, _amountPointer : Pointer) -> bool:
 	if not _canActivate:
-		return
+		return false
 	
 	var ownPlayerModel : PlayerModel = getPlayerModel()
 	if playerModel != ownPlayerModel:
-		return
+		return false
 	
 	if matchState.getSpin(ownPlayerModel) > 0:
-		return
+		return false
 	
 	await CmdSpin.addSpin(matchState, playerModel, SPIN_INC)
 	_canActivate = false
 	popNode()
+	return true

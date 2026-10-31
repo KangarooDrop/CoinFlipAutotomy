@@ -26,6 +26,9 @@ func _insert(model : LocalizedModel) -> void:
 
 ####################################################################################################
 
+func getModelToDBIndex(model : LocalizedModel) -> int:
+	return _scriptToIndex[model.get_script()]
+
 func getAllScripts() -> Array[Script]:
 	return _scriptToModel.keys()
 
@@ -47,7 +50,7 @@ func getModelByScriptSingleton(scr : Script) -> LocalizedModel:
 func getByIndex(index : int) -> LocalizedModel:
 	if index < 0 or index >= _models.size():
 		return null
-	return _models[index]
+	return _cloneIfNotNull(_models[index])
 
 func getIndexByScript(scr : Script) -> int:
 	if not _scriptToIndex.has(scr):

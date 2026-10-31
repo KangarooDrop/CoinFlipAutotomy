@@ -1,4 +1,4 @@
-extends RefCounted
+extends Serializable
 
 class_name FingerModel
 
@@ -51,6 +51,25 @@ func destroyFinger() -> void:
 	before_finger_destroyed.emit()
 	destroyed = true
 	after_finger_destroyed.emit()
+
+const DESTROYED_KEY : String = "destroyed"
+const RING_KEY : String = "ring"
+
+func serialize() -> Dictionary:
+	var data : Dictionary = super.serialize()
+	data[DESTROYED_KEY] = destroyed
+	if _ringModel != null:
+		data[RING_KEY] = _ringModel.serialize()
+	return data
+
+func deserialize(data : Dictionary) -> Serializable:
+	super.deserialize(data)
+	if data.has(DESTROYED_KEY):
+		destroyed = data[DESTROYED_KEY]
+	if data.has(RING_KEY):
+		setRingModel(ModelDB.getModelFromSerialized(data[RING_KEY]))
+		_ringModel.setFingerModel(self)
+	return self
 
 func clone() -> FingerModel:
 	var usecs : int = Time.get_ticks_usec()

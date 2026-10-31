@@ -2,20 +2,21 @@ extends RefCounted
 
 class_name CPUDecider
 
-const MAX_TIME_THRESHOLD : float = 20.0
+const USE_THREADS : bool = true
+const MAX_MS_THRESHOLD : int = 10_000
 
 var cpuTargetThread : Thread = null
 var oldTargetThread : Thread = null
 var hasForceKilledTargetThread : bool = false
-var threadTimer : float = 0.0
+var msStarted : int = 0
 
 var currentDecision : MatchStateDecision = null
 var _matchState : MatchState = null
 
 var targetQueueSerialized : Array[Array] = []
 
-var bestTargetQueueSerialized : Array[Array] = []
-signal target_serialized_chosen(targetQueueSerialized : Array[int])
+var bestTargetSerialized : Array[int] = []
+signal target_serialized_chosen(targetSerialized : Array[int])
 
 func setMatchState(matchState : MatchState) -> void:
 	self._matchState = matchState
@@ -33,15 +34,15 @@ func traverseDecisionTree(serializedTarget : Array[int]) -> bool:
 	return false
 """
 
-func initCPUTargetThread() -> Array[int]:
-	clearCPUTargetThread()
-	threadTimer = 0.0
+func initCPUTarget() -> Array[int]:
+	if USE_THREADS:
+		clearCPUTargetThread()
+	msStarted = Time.get_ticks_msec()
 	hasForceKilledTargetThread = false
-	currentDecision = MatchStateDecision.new()
-	currentDecision.deserialize(_matchState.serialize())
-	currentDecision.setBaseMatchStateRef(_matchState)
-	currentDecision._perspectiveIndex = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
-	currentDecision.targetQueueSerialized = targetQueueSerialized
+	var serializedData : Dictionary = _matchState.serialize()
+	serializedData[MatchStateDecision.PERSPECTIVE_INDEX_KEY] = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
+	serializedData[MatchStateDecision.TARGET_QUEUE_SERIALIZED_KEY] = targetQueueSerialized
+	currentDecision = MatchStateDecision.new(serializedData)
 	currentDecision.initDecision()
 	"""
 	if currentDecision == null:
@@ -53,19 +54,22 @@ func initCPUTargetThread() -> Array[int]:
 	else:
 		currentDecision.setForceKill(false)
 	"""
-	initThread()
+	_initCPUTargetInternal()
 	return await target_serialized_chosen
 
-func initThread() -> void:
-	if oldTargetThread != null:
-		oldTargetThread.wait_to_finish()
-	if cpuTargetThread != null:
-		oldTargetThread = cpuTargetThread
-	
-	cpuTargetThread = Thread.new()
-	cpuTargetThread.start(iterCPUTargetThread)
+func _initCPUTargetInternal() -> void:
+	if USE_THREADS:
+		if oldTargetThread != null:
+			oldTargetThread.wait_to_finish()
+		if cpuTargetThread != null:
+			oldTargetThread = cpuTargetThread
+		
+		cpuTargetThread = Thread.new()
+		cpuTargetThread.start(_iterCPUTarget)
+	else:
+		_iterCPUTarget()
 
-func iterCPUTargetThread() -> void:
+func _iterCPUTarget() -> void:
 	var decisionToIter : MatchStateDecision = currentDecision
 	decisionToIter.iterDecision()
 	if currentDecision != decisionToIter:
@@ -74,25 +78,31 @@ func iterCPUTargetThread() -> void:
 	
 	if not currentDecision.forceKill:
 		printCurrentDecision()
-		bestTargetQueueSerialized = currentDecision.getBestDecision().targetQueueSerialized
+		bestTargetSerialized = currentDecision.getModelToTargetSerialized(currentDecision.getBestTarget())
 	else:
 		print("Current Decision Force Killed.")
 	
 	if isTimeExceeded():
-		print("Current time exceeded. Ending Thread.")
-		call_deferred("emitBestTargetQueueSerialized")
+		print("Current time exceeded. Ending.")
+		call_deferred("emitBestTargetSerialized")
 		return
 	
-	initThread()
+	_initCPUTargetInternal()
 
-func emitBestTargetQueueSerialized() -> void:
-	target_serialized_chosen.emit(bestTargetQueueSerialized[targetQueueSerialized.size()])
+func emitBestTargetSerialized() -> void:
+	target_serialized_chosen.emit(bestTargetSerialized)
 
 func printCurrentDecision() -> void:
-	print("Total Decisions: ", currentDecision.getTotalNumDecisions())
+	var totalDecisions : int = currentDecision.getTotalNumDecisions()
+	print("Total Decisions: ", totalDecisions)
+	#if totalDecisions == 127:
+	#	currentDecision.printTree()
+	if totalDecisions > 500:
+		pass
+		#currentDecision.printTree()
+	print("Elapsed Time: ", Time.get_ticks_msec() - msStarted, " ms.")
 	print(currentDecision.getEvalDict())
-	var bestDecision : MatchStateDecision = currentDecision.getBestDecision()
-	print(bestDecision.targetQueueSerialized)
+	print(currentDecision.getModelToTargetSerialized(currentDecision.getBestTarget()))
 	print()
 
 func clearCPUTargetThread() -> void:
@@ -101,14 +111,15 @@ func clearCPUTargetThread() -> void:
 	if oldTargetThread != null and oldTargetThread.is_alive():
 		oldTargetThread.wait_to_finish()
 
-func _process(delta : float):
-	threadTimer += delta
+func _process(_delta : float):
 	if isTimeExceeded() and currentDecision != null and not hasForceKilledTargetThread:
 		forceKill()
 
 func forceKill() -> void:
 	hasForceKilledTargetThread = true
-	currentDecision.setForceKill(true)
+	if currentDecision != null:
+		currentDecision.setForceKill(true)
 
 func isTimeExceeded() -> bool:
-	return threadTimer >= MAX_TIME_THRESHOLD
+	return msStarted + MAX_MS_THRESHOLD < Time.get_ticks_msec()
+		 

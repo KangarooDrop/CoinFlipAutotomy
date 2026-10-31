@@ -8,8 +8,8 @@ const SPIN_INC : int = 1
 
 func getLocID() -> String: return super.getLocID() + "BAND_OF_A_THOUSAND_CUTS"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -21,8 +21,9 @@ func getTexturePath() -> String:
 
 ####################################################################################################
 
-func onAfterSpinChanged(matchState : MatchState, _playerModel : PlayerModel, amountPointer : Pointer) -> void:
+func onAfterSpinChanged(matchState : MatchState, _playerModel : PlayerModel, amountPointer : Pointer) -> bool:
 	if amountPointer.val >= 0:
-		return
+		return false
 	popNode()
 	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_INC)
+	return true

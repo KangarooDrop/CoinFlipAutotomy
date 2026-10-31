@@ -163,6 +163,7 @@ func _onTurnStartInternal() -> void:
 
 func _onTurnActionable() -> void:
 	await _matchState.onTurnActionable()
+	_cpuDecider.targetQueueSerialized.clear()
 	var activePlayer : PlayerModel = _matchState.getActivePlayerModel()
 	if not _matchState.isUserControlled():
 		var coinPieceModelsCanActivate : Array[CoinPieceModel] = _matchState.getCoinPiecesThatCanActivate(activePlayer)
@@ -172,6 +173,9 @@ func _onTurnActionable() -> void:
 			var targetToActivate : CoinPieceModel = await _matchState.getTarget(Entities.TargetType.ABILITY_PIECE_FRIENDLY, activePlayer)
 			await _matchState.activateAbilityOfCoinPieceModel(targetToActivate)
 			_matchState.phaseHandler.iterPhaseDeferred()
+
+func onTriggerActivated() -> void:
+	_cpuDecider.targetQueueSerialized.clear()
 
 func _onTurnEndInternal() -> void:
 	if choosingTarget:
@@ -270,7 +274,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if choosingTarget and canCancelTargetChoice and _matchState.isUserControlled():
 			_cancelTargeting()
 		else:
-			_cpuDecider.initCPUTargetThread()
+			_cpuDecider.initCPUTarget()
 			print("ESCAPING")
 		return
 	
@@ -346,11 +350,10 @@ func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, veri
 	var target : RefCounted = await _getUserTarget(targetType, playerModel, verifyCallable)
 	#var targetSerialized : Array[int] = _matchState.getModelToTargetSerialized(target)
 	#_cpuDecider.traverseDecisionTree(targetSerialized)
-	_cpuDecider.targetQueueSerialized.clear()
 	return target
 
 func getTargetCPU(targetType : Entities.TargetType, playerModel : PlayerModel, verifyCallable : Callable) -> Variant:
-	var nextTargetSerialized : Array[int] = await _cpuDecider.initCPUTargetThread()
+	var nextTargetSerialized : Array[int] = await _cpuDecider.initCPUTarget()
 	_cpuDecider.targetQueueSerialized.append(nextTargetSerialized)
 	return _matchState.getTargetSerializedToModel(nextTargetSerialized)
 	

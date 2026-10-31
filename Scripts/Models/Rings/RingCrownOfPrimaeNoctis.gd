@@ -6,8 +6,8 @@ class_name RingCrownOfPrimaeNoctis
 
 func getLocID() -> String: return super.getLocID() + "CROWN_OF_PRIMAE_NOCTIS"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -19,11 +19,12 @@ func getTexturePath() -> String:
 
 ####################################################################################################
 
-func onRoundStart(matchState : MatchState) -> void:
+func onRoundStart(matchState : MatchState) -> bool:
 	popNode()
 	var targetCoinPiece : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.ABILITY_PIECE_ENEMY, getPlayerModel())
 	var abilityScript : Script = targetCoinPiece.abilityScript
 	if abilityScript == null:
-		return
+		return true
 	
 	await CmdMatch.copyAbilityScript(matchState, abilityScript, self)
+	return true

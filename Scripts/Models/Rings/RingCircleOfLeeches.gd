@@ -6,8 +6,8 @@ class_name RingCircleOfLeeches
 
 func getLocID() -> String: return super.getLocID() + "CIRCLE_OF_LEECHES"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -24,25 +24,27 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
 	if context.source.getPlayerModel() != getPlayerModel():
-		return
+		return false
 	if not context.source is CoinPieceModel:
-		return
+		return false
 	var sourceCoinPieceModel : CoinPieceModel = context.source as CoinPieceModel
 	if sourceCoinPieceModel.getSealModel() != null:
-		return
+		return false
 	
 	popNode()
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCleansing), sourceCoinPieceModel)
+	return true
 
-func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> void:
+func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> bool:
 	if coinPieceModel.getPlayerModel() != getPlayerModel():
-		return
+		return false
 	if not oldSealModel is SealCleansing:
-		return
+		return false
 	if coinPieceModel.getSealModel() != null:
-		return
+		return false
 	
 	popNode()
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)
+	return true

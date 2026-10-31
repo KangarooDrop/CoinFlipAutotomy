@@ -11,8 +11,8 @@ func getLocID() -> String:
 func getTexturePath() -> String:
 	return super.getTexturePath() + "phase_change.png"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		TARGET_TYPE_KEY : Entities.TargetType.NONE,

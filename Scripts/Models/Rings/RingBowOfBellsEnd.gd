@@ -8,8 +8,8 @@ var _canActivate : bool = true
 
 func getLocID() -> String: return super.getLocID() + "BOW_OF_BELLS_END"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -24,26 +24,28 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onRoundStart(matchState : MatchState) -> void:
+func onRoundStart(matchState : MatchState) -> bool:
 	_canActivate = true
 	popNode()
 	
 	var playerModel : PlayerModel = getPlayerModel()
 	if playerModel == null:
-		return
+		return true
 	
 	for coinPieceModel : CoinPieceModel in playerModel.getCoinFaceModel().getAllPieces():
 		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), coinPieceModel)
+	return true
 
-func onBeforeTurnEnd(matchState : MatchState) -> void:
+func onBeforeTurnEnd(matchState : MatchState) -> bool:
 	if not _canActivate:
-		return
+		return false
 	var playerModel : PlayerModel = getPlayerModel()
 	if playerModel != matchState.getActivePlayerModel():
-		return
+		return false
 	if matchState.currentTurnNumber <= matchState.NUM_TURNS_MAX - 2:
-		return
+		return false
 	
 	popNode()
 	_canActivate = false
 	CmdMatch.addAdditionalTurn(matchState, playerModel)
+	return true

@@ -60,7 +60,8 @@ func onExitPressed() -> void:
 
 func _getRandomPlayerModel() -> PlayerModel:
 	var demonScript : Script = ModelDB.getRandomDemonScript()
-	var handModel : HandModel = HandModel.new(demonScript)
+	var handModel : HandModel = HandModel.new()
+	handModel.setDemonScript(demonScript)
 	for i in range(handModel.getTotalNumFingers()):
 		handModel.addRing(ModelDB.getRing(ModelDB.getRandomRingScript()))
 	var coinFaceModel : CoinFaceModel = CoinFaceModel.new()
@@ -71,31 +72,40 @@ func _getRandomPlayerModel() -> PlayerModel:
 		else:
 			abilityScript = ModelDB.getRandomAbilityExteriorScript()
 		coinFaceModel.addCoinPieceToNextSocket(CoinPieceModel.new().setAbilityScript(abilityScript))
-	return PlayerModel.new(demonScript, handModel, coinFaceModel)
+	return PlayerModel.new().setHandModel(handModel).setCoinFaceModel(coinFaceModel)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.is_pressed() and not event.is_echo():
-		
-		return
-		checkRNGDecision()
-		
-		"""
 		var matchState : MatchState = MatchState.new()
 		var playerModelUser : PlayerModel = _getRandomPlayerModel()
 		var playerModelOpponent : PlayerModel = _getRandomPlayerModel()
 		matchState.setPlayerModels(playerModelUser, playerModelOpponent)
+		var serialized : Dictionary = matchState.serialize()
 		
+		var deserialized : MatchState = MatchState.new().deserialize(serialized)
+		print(serialized == deserialized.serialize())
 		
-		var usecs : int = Time.get_ticks_usec()
-		var n : int = 1000
-		for i in range(n):
-			var data : Dictionary = matchState.serialize()
-			var decision : MatchStateDecision = MatchStateDecision.new()
-			decision.deserialize(data)
-		print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
-		Tracker.printTimes()
-		Tracker.clear()
-		"""
+		return
+		checkRNGDecision()
+		return
+		checkDecisionSpeed()
+
+func checkDecisionSpeed() -> void:
+	var matchState : MatchState = MatchState.new()
+	var playerModelUser : PlayerModel = _getRandomPlayerModel()
+	var playerModelOpponent : PlayerModel = _getRandomPlayerModel()
+	matchState.setPlayerModels(playerModelUser, playerModelOpponent)
+	
+	
+	var usecs : int = Time.get_ticks_usec()
+	var n : int = 1000
+	for i in range(n):
+		var data : Dictionary = matchState.serialize()
+		var decision : MatchStateDecision = MatchStateDecision.new()
+		decision.deserialize(data)
+	print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+	Tracker.printTimes()
+	Tracker.clear()
 
 func onStartRNGAccumulator() -> void:
 	pass
@@ -103,8 +113,8 @@ func onEndRNGAccumulator() -> void:
 	pass
 
 func checkRNGDecision() -> void:
-	RNG.start_rng_accumulator.connect(onStartRNGAccumulator)
-	RNG.end_rng_accumulator.connect(onEndRNGAccumulator)
+	RNG.start_rng_accumulator.connectSignal(onStartRNGAccumulator)
+	RNG.end_rng_accumulator.connectSignal(onEndRNGAccumulator)
 	
 	var rngChoicesTwoNumbers : Array = ["0", "1"]
 	var rngChoicesThreeNumbers : Array = ["0", "1", "2"]
@@ -117,15 +127,15 @@ func checkRNGDecision() -> void:
 	#1 Deep
 	simRNG(func(source):
 		var rtn : Array = []
-		rtn.append(RNG.select(rngChoicesThreeNumbers, source))
+		rtn.append(RNG.select(null, rngChoicesThreeNumbers, source))
 		return rtn
 	, ["0", "1", "2", null])
 	
 	#2 Deep
 	simRNG(func(source):
 		var rtn : Array = []
-		rtn.append(RNG.select(rngChoicesThreeNumbers, source))
-		rtn.append(RNG.select(rngChoicesThreeLetters, source))
+		rtn.append(RNG.select(null, rngChoicesThreeNumbers, source))
+		rtn.append(RNG.select(null, rngChoicesThreeLetters, source))
 		return rtn
 	, ["0", "A", "0", "B", "0", "C", "1", "A", "1", "B", "1", "C", "2", "A", "2", "B", "2", "C", null, null])
 	
@@ -139,45 +149,45 @@ func checkRNGDecision() -> void:
 		expectedOut.append(null)
 	simRNG(func(source):
 		var rtn : Array = []
-		rtn.append(RNG.select(rngChoicesThreeNumbers, source))
-		rtn.append(RNG.select(rngChoicesThreeNumbers, source))
-		rtn.append(RNG.select(rngChoicesThreeNumbers, source))
+		rtn.append(RNG.select(null, rngChoicesThreeNumbers, source))
+		rtn.append(RNG.select(null, rngChoicesThreeNumbers, source))
+		rtn.append(RNG.select(null, rngChoicesThreeNumbers, source))
 		return rtn
 	, expectedOut)
 	
 	#Conditional 3/3 Left
 	simRNG(func(source):
 		var rtn : Array = []
-		var out = RNG.select(rngChoicesThreeNumbers, source)
+		var out = RNG.select(null, rngChoicesThreeNumbers, source)
 		rtn.append(out)
 		if out == rngChoicesThreeNumbers[0]:
-			rtn.append(RNG.select(rngChoicesThreeLetters, source))
+			rtn.append(RNG.select(null, rngChoicesThreeLetters, source))
 		return rtn
 	, ["0", "A", "0", "B", "0", "C", "1", "2", null])
 	
 	#Conditional 3/3 Middle
 	simRNG(func(source):
 		var rtn : Array = []
-		var out = RNG.select(rngChoicesThreeNumbers, source)
+		var out = RNG.select(null, rngChoicesThreeNumbers, source)
 		rtn.append(out)
 		if out == rngChoicesThreeNumbers[1]:
-			rtn.append(RNG.select(rngChoicesThreeLetters, source))
+			rtn.append(RNG.select(null, rngChoicesThreeLetters, source))
 		return rtn
 	, ["0", "1", "A", "1", "B", "1", "C", "2", null])
 	
 	#Conditional 3/3 Right
 	simRNG(func(source):
 		var rtn : Array = []
-		var out = RNG.select(rngChoicesThreeNumbers, source)
+		var out = RNG.select(null, rngChoicesThreeNumbers, source)
 		rtn.append(out)
 		if out == rngChoicesThreeNumbers[2]:
-			rtn.append(RNG.select(rngChoicesThreeLetters, source))
+			rtn.append(RNG.select(null, rngChoicesThreeLetters, source))
 		return rtn
 	, ["0", "1", "2", "A", "2", "B", "2", "C", null])
 	
 	#10 Wide, 1 Deep
 	simRNG(func(source):
-		return [RNG.select(rngChoicesTenLetters, source)]
+		return [RNG.select(null, rngChoicesTenLetters, source)]
 	, rngChoicesTenLetters + [null])
 	
 	#1 Wide, 10 Deep
@@ -189,33 +199,33 @@ func checkRNGDecision() -> void:
 	simRNG(func(source):
 		var rtn : Array = []
 		for i in range(10):
-			rtn.append(RNG.select(rngChoicesOneLetters, source))
+			rtn.append(RNG.select(null, rngChoicesOneLetters, source))
 		return rtn
 	, expectedOut)
 	
 	#Rightmost Conditional 2-Wide, 3 Deep
 	simRNG(func(source):
 		var rtn : Array = []
-		var out = RNG.select(rngChoicesTwoNumbers, source)
+		var out = RNG.select(null, rngChoicesTwoNumbers, source)
 		rtn.append(out)
 		if out == rngChoicesTwoNumbers[0]:
-			out = RNG.select(rngChoicesTwoLetters, source)
+			out = RNG.select(null, rngChoicesTwoLetters, source)
 			rtn.append(out)
 			if out == rngChoicesTwoLetters[0]:
-				rtn.append(RNG.select(rngChoicesTwoLetters2, source))
+				rtn.append(RNG.select(null, rngChoicesTwoLetters2, source))
 		return rtn
 	, ["0", "A", "X", "0", "A", "Y", "0", "B", "1", null])
 	
 	#Rightmost Conditional 2-Wide, 3 Deep
 	simRNG(func(source):
 		var rtn : Array = []
-		var out = RNG.select(rngChoicesTwoNumbers, source)
+		var out = RNG.select(null, rngChoicesTwoNumbers, source)
 		rtn.append(out)
 		if out == rngChoicesTwoNumbers[1]:
-			out = RNG.select(rngChoicesTwoLetters, source)
+			out = RNG.select(null, rngChoicesTwoLetters, source)
 			rtn.append(out)
 			if out == rngChoicesTwoLetters[1]:
-				rtn.append(RNG.select(rngChoicesTwoLetters2, source))
+				rtn.append(RNG.select(null, rngChoicesTwoLetters2, source))
 		return rtn
 	, ["0", "1", "A", "1", "B", "X", "1", "B", "Y", null])
 	
@@ -226,8 +236,8 @@ func checkRNGDecision() -> void:
 	else:
 		print("EXIT TEST PASS!")
 	
-	RNG.start_rng_accumulator.disconnect(onStartRNGAccumulator)
-	RNG.end_rng_accumulator.disconnect(onEndRNGAccumulator)
+	RNG.start_rng_accumulator.disconnectSignal(onStartRNGAccumulator)
+	RNG.end_rng_accumulator.disconnectSignal(onEndRNGAccumulator)
 
 const RNG_DEPTH_MAX : int = 32
 func simRNG(lambda : Callable, expectedOut : Array) -> void:

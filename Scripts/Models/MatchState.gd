@@ -1,4 +1,4 @@
-extends RefCounted
+extends Serializable
 
 class_name MatchState
 
@@ -30,6 +30,8 @@ var _spinOpponent : int = STARTING_SPIN
 var _additionalTurnQueue : Array = []
 
 var phaseHandler : PhaseHandler = null
+
+var rngQueue : Array[int] = []
 
 #signal spin_changed(playerModel : PlayerModel)
 var spin_changed : CFSignal = CFSignal.new(CFSignal.WAIT_TYPE_PARALLEL) #(playerModel : PlayerModel)
@@ -78,80 +80,100 @@ func _setSpinOpponentInternal(amount : int) -> void:
 
 ####################################################################################################
 
-func _init() -> void:
+func _init(data : Dictionary = {}) -> void:
 	phaseHandler = PhaseHandler.new()
 	phaseHandler.setMatchState(self)
+	super._init(data)
 
-func _getCloneCounterpart(comp : PlayerModel, userClone : PlayerModel, opponentClone : PlayerModel) -> PlayerModel:
-	if comp == null:
-		return null
-	elif comp == _playerModelUser:
-		return userClone
-	elif comp == _playerModelOpponent:
-		return opponentClone
+func _getPlayerModelToIndex(playerModel : PlayerModel) -> int:
+	if playerModel == _playerModelUser:
+		return 0
+	elif playerModel == _playerModelOpponent:
+		return 1
+	else:
+		return -1
+func _getIndexToPlayerModel(index : int) -> PlayerModel:
+	if index == 0:
+		return _playerModelUser
+	elif index == 1:
+		return _playerModelOpponent
 	else:
 		return null
 
-func serialize() -> Dictionary:
-	var usecs : int = Time.get_ticks_usec()
-	
-	var playerModelUserClone : PlayerModel = _playerModelUser.clone()
-	var playerModelOpponentClone : PlayerModel = _playerModelOpponent.clone()
-	var activePlayerClone : PlayerModel = _getCloneCounterpart(_activePlayer, playerModelUserClone, playerModelOpponentClone)
-	var additionalTurnQueueClone : Array[PlayerModel] = []
-	for addTurnPlayerModel : PlayerModel in additionalTurnQueueClone:
-		additionalTurnQueueClone.append(_getCloneCounterpart(addTurnPlayerModel, playerModelUserClone, playerModelOpponentClone))
-	var activePlayerOnStartClone : PlayerModel = _getCloneCounterpart(activePlayerOnStart, playerModelUserClone, playerModelOpponentClone)
-	var winnerLastRoundClone : PlayerModel = _getCloneCounterpart(winnerLastRound, playerModelUserClone, playerModelOpponentClone)
-	var winningPlayersClone : Array[PlayerModel] = []
-	for winningPlayerModel : PlayerModel in winningPlayers:
-		winningPlayersClone.append(_getCloneCounterpart(winningPlayerModel, playerModelUserClone, playerModelOpponentClone))
-	var rtn : Dictionary[String, Variant] = {
-		"player_model_user" : playerModelUserClone,
-		"player_model_opponent" : playerModelOpponentClone,
-		"active_player" : activePlayerClone,
-		"spin_user" : _spinUser,
-		"spin_opponent" : _spinOpponent,
-		"add_turn_queue" : additionalTurnQueueClone,
+const PLAYER_USER_DATA_KEY : String = "player_user_data"
+const PLAYER_OPPONENT_DATA_KEY : String = "player_opponent_data"
+const ACTIVE_PLAYER_INDEX_KEY : String = "active_player_index"
+const ACTIVE_PLAYER_ON_START_INDEX_KEY : String = "active_player_on_start_index"
+const ADDITIONAL_TURN_INDICES_KEY : String = "additional_turn_indices"
+const WINNER_LAST_ROUND_INDEX_KEY : String = "winner_last_round_index"
+const RNG_QUEUE_KEY : String = "rng_queue"
 
-		"round_num" : roundNumber,
-		"pregame_started" : pregameStarted,
-		"match_started" : matchStarted,
-		"round_started" : roundStarted,
-		"pregame_timer" : pregameTime,
-		"current_turn_time" : currentTurnTime,
-		"current_turn_num" : currentTurnNumber,
-		"current_turns_remaining" : currentTurnsRemaining,
-		"active_player_on_start" : activePlayerOnStartClone,
-		"winner_last_round" : winnerLastRoundClone,
-		"winning_players" : winningPlayersClone,
-		"is_actionable" : isActionable,
-		"current_phase" : phaseHandler.currentPhase,
-	}
-	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.MATCH_STATE_SERIALIZE, Time.get_ticks_usec() - usecs)
+const SPIN_USER_KEY : String = "spin_user"
+const SPIN_OPPONENT_KEY : String = "spin_opponent"
+const ROUND_NUMBER_KEY : String = "round_number"
+const PREGAME_STARTED_KEY : String = "pregame_started"
+const MATCH_STARTED_KEY : String = "match_started"
+const ROUND_STARTED_KEY : String = "round_started"
+const CURRENT_TURN_NUM_KEY : String = "current_turn_num"
+const CURRENT_TURNS_REMAINING_KEY : String = "current_turns_remaining"
+const IS_ACTIONABLE_KEY : String = "is_actionable"
+const CURRENT_PHASE_KEY : String = "current_phase"
+
+func serialize() -> Dictionary:
+	var rtn : Dictionary = super.serialize()
+	rtn[PLAYER_USER_DATA_KEY] = _playerModelUser.serialize()
+	rtn[PLAYER_OPPONENT_DATA_KEY] = _playerModelOpponent.serialize()
+	rtn[ACTIVE_PLAYER_INDEX_KEY] = _getPlayerModelToIndex(_activePlayer)
+	rtn[ACTIVE_PLAYER_ON_START_INDEX_KEY] = _getPlayerModelToIndex(activePlayerOnStart)
+	rtn[ADDITIONAL_TURN_INDICES_KEY] = []
+	for playerModel : PlayerModel in _additionalTurnQueue:
+		rtn[ADDITIONAL_TURN_INDICES_KEY].append(_getPlayerModelToIndex(playerModel))
+	rtn[WINNER_LAST_ROUND_INDEX_KEY] = _getPlayerModelToIndex(winnerLastRound)
+	rtn[RNG_QUEUE_KEY] = rngQueue.duplicate(true)
+	
+	rtn[SPIN_USER_KEY] = _spinUser
+	rtn[SPIN_OPPONENT_KEY] = _spinOpponent
+	rtn[ROUND_NUMBER_KEY] = roundNumber
+	rtn[PREGAME_STARTED_KEY] = pregameStarted
+	rtn[MATCH_STARTED_KEY] = matchStarted
+	rtn[ROUND_STARTED_KEY] = roundStarted
+	rtn[CURRENT_TURN_NUM_KEY] = currentTurnNumber
+	rtn[CURRENT_TURNS_REMAINING_KEY] = currentTurnsRemaining
+	rtn[IS_ACTIONABLE_KEY] = isActionable
+	rtn[CURRENT_PHASE_KEY] = phaseHandler.currentPhase
+	
 	return rtn
 
-func deserialize(data : Dictionary) -> void:
-	_playerModelUser = data["player_model_user"]
-	_playerModelOpponent = data["player_model_opponent"]
-	_activePlayer = data["active_player"]
-	_spinUser = data["spin_user"]
-	_spinOpponent = data["spin_opponent"]
-	_additionalTurnQueue = data["add_turn_queue"]
+func deserialize(data : Dictionary) -> Serializable:
+	if _playerModelUser == null:
+		_playerModelUser = PlayerModel.new(data[PLAYER_USER_DATA_KEY])
+	else:
+		_playerModelUser.deserialize(data[PLAYER_USER_DATA_KEY])
+	if _playerModelOpponent == null:
+		_playerModelOpponent = PlayerModel.new(data[PLAYER_OPPONENT_DATA_KEY])
+	else:
+		_playerModelOpponent.deserialize(data[PLAYER_OPPONENT_DATA_KEY])
 	
-	roundNumber = data["round_num"]
-	pregameStarted = data["pregame_started"]
-	matchStarted = data["match_started"]
-	roundStarted = data["round_started"]
-	pregameTime = data["pregame_timer"]
-	currentTurnTime = data["current_turn_time"]
-	currentTurnNumber = data["current_turn_num"]
-	currentTurnsRemaining = data["current_turns_remaining"]
-	activePlayerOnStart = data["active_player_on_start"]
-	winnerLastRound = data["winner_last_round"]
-	winningPlayers = data["winning_players"]
-	isActionable = data["is_actionable"]
-	phaseHandler.currentPhase = data["current_phase"]
+	_activePlayer = _getIndexToPlayerModel(data[ACTIVE_PLAYER_INDEX_KEY])
+	activePlayerOnStart = _getIndexToPlayerModel(data[ACTIVE_PLAYER_ON_START_INDEX_KEY])
+	_additionalTurnQueue.clear()
+	for index : int in data[ADDITIONAL_TURN_INDICES_KEY]:
+		_additionalTurnQueue.append(_getIndexToPlayerModel(index))
+	winnerLastRound = _getIndexToPlayerModel(data[WINNER_LAST_ROUND_INDEX_KEY])
+	rngQueue = data[RNG_QUEUE_KEY].duplicate()
+	
+	_spinUser = data[SPIN_USER_KEY]
+	_spinOpponent = data[SPIN_OPPONENT_KEY]
+	roundNumber = data[ROUND_NUMBER_KEY]
+	pregameStarted = data[PREGAME_STARTED_KEY]
+	matchStarted = data[MATCH_STARTED_KEY]
+	roundStarted = data[ROUND_STARTED_KEY]
+	currentTurnNumber = data[CURRENT_TURN_NUM_KEY]
+	currentTurnsRemaining = data[CURRENT_TURNS_REMAINING_KEY]
+	isActionable = data[IS_ACTIONABLE_KEY]
+	phaseHandler.currentPhase = data[CURRENT_PHASE_KEY]
+	
+	return self
 
 ####################################################################################################
 
@@ -252,7 +274,7 @@ func isPlayerTurn(playerModel : PlayerModel) -> bool:
 func isUserControlled(playerModel : PlayerModel = _activePlayer) -> bool:
 	if playerModel == null:
 		return false
-	return _playerModelUser == playerModel or (not playerModel.isHuman and playerModel.isControlledCPU)
+	return (_playerModelUser == playerModel and playerModel.isHuman) or (not playerModel.isHuman and playerModel.isControlledCPU)
 
 func getAllPlayerModels() -> Array[PlayerModel]:
 	var priorityPlayer : PlayerModel = _activePlayer if _activePlayer != null else activePlayerOnStart
@@ -365,6 +387,16 @@ func getTarget(targetType : Entities.TargetType, playerModel : PlayerModel, veri
 	if target != null and target.has_method("popNode"):
 		target.popNode()
 	return target
+
+func onTriggerActivated() -> void:
+	if _matchNode != null:
+		_matchNode.onTriggerActivated()
+
+func onBeforeTriggerCondition() -> void:
+	pass
+
+func onAfterTriggerCondition() -> void:
+	pass
 
 func activateAbilityScript(abilityScript : Script, context : AbilityContext) -> void:
 	var ability : Ability = ModelDB.getAbility(abilityScript)

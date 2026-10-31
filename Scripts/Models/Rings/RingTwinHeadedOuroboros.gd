@@ -8,8 +8,8 @@ var _canActivate : bool = true
 
 func getLocID() -> String: return super.getLocID() + "TWIN_HEADED_OUROBOROS"
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		
@@ -21,30 +21,35 @@ func getTexturePath() -> String:
 
 ####################################################################################################
 
-func onRoundStart(_matchState : MatchState) -> void:
+func onRoundStart(_matchState : MatchState) -> bool:
 	_canActivate = true
+	return true
 
-func onBeforeTurnEnd(matchState : MatchState) -> void:
+func onBeforeTurnEnd(matchState : MatchState) -> bool:
 	if not _canActivate:
-		return
-	if getPlayerModel() == matchState.getActivePlayerModel():
-		_canActivate = false
-
-func onAfterAbilityActivated(matchState : MatchState, ability : Ability, _context : AbilityContext) -> void:
-	if not _canActivate:
-		return
+		return false
 	if getPlayerModel() != matchState.getActivePlayerModel():
-		return
+		return false
+	_canActivate = false
+	return true
+
+func onAfterAbilityActivated(matchState : MatchState, ability : Ability, _context : AbilityContext) -> bool:
+	if not _canActivate:
+		return false
+	if getPlayerModel() != matchState.getActivePlayerModel():
+		return false
 	
 	popNode()
 	_canActivate = false
 	await CmdMatch.copyAbilityScript(matchState, ability.get_script(), self)
+	return true
 
-func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> void:
+func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
 	if matchState.currentTurnNumber <= matchState.NUM_TURNS_MAX - 2:
-		return
+		return false
 	if getPlayerModel() != matchState.getActivePlayerModel():
-		return
+		return false
 	
 	popNode()
 	context.isCountered = true
+	return true

@@ -1,6 +1,9 @@
-extends RefCounted
+extends Serializable
 
 class_name HandModel
+
+const DEMON_DATA_KEY : String = "demon_data"
+const FINGER_DATA_KEY : String = "finger_data"
 
 var _demonScript : Script = null
 var _fingerModels : Array[FingerModel] = []
@@ -9,7 +12,7 @@ var _playerModelRef : WeakRef = null
 
 ####################################################################################################
 
-func _init(newDemonScript : Script) -> void:
+func setDemonScript(newDemonScript : Script) -> void:
 	_demonScript = newDemonScript
 	for i in range(ModelDB.getDemonSingleton(_demonScript).getTotalNumFingers()):
 		var fingerModel : FingerModel = FingerModel.new()
@@ -30,17 +33,21 @@ func _hasIndex(index : int) -> bool:
 
 ####################################################################################################
 
-func clone() -> HandModel:
-	var usecs : int = Time.get_ticks_usec()
-	var cloneModel : HandModel = get_script().new(_demonScript)
-	cloneModel.setPlayerModel(getPlayerModel())
-	for i in range(_fingerModels.size()):
-		if _fingerModels[i] == null:
-			continue
-		cloneModel._setFingerInternal(i, _fingerModels[i].clone())
-		cloneModel.getFinger(i).setHandModel(cloneModel)
-	Tracker.addTimeUsecs(Tracker.TRACKING_KEY.HAND_SERIALIZE, Time.get_ticks_usec() - usecs)
-	return cloneModel
+func serialize() -> Dictionary:
+	var rtn : Dictionary = super.serialize()
+	rtn[DEMON_DATA_KEY] = ModelDB.getDemonSingleton(_demonScript).serialize()
+	rtn[FINGER_DATA_KEY] = []
+	for i in range(getTotalNumFingers()):
+		rtn[FINGER_DATA_KEY].append(getFinger(i).serialize())
+	return rtn
+
+func deserialize(data : Dictionary) -> Serializable:
+	super.deserialize(data)
+	setDemonScript(ModelDB.getModelFromSerialized(data[DEMON_DATA_KEY]).get_script())
+	for i in range(data[FINGER_DATA_KEY].size()):
+		getFinger(i).deserialize(data[FINGER_DATA_KEY][i])
+		getFinger(i).setHandModel(self)
+	return self
 
 ####################################################################################################
 
@@ -51,6 +58,9 @@ func getPlayerModel() -> PlayerModel:
 	if not _playerModelRef:
 		return null
 	return _playerModelRef.get_ref()
+
+func getDemonScript() -> Script:
+	return _demonScript
 
 func getTextureAtlas() -> Texture2D:
 	return ModelDB.getDemonSingleton(_demonScript).handAtlas

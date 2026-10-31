@@ -5,6 +5,9 @@ class_name CoinPieceModel
 const PIECE_TYPE_KEY : String = "piece_type"
 const ABILITY_SCRIPT_KEY : String = "ability_script"
 
+const SEAL_KEY : String = "seal_data"
+const ABILITY_KEY : String = "ability_data"
+
 var coinPieceType : Entities.CoinPieceType = Entities.CoinPieceType.NONE
 var abilityScript : Script = null
 
@@ -28,8 +31,8 @@ func clone() -> CoinPieceModel:
 
 ####################################################################################################
 
-func getBaseData() -> Dictionary:
-	var baseData : Dictionary = super.getBaseData()
+func _getBaseData() -> Dictionary:
+	var baseData : Dictionary = super._getBaseData()
 	baseData.merge(
 	{
 		PIECE_TYPE_KEY : Entities.CoinPieceType.NONE,
@@ -37,21 +40,28 @@ func getBaseData() -> Dictionary:
 	}, true)
 	return baseData
 
-func deserialize(data : Dictionary) -> LocalizedModel:
-	super.deserialize(data)
+func _initBaseData(data : Dictionary) -> void:
+	super._initBaseData(data)
 	if data.has(ABILITY_SCRIPT_KEY):
-		abilityScript = data[ABILITY_SCRIPT_KEY]
+		setAbilityScript(data[ABILITY_SCRIPT_KEY])
 	if data.has(PIECE_TYPE_KEY):
 		coinPieceType = data[PIECE_TYPE_KEY]
-	return self
 
 func serialize() -> Dictionary:
-	var rtn : Dictionary = super.serialize()
-	rtn.merge({
-		ABILITY_SCRIPT_KEY : abilityScript,
-		PIECE_TYPE_KEY : coinPieceType,
-	}, true)
+	var rtn : Dictionary = {}
+	if abilityScript != null:
+		rtn[ABILITY_KEY] = ModelDB.getAbilitySingleton(abilityScript).serialize()
+	if hasSeal():
+		rtn[SEAL_KEY] = getSealModel().serialize()
 	return rtn
+
+func deserialize(data : Dictionary) -> Serializable:
+	super.deserialize(data)
+	if data.has(ABILITY_KEY):
+		setAbilityScript(ModelDB.getModelFromSerialized(data[ABILITY_KEY]).get_script())
+	if data.has(SEAL_KEY):
+		setSealModel(ModelDB.getModelFromSerialized(data[SEAL_KEY]))
+	return self
 
 func getTooltipString() -> String:
 	var rtn : String = ""
@@ -74,9 +84,11 @@ func getLocID() -> String:
 
 func setAbilityScript(newAbilityScript : Script) -> CoinPieceModel:
 	abilityScript = newAbilityScript
-	var abilitySingleton : Ability = ModelDB.getAbilitySingleton(abilityScript)
-	coinPieceType = abilitySingleton.coinPieceType
-	texPath = abilitySingleton.getTexturePath()
+	texPath = ""
+	if abilityScript != null:
+		var abilitySingleton : Ability = ModelDB.getAbilitySingleton(abilityScript)
+		coinPieceType = abilitySingleton.coinPieceType
+		texPath = abilitySingleton.getTexturePath()
 	_textureAtlas = null
 	return self
 
@@ -101,7 +113,8 @@ func setCoinFaceModel(newCoinFaceModel : CoinFaceModel) -> void:
 func getCoinFaceModel() -> CoinFaceModel:
 	if not _coinFaceModelRef:
 		return null
-	return _coinFaceModelRef.get_ref()
+	var rtn = _coinFaceModelRef.get_ref()
+	return rtn
 
 func getPlayerModel() -> PlayerModel:
 	if not _coinFaceModelRef:
