@@ -27,17 +27,13 @@ func getTooltipString() -> String:
 func onRoundStart(matchState : MatchState) -> bool:
 	popNode()
 	
-	var playerModelToCoinPieces : Dictionary[PlayerModel, Array] = {}
+	var randomNonSeals : Array[CoinPieceModel] = []
 	for playerModel : PlayerModel in matchState.getAllPlayerModels():
-		playerModelToCoinPieces[playerModel] = playerModel.getCoinFaceModel().getAllPieces()
-		for i in range(playerModelToCoinPieces[playerModel].size()-1, -1, -1):
-			if playerModelToCoinPieces[playerModel][i].getSealModel() != null:
-				playerModelToCoinPieces[playerModel].remove_at(i)
-		while playerModelToCoinPieces[playerModel].size() > NUM_SEALS_PER_PLAYER:
-			var index : int = RNG.getRandi() % playerModelToCoinPieces[playerModel].size()
-			playerModelToCoinPieces[playerModel].remove_at(index)
+		var coinFaceModel : CoinFaceModel = playerModel.getCoinFaceModel()
+		if coinFaceModel == null:
+			continue
+		randomNonSeals.append_array(RNG.getNRandomCoinPiecesNonSeal(matchState, coinFaceModel, NUM_SEALS_PER_PLAYER))
 	
-	for playerModel : PlayerModel in matchState.getAllPlayerModels():
-		for coinPieceModel : CoinPieceModel in playerModelToCoinPieces[playerModel]:
-			await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)
+	for coinPieceModel : CoinPieceModel in randomNonSeals:
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)
 	return true

@@ -30,7 +30,7 @@ func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amo
 		return false
 	if playerModel != myPlayerModel:
 		return false
-	if RNG.getRandf() > PERCENT_CHANCE:
+	if not RNG.selectRate(matchState, PERCENT_CHANCE):
 		return false
 	
 	popNode()

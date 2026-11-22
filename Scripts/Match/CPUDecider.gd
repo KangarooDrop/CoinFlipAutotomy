@@ -3,7 +3,7 @@ extends RefCounted
 class_name CPUDecider
 
 const USE_THREADS : bool = true
-const MAX_MS_THRESHOLD : int = 10_000
+const MAX_MS_THRESHOLD : int = 20_000
 
 var cpuTargetThread : Thread = null
 var oldTargetThread : Thread = null

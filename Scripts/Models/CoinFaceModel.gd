@@ -98,44 +98,6 @@ func fillEmptySockets() -> void:
 			counterweightCoinPiece.setAbilityScript(AbilityCounterweightExterior)
 		insertCoinPiece(socketIndex, counterweightCoinPiece)
 
-func getCore() -> CoinPieceModel:
-	return _socketIndexToPiece[Entities.CoinPieceSocketIndex.CORE]
-
-func getExteriors() -> Array[CoinPieceModel]:
-	var rtn : Array[CoinPieceModel] = []
-	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
-		if socketIndex != Entities.CoinPieceSocketIndex.CORE and _socketIndexToPiece[socketIndex] != null:
-			rtn.append(_socketIndexToPiece[socketIndex])
-	return rtn
-
-func getAllPieces() -> Array[CoinPieceModel]:
-	var rtn : Array[CoinPieceModel] = []
-	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
-		if _socketIndexToPiece[socketIndex] != null:
-			rtn.append(_socketIndexToPiece[socketIndex])
-	return rtn
-
-func getAllSeals() -> Array[SealModel]:
-	var rtn : Array[SealModel] = []
-	for coinPieceModel : CoinPieceModel in getAllPieces():
-		var sealModel : SealModel = coinPieceModel.getSealModel()
-		if sealModel != null:
-			rtn.append(sealModel)
-	return rtn
-
-func getAdjacentCoinPieces(fromModel : CoinPieceModel) -> Array[CoinPieceModel]:
-	var socketIndex : Entities.CoinPieceSocketIndex = getSocketIndexFromCoinPieceModel(fromModel)
-	if socketIndex == Entities.CoinPieceSocketIndex.NONE:
-		return []
-	var rtn : Array[CoinPieceModel] = []
-	var adjacentSocketIndices : Array[Entities.CoinPieceSocketIndex] = Entities.CoinPieceSocketScript.getAllAdjacent(socketIndex)
-	for adjIndex : Entities.CoinPieceSocketIndex in adjacentSocketIndices:
-		var adjacentCoinPieceModel : CoinPieceModel = getCoinPieceAtSocket(adjIndex)
-		if adjacentCoinPieceModel == null:
-			continue
-		rtn.append(adjacentCoinPieceModel)
-	return rtn
-
 func getCoinPieceAtSocket(socketIndex : Entities.CoinPieceSocketIndex) -> CoinPieceModel:
 	if not _socketIndexToPiece.has(socketIndex):
 		return null
@@ -182,3 +144,41 @@ func getSocketIndexFromCoinPieceModel(coinPieceModel : CoinPieceModel) -> Entiti
 		if _socketIndexToPiece[socketIndex] == coinPieceModel:
 			return socketIndex
 	return Entities.CoinPieceSocketIndex.NONE
+
+func getCore() -> CoinPieceModel:
+	return _socketIndexToPiece[Entities.CoinPieceSocketIndex.CORE]
+
+func getExteriors() -> Array[CoinPieceModel]:
+	var rtn : Array[CoinPieceModel] = []
+	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
+		if socketIndex != Entities.CoinPieceSocketIndex.CORE and _socketIndexToPiece[socketIndex] != null:
+			rtn.append(_socketIndexToPiece[socketIndex])
+	return rtn
+
+func getAllPieces() -> Array[CoinPieceModel]:
+	var rtn : Array[CoinPieceModel] = []
+	for socketIndex : Entities.CoinPieceSocketIndex in _socketIndexToPiece.keys():
+		if _socketIndexToPiece[socketIndex] != null:
+			rtn.append(_socketIndexToPiece[socketIndex])
+	return rtn
+
+func getAllSeals() -> Array[SealModel]:
+	var rtn : Array[SealModel] = []
+	for coinPieceModel : CoinPieceModel in getAllPieces():
+		var sealModel : SealModel = coinPieceModel.getSealModel()
+		if sealModel != null:
+			rtn.append(sealModel)
+	return rtn
+
+func getAdjacentCoinPieces(fromModel : CoinPieceModel) -> Array[CoinPieceModel]:
+	var socketIndex : Entities.CoinPieceSocketIndex = getSocketIndexFromCoinPieceModel(fromModel)
+	if socketIndex == Entities.CoinPieceSocketIndex.NONE:
+		return []
+	var rtn : Array[CoinPieceModel] = []
+	var adjacentSocketIndices : Array[Entities.CoinPieceSocketIndex] = Entities.CoinPieceSocketScript.getAllAdjacent(socketIndex)
+	for adjIndex : Entities.CoinPieceSocketIndex in adjacentSocketIndices:
+		var adjacentCoinPieceModel : CoinPieceModel = getCoinPieceAtSocket(adjIndex)
+		if adjacentCoinPieceModel == null:
+			continue
+		rtn.append(adjacentCoinPieceModel)
+	return rtn

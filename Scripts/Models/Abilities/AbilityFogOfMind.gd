@@ -25,19 +25,6 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func _getRandomAdjacentNonSeal(coinPieceModel : CoinPieceModel) -> CoinPieceModel:
-	if coinPieceModel == null:
-		return null
-	var adjacentCoinPieceModels : Array[CoinPieceModel] = coinPieceModel.getCoinFaceModel().getAdjacentCoinPieces(coinPieceModel)
-	for i in range(adjacentCoinPieceModels.size()-1, -1, -1):
-		if adjacentCoinPieceModels[i].getSealModel() == null:
-			continue
-		adjacentCoinPieceModels.remove_at(i)
-	if adjacentCoinPieceModels.size() > 0:
-		return adjacentCoinPieceModels[RNG.getRandi() % adjacentCoinPieceModels.size()]
-	else:
-		return null
-
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityFogOfMind.activate: " + str(abilityContext.targets.size()) + " != 1.")
@@ -53,12 +40,12 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPieceModel)
 	
-	var adjacentTarget : CoinPieceModel = _getRandomAdjacentNonSeal(targetCoinPieceModel)
+	var adjacentTarget : CoinPieceModel = RNG.getRandomAdjacentNonSeal(matchState, targetCoinPieceModel)
 	if adjacentTarget != null:
 		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealBlackSulfur), adjacentTarget)
 	
 	var sourceCoinPieceModel : CoinPieceModel = null
 	if abilityContext.source is CoinPieceModel:
 		sourceCoinPieceModel = abilityContext.source
-	if sourceCoinPieceModel != null:
+	if sourceCoinPieceModel != null and not sourceCoinPieceModel.hasSeal():
 		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), sourceCoinPieceModel)

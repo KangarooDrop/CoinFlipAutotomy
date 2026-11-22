@@ -70,6 +70,11 @@ func setModel(newCoinPieceModel : CoinPieceModel, useDefaultRotData : bool = tru
 		await _onSealReplaced(newSealModel, _sealNode.getModel())
 	elif _sealNode != null:
 		await _onSealRemoved(_sealNode.getModel())
+	if _coinPieceModel.coinPieceType == Entities.CoinPieceType.CORE:
+		tooltipViewer.setShapeCircle()
+	else:
+		tooltipViewer.setShapeTrapezoid()
+	
 	if useDefaultRotData:
 		if _coinPieceModel.coinPieceType == Entities.CoinPieceType.CORE:
 			setRotationData(Util.getSocketIndexToCoinPieceRotData(Entities.CoinPieceSocketIndex.CORE))
@@ -85,6 +90,8 @@ func getModel() -> CoinPieceModel:
 func setRotationData(rotData : CoinPieceRotData) -> void:
 	sprite.rotation = rotData.getRotation()
 	sprite.region_rect.position.y = sprite.region_rect.size.x * rotData.getAtlasIndex()
+	
+	tooltipViewer.setRotation(rotData.getRotation() + rotData.getAtlasIndex() * PI/4.0)
 
 func popNode() -> void:
 	if _sealNode != null:

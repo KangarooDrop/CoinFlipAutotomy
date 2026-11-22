@@ -23,19 +23,6 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func _getRandomAdjacentNonSeal(matchState : MatchState, coinPieceModel : CoinPieceModel) -> CoinPieceModel:
-	if coinPieceModel == null:
-		return null
-	var adjacentCoinPieceModels : Array[CoinPieceModel] = coinPieceModel.getCoinFaceModel().getAdjacentCoinPieces(coinPieceModel)
-	for i in range(adjacentCoinPieceModels.size()-1, -1, -1):
-		if adjacentCoinPieceModels[i].getSealModel() == null:
-			continue
-		adjacentCoinPieceModels.remove_at(i)
-	if adjacentCoinPieceModels.size() > 0:
-		return RNG.select(matchState, adjacentCoinPieceModels, self)
-	else:
-		return null
-
 func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityPlayWithYourFood.activate: " + str(abilityContext.targets.size()) + " != 1.")
@@ -49,7 +36,7 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		pass
 		push_error("ERROR: Coin Piece with Seal given to AbilityPlayWithYourFood.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
 		return
-	var adjacentTarget : CoinPieceModel = _getRandomAdjacentNonSeal(matchState, targetCoinPieceModel)
+	var adjacentTarget : CoinPieceModel = RNG.getRandomAdjacentNonSeal(matchState, targetCoinPieceModel)
 	
 	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), targetCoinPieceModel)
 	if adjacentTarget != null:

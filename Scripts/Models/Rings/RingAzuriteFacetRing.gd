@@ -24,15 +24,15 @@ func getTooltipString() -> String:
 
 func onBeforeTurnSkipped(matchState : MatchState) -> bool:
 	var playerModel : PlayerModel = getPlayerModel()
-	var coinFaceModel : CoinFaceModel = playerModel.getCoinFaceModel()
-	var coinPiecesNoSeal : Array[CoinPieceModel] = []
-	for coinPieceModel : CoinPieceModel in coinFaceModel.getAllPieces():
-		if coinPieceModel.hasSeal():
-			continue
-		coinPiecesNoSeal.append(coinPieceModel)
-	if coinPiecesNoSeal.size() == 0:
+	if playerModel == null:
 		return false
-	var coinPieceToStamp : CoinPieceModel = coinPiecesNoSeal[RNG.getRandi() % coinPiecesNoSeal.size()]
+	var coinFaceModel : CoinFaceModel = playerModel.getCoinFaceModel()
+	if coinFaceModel == null:
+		return false
+	var randomNonSeal : CoinPieceModel = RNG.getRandomCoinPieceNonSeal(matchState, coinFaceModel)
+	if randomNonSeal == null:
+		return false
+	
 	popNode()
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), coinPieceToStamp)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), randomNonSeal)
 	return true

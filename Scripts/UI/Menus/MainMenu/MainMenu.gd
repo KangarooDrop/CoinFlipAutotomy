@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 @onready var coinNode : CoinNode = get_node("%CoinNode")
 @onready var coinHolder : Control = get_node("%CoinHolder")
@@ -76,16 +76,6 @@ func _getRandomPlayerModel() -> PlayerModel:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.is_pressed() and not event.is_echo():
-		var matchState : MatchState = MatchState.new()
-		var playerModelUser : PlayerModel = _getRandomPlayerModel()
-		var playerModelOpponent : PlayerModel = _getRandomPlayerModel()
-		matchState.setPlayerModels(playerModelUser, playerModelOpponent)
-		var serialized : Dictionary = matchState.serialize()
-		
-		var deserialized : MatchState = MatchState.new().deserialize(serialized)
-		print(serialized == deserialized.serialize())
-		
-		return
 		checkRNGDecision()
 		return
 		checkDecisionSpeed()
@@ -113,6 +103,7 @@ func onEndRNGAccumulator() -> void:
 	pass
 
 func checkRNGDecision() -> void:
+	"""
 	RNG.start_rng_accumulator.connectSignal(onStartRNGAccumulator)
 	RNG.end_rng_accumulator.connectSignal(onEndRNGAccumulator)
 	
@@ -229,6 +220,19 @@ func checkRNGDecision() -> void:
 		return rtn
 	, ["0", "1", "A", "1", "B", "X", "1", "B", "Y", null])
 	
+	#20% Chance random[2] adjacent CP gets a random[3] Seal, 80% Change this gets a random[2] Seal
+	simRNG(func(source):
+		var rtn : Array = []
+		var out : bool = RNG.selectRate(null, 0.2, source)
+		rtn.append(out)
+		if out:
+			rtn.append(RNG.select(null, ["CP_0", "CP_1"], source))
+			rtn.append(RNG.select(null, ["Seal_0", "Seal_1", "Seal_2"], source))
+		else:
+			rtn.append(RNG.select(null, ["Seal_A", "Seal_B"], source))
+		return rtn
+	, [true, "CP_0", "Seal_0", true, "CP_0", "Seal_1", true, "CP_0", "Seal_2", true, "CP_1", "Seal_0", true, "CP_1", "Seal_1", true, "CP_1", "Seal_2", false, "Seal_A", false, "Seal_B", false, null])
+	
 	
 	if RNG.decisionIndices.size() != 0 or RNG.lastSource != null or RNG.finishedDeciding or RNG.isDeciding:
 		print("EXIT TEST FAIL!")
@@ -238,6 +242,7 @@ func checkRNGDecision() -> void:
 	
 	RNG.start_rng_accumulator.disconnectSignal(onStartRNGAccumulator)
 	RNG.end_rng_accumulator.disconnectSignal(onEndRNGAccumulator)
+	"""
 
 const RNG_DEPTH_MAX : int = 32
 func simRNG(lambda : Callable, expectedOut : Array) -> void:
@@ -259,4 +264,18 @@ func simRNG(lambda : Callable, expectedOut : Array) -> void:
 		print("TEST FAILED")
 
 func endRNGDecision() -> void:
+	pass
+
+func resyncRNG() -> void:
+	#[Aquire new seed]
+	#Seed RNG w/ current game run time (Time.get_ticks_msec())
+	#Send r0 = RNG.next() to opponent
+	#Wait for r1 = opponent's RNG.next()
+	#Hash own r0 w/ r1 to get rx
+	
+	#[Confirm new seed]
+	#Seed RNG w/ rx
+	#Send c0 = RNG.next() to opponent
+	#Wait for c1 = opponent's RNG.next()
+	#Compare c0 and c1
 	pass

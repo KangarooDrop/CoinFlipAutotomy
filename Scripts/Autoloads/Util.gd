@@ -1,5 +1,10 @@
 extends Node
 
+#UtilCallables
+@warning_ignore("unused_parameter")
+func callableFuncTrue(...args): return true
+
+#Cached
 @onready var _socketIndexToCoinPieceRotData : Dictionary[Entities.CoinPieceSocketIndex, CoinPieceRotData] = _initSocketIndexToPieceRotData()
 static func _initSocketIndexToPieceRotData() -> Dictionary:
 	var rtn : Dictionary[Entities.CoinPieceSocketIndex, CoinPieceRotData] = {}
@@ -14,9 +19,11 @@ func getSocketIndexToCoinPieceRotData(socketIndex : Entities.CoinPieceSocketInde
 	else:
 		return _socketIndexToCoinPieceRotData[socketIndex]
 
+#WindowData
 var screenWidth : float = ProjectSettings.get("display/window/size/viewport_width")
 var screenHeight : float = ProjectSettings.get("display/window/size/viewport_height")
 
+#Math
 const INT_MAX : int = 2147483647
 
 func hasBitVal(val : int, bitVal : int) -> bool:
@@ -38,6 +45,11 @@ func betterFloor(val : Variant) -> Variant:
 	else:
 		return val
 
+const NUM_PERCENT_FIGS : int = 5
+func toPercent(val : float) -> float:
+	return int(val * pow(10, NUM_PERCENT_FIGS)) / pow(10, NUM_PERCENT_FIGS-2)
+
+#ArrayOps
 func arrayAND(arr0 : Array, arr1 : Array) -> Array:
 	var rtn : Array = []
 	for val in arr0:
@@ -62,6 +74,7 @@ func arraySUB(arr0 : Array, arr1 : Array) -> Array:
 func arrayXOR(arr0 : Array, arr1 : Array) -> Array:
 	return arraySUB(arrayOR(arr0, arr1), arrayAND(arr0, arr1))
 
-const NUM_PERCENT_FIGS : int = 5
-func toPercent(val : float) -> float:
-	return int(val * pow(10, NUM_PERCENT_FIGS)) / pow(10, NUM_PERCENT_FIGS-2)
+func getFirstOrNull(arr : Array) -> Variant:
+	if arr.size() == 0:
+		return null
+	return arr[0]

@@ -15,7 +15,19 @@ var _tooltipHideWaitTimer : float = 0.0
 
 var _tooltip : Tooltip = null
 
+@onready var hoverArea : Area2D = get_node("%HoverArea")
+@onready var collisionShapeSquare : CollisionShape2D = get_node("%CollisionShapeSquare")
+@onready var shapeSquare : RectangleShape2D = collisionShapeSquare.shape
+@onready var collisionShapeTrapezoid : CollisionShape2D = get_node("%CollisionShapeTrapezoid")
+@onready var shapeTrapezoid : ConvexPolygonShape2D = collisionShapeTrapezoid.shape
+@onready var collisionShapeCircle : CollisionShape2D = get_node("%CollisionShapeCircle")
+@onready var shapeCircle : CircleShape2D = collisionShapeCircle.shape
+@onready var collisionShapes : Array[CollisionShape2D] = [collisionShapeSquare, collisionShapeTrapezoid, collisionShapeCircle]
+
 ####################################################################################################
+
+func _ready() -> void:
+	_setShape(0)
 
 func _process(delta: float) -> void:
 	if _disabled:
@@ -59,6 +71,11 @@ func _exit_tree() -> void:
 	if is_instance_valid(_tooltip):
 		_removeTooltip()
 
+func _setShape(index : int) -> void:
+	for i in range(collisionShapes.size()):
+		collisionShapes[i].visible = (i==index)
+		collisionShapes[i].disabled = not collisionShapes[i].visible
+
 ####################################################################################################
 
 func setText(newText : String) -> void:
@@ -84,3 +101,25 @@ func disable() -> void:
 
 func enable() -> void:
 	_disabled = false
+
+func setShapeSquare() -> void:
+	_setShape(0)
+
+func setShapeTrapezoid() -> void:
+	_setShape(1)
+
+func setShapeCircle() -> void:
+	_setShape(2)
+
+func setRotation(val : float) -> void:
+	hoverArea.rotation = val
+
+func _has_point(point : Vector2) -> bool:
+	point = point.rotated(-hoverArea.rotation)
+	if collisionShapeSquare.visible:
+		return point.x > -shapeSquare.size.x/2.0 and point.x < shapeSquare.size.x/2.0 and point.y > -shapeSquare.size.y/2.0 and point.y < shapeSquare.size.y/2.0
+	elif collisionShapeCircle.visible:
+		return point.length_squared() < shapeCircle.radius*shapeCircle.radius
+	elif collisionShapeTrapezoid.visible:
+		return Geometry2D.is_point_in_polygon(point, shapeTrapezoid.points)
+	return false
