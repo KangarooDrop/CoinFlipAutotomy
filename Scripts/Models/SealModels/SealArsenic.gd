@@ -24,11 +24,11 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
+func onAfterAbilityActivated(matchState : MatchState, ability : Ability) -> bool:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
-	if context.source != coinPieceModel:
+	if ability.abilityContext.source != coinPieceModel:
 		return false
 	var playerModel : PlayerModel = getPlayerModel()
-	await CmdSeal.removeSeal(matchState, coinPieceModel)
-	await CmdSpin.addSpin(matchState, playerModel, -SPIN_DEC)
+	await CmdSeal.removeSeal(matchState, coinPieceModel, self)
+	await CmdSpin.addSpin(matchState, playerModel, -SPIN_DEC, self)
 	return true

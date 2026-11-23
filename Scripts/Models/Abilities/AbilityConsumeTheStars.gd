@@ -26,7 +26,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityConsumeTheStars.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityConsumeTheStars.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -49,14 +52,14 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		var sealModelToBreak : SealModel = coinPieceToBreak.getSealModel()
 		if sealModelToBreak == null:
 			continue
-		await CmdSeal.removeSeal(matchState, coinPieceToBreak)
+		await CmdSeal.removeSeal(matchState, coinPieceToBreak, self)
 		breakCounter += 1
 	
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
-	await CmdSpin.addSpin(matchState, playerModel, SPIN_PER_BREAK * breakCounter)
+	await CmdSpin.addSpin(matchState, playerModel, SPIN_PER_BREAK * breakCounter, self)
 	
 	if breakCounter >= BREAKS_TO_STAMP:
 		var stampTarget : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.NON_SEAL_ANY, playerModel)
 		if stampTarget == null:
 			return
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), stampTarget)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), stampTarget, self)

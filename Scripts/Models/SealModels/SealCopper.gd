@@ -27,8 +27,8 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
-	if context.source != getCoinPieceModel():
+func onAfterAbilityActivated(_matchState : MatchState, ability : Ability) -> bool:
+	if ability.abilityContext.source != getCoinPieceModel():
 		return false
 	
 	_wasAbilityActivated = true
@@ -40,8 +40,8 @@ func onBeforeTurnEnd(matchState : MatchState) -> bool:
 		return false
 	
 	if not _wasAbilityActivated:
-		await CmdSpin.addSpin(matchState, ownPlayerModel, SPIN_INC)
+		await CmdSpin.addSpin(matchState, ownPlayerModel, SPIN_INC, self)
 	else:
-		await CmdSpin.addSpin(matchState, ownPlayerModel, -SPIN_DEC)
-		await CmdSeal.removeSeal(matchState, getCoinPieceModel())
+		await CmdSpin.addSpin(matchState, ownPlayerModel, -SPIN_DEC, self)
+		await CmdSeal.removeSeal(matchState, getCoinPieceModel(), self)
 	return true

@@ -33,7 +33,7 @@ func onRoundStart(matchState : MatchState) -> bool:
 		return true
 	
 	for coinPieceModel : CoinPieceModel in playerModel.getCoinFaceModel().getAllPieces():
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), coinPieceModel)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), coinPieceModel, self)
 	return true
 
 func onBeforeTurnEnd(matchState : MatchState) -> bool:

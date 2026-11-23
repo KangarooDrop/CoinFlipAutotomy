@@ -7,7 +7,10 @@ static func addAdditionalTurn(matchState : MatchState, playerModel : PlayerModel
 static func activateAbilityScript(matchState : MatchState, abilityScript : Script, source : RefCounted) -> bool:
 	return await matchState.activateAbilityScriptFromSource(abilityScript, source)
 
-static func copyAbilityScript(matchState : MatchState, abilityScript : Script, source : RefCounted) -> bool:
+static func copyAbilitySameContext(matchState : MatchState, ability : Ability) -> void:
+	await matchState.activateAbilityScript(ability.get_script(), ability.abilityContext.clone())
+
+static func copyAbilityScriptNewContext(matchState : MatchState, abilityScript : Script, source : RefCounted) -> bool:
 	return await matchState.activateAbilityScriptFromSource(abilityScript, source, true)
 
 #func getMatchState() -> MatchState:

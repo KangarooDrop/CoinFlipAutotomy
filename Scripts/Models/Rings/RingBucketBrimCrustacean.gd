@@ -24,7 +24,7 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer) -> bool:
+func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer, _source : RefCounted) -> bool:
 	var myPlayerModel : PlayerModel = getPlayerModel()
 	if not matchState.isPlayerTurn(myPlayerModel):
 		return false

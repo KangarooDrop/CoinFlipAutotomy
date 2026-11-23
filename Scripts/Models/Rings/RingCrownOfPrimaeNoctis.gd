@@ -26,5 +26,5 @@ func onRoundStart(matchState : MatchState) -> bool:
 	if abilityScript == null:
 		return true
 	
-	await CmdMatch.copyAbilityScript(matchState, abilityScript, self)
+	await CmdMatch.copyAbilityScriptNewContext(matchState, abilityScript, self)
 	return true

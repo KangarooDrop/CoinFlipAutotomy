@@ -30,7 +30,7 @@ func onRoundStart(_matchState : MatchState) -> bool:
 	_canActivate = true
 	return true
 
-func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, _amountPointer : Pointer) -> bool:
+func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, _amount : int, _source : RefCounted) -> bool:
 	if not _canActivate:
 		return false
 	
@@ -41,7 +41,7 @@ func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, _amo
 	if matchState.getSpin(ownPlayerModel) > 0:
 		return false
 	
-	await CmdSpin.addSpin(matchState, playerModel, SPIN_INC)
+	await CmdSpin.addSpin(matchState, playerModel, SPIN_INC, self)
 	_canActivate = false
 	popNode()
 	return true

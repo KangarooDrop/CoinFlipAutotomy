@@ -21,7 +21,10 @@ func _getBaseData() -> Dictionary:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityObliterate.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityObliterate.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return

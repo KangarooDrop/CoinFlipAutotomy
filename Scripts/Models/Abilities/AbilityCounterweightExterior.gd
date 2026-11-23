@@ -24,5 +24,5 @@ func _getBaseData() -> Dictionary:
 func canActivateAbilityOfCoinPiece(_matchState : MatchState, _coinPieceModel : CoinPieceModel) -> bool:
 	return false
 
-func activate(_matchState : MatchState, _abilityContext : AbilityContext) -> void:
+func activate(_matchState : MatchState) -> void:
 	pass

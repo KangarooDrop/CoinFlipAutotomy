@@ -30,5 +30,5 @@ func onTurnStart(matchState : MatchState) -> bool:
 		return false
 	
 	popNode()
-	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE)
+	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS_BASE, self)
 	return true

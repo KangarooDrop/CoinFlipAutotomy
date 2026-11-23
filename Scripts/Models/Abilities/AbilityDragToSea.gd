@@ -20,7 +20,10 @@ func _getBaseData() -> Dictionary:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityDragToSea.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityDragToSea.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -34,7 +37,7 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		return
 	
 	var brokenSealScript : Script = targetCoinPieceModel.getSealModel().get_script()
-	await CmdSeal.removeSeal(matchState, targetCoinPieceModel)
+	await CmdSeal.removeSeal(matchState, targetCoinPieceModel, self)
 	
 	var sourceCoinPiece : CoinPieceModel = null
 	if abilityContext.source is CoinPieceModel:
@@ -42,4 +45,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	if sourceCoinPiece == null:
 		return
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(brokenSealScript), sourceCoinPiece)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(brokenSealScript), sourceCoinPiece, self)

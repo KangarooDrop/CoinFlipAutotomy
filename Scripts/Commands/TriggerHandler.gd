@@ -66,71 +66,71 @@ func onBeforeTurnSkipped(matchState : MatchState) -> void:
 	matchState.onAfterTriggerCondition()
 
 #	Spin Change Triggers	#
-func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer) -> void:
+func onBeforeSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer, source : RefCounted) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onBeforeSpinChanged(matchState, playerModel, amountPointer):
+		if await trig.onBeforeSpinChanged(matchState, playerModel, amountPointer, source):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
-func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, amountPointer : Pointer) -> void:
+func onAfterSpinChanged(matchState : MatchState, playerModel : PlayerModel, amount : int, source : RefCounted) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onAfterSpinChanged(matchState, playerModel, amountPointer):
+		if await trig.onAfterSpinChanged(matchState, playerModel, amount, source):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
 
 #	Ability Triggers	#
-func onBeforeAbilityCheck(matchState : MatchState, ability : Ability, context : AbilityContext) -> void:
+func onBeforeAbilityCheck(matchState : MatchState, ability : Ability) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onBeforeAbilityCheck(matchState, ability, context):
+		if await trig.onBeforeAbilityCheck(matchState, ability):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
-func onBeforeAbilityActivated(matchState : MatchState, ability : Ability, context : AbilityContext) -> void:
+func onBeforeAbilityActivated(matchState : MatchState, ability : Ability) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onBeforeAbilityActivated(matchState, ability, context):
+		if await trig.onBeforeAbilityActivated(matchState, ability):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
-func onAfterAbilityActivated(matchState : MatchState, ability : Ability, context : AbilityContext) -> void:
+func onAfterAbilityActivated(matchState : MatchState, ability : Ability) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onAfterAbilityActivated(matchState, ability, context):
+		if await trig.onAfterAbilityActivated(matchState, ability):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
-func onBeforeAbilityCountered(matchState : MatchState, ability : Ability, context : AbilityContext) -> void:
+func onBeforeAbilityCountered(matchState : MatchState, ability : Ability) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onBeforeAbilityCountered(matchState, ability, context):
+		if await trig.onBeforeAbilityCountered(matchState, ability):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
-func onAfterAbilityCountered(matchState : MatchState, ability : Ability, context : AbilityContext) -> void:
+func onAfterAbilityCountered(matchState : MatchState, ability : Ability) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onAfterAbilityCountered(matchState, ability, context):
+		if await trig.onAfterAbilityCountered(matchState, ability):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
 
 #	Seal Triggers	#
-func onBeforeSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, newSealModelPointer : Pointer) -> void:
+func onBeforeSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, newSealModelPointer : Pointer, source : RefCounted) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onBeforeSealChanged(matchState, coinPieceModel, newSealModelPointer):
+		if await trig.onBeforeSealChanged(matchState, coinPieceModel, newSealModelPointer, source):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
-func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> void:
+func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel, source : RefCounted) -> void:
 	matchState.onBeforeTriggerCondition()
 	for trig : Triggerable in matchState.getAllTriggerables():
 		@warning_ignore("redundant_await")
-		if await trig.onAfterSealChanged(matchState, coinPieceModel, oldSealModel):
+		if await trig.onAfterSealChanged(matchState, coinPieceModel, oldSealModel, source):
 			matchState.onTriggerActivated()
 	matchState.onAfterTriggerCondition()
 

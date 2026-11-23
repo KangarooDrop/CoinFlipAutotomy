@@ -35,5 +35,5 @@ func onRoundStart(matchState : MatchState) -> bool:
 		randomNonSeals.append_array(RNG.getNRandomCoinPiecesNonSeal(matchState, coinFaceModel, NUM_SEALS_PER_PLAYER))
 	
 	for coinPieceModel : CoinPieceModel in randomNonSeals:
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel, self)
 	return true

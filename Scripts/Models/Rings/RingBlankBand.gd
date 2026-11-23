@@ -24,10 +24,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityCountered(matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
-	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_GAIN)
+func onAfterAbilityCountered(matchState : MatchState, _ability : Ability) -> bool:
+	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_GAIN, self)
 	return true
 
 func onBeforeTurnSkipped(matchState : MatchState) -> bool:
-	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_GAIN)
+	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_GAIN, self)
 	return true

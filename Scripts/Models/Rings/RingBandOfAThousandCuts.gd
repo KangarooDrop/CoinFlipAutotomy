@@ -21,9 +21,9 @@ func getTexturePath() -> String:
 
 ####################################################################################################
 
-func onAfterSpinChanged(matchState : MatchState, _playerModel : PlayerModel, amountPointer : Pointer) -> bool:
-	if amountPointer.val >= 0:
+func onAfterSpinChanged(matchState : MatchState, _playerModel : PlayerModel, amount : int, _source : RefCounted) -> bool:
+	if amount >= 0:
 		return false
 	popNode()
-	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_INC)
+	await CmdSpin.addSpin(matchState, getPlayerModel(), SPIN_INC, self)
 	return true

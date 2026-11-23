@@ -38,5 +38,5 @@ func onBeforeTurnEnd(matchState : MatchState) -> bool:
 	if not presentSinceStart:
 		return false
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
-	await CmdSeal.removeSeal(matchState, coinPieceModel)
+	await CmdSeal.removeSeal(matchState, coinPieceModel, self)
 	return true

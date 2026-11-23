@@ -23,7 +23,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityUnchartedWaters.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilitySealAway.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -36,5 +39,5 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Coin Piece with Seal given to AbilitySealAway.activate: " + str(targetCoinPieceModel.getSealModel()) + ".")
 		return
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealBlackSulfur), targetCoinPieceModel)
-	await CmdMatch.copyAbilityScript(matchState, targetCoinPieceModel.abilityScript, abilityContext)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealBlackSulfur), targetCoinPieceModel, self)
+	await CmdMatch.copyAbilityScriptNewContext(matchState, targetCoinPieceModel.abilityScript, abilityContext)

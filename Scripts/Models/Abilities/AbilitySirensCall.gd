@@ -28,11 +28,14 @@ func getTooltipString() -> String:
 func canActivateAbilityOfCoinPiece(matchState : MatchState, coinPieceModel : CoinPieceModel) -> bool:
 	return matchState.getSpin(coinPieceModel.getPlayerModel()) < 0
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilitySirensCall.activate")
+		return
 	if abilityContext.targets.size() != 0:
 		push_error("ERROR: Invalid num targets given to AbilitySirensCall.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
 	
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	var opponentPlayerModel : PlayerModel = matchState.getOtherPlayerModel(playerModel)
-	await CmdSpin.addSpin(matchState, opponentPlayerModel, -SPIN_DEC)
+	await CmdSpin.addSpin(matchState, opponentPlayerModel, -SPIN_DEC, self)

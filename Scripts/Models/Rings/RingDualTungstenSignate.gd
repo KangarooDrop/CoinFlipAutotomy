@@ -28,7 +28,7 @@ func onRoundStart(matchState : MatchState) -> bool:
 	popNode()
 	
 	var playerModel : PlayerModel = getPlayerModel()
-	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS)
+	await CmdSpin.addSpin(matchState, playerModel, -SPIN_LOSS, self)
 	
 	var targetCoinPiece : CoinPieceModel = await CmdAction.getCoinPieceToActivate(matchState, playerModel)
 	if targetCoinPiece == null:
@@ -36,5 +36,5 @@ func onRoundStart(matchState : MatchState) -> bool:
 	var abilityScript : Script = targetCoinPiece.abilityScript
 	if abilityScript == null:
 		return true
-	await CmdMatch.copyAbilityScript(matchState, abilityScript, self)
+	await CmdMatch.copyAbilityScriptNewContext(matchState, abilityScript, self)
 	return true

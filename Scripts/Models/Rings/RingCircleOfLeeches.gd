@@ -24,20 +24,20 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func onAfterAbilityActivated(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
-	if context.source.getPlayerModel() != getPlayerModel():
+func onAfterAbilityActivated(matchState : MatchState, ability : Ability) -> bool:
+	if ability.abilityContext.getPlayerModel() != getPlayerModel():
 		return false
-	if not context.source is CoinPieceModel:
+	if not ability.abilityContext.source is CoinPieceModel:
 		return false
-	var sourceCoinPieceModel : CoinPieceModel = context.source as CoinPieceModel
+	var sourceCoinPieceModel : CoinPieceModel = ability.abilityContext.source as CoinPieceModel
 	if sourceCoinPieceModel.getSealModel() != null:
 		return false
 	
 	popNode()
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCleansing), sourceCoinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCleansing), sourceCoinPieceModel, self)
 	return true
 
-func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel) -> bool:
+func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel, oldSealModel : SealModel, source : RefCounted) -> bool:
 	if coinPieceModel.getPlayerModel() != getPlayerModel():
 		return false
 	if not oldSealModel is SealCleansing:
@@ -46,5 +46,5 @@ func onAfterSealChanged(matchState : MatchState, coinPieceModel : CoinPieceModel
 		return false
 	
 	popNode()
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), coinPieceModel, self)
 	return true

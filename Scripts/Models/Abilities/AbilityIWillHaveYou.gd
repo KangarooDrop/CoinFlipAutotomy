@@ -25,12 +25,15 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityIWillHaveYou.activate")
+		return
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	if not abilityContext.isCopy:
 		var copyTarget : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.SEAL_ANY, playerModel)
 		if copyTarget == null:
 			return
-		await CmdMatch.copyAbilityScript(matchState, copyTarget.abilityScript, abilityContext)
+		await CmdMatch.copyAbilityScriptNewContext(matchState, copyTarget.abilityScript, abilityContext)
 	else:
-		await CmdSpin.addSpin(matchState, playerModel, SPIN_INC)
+		await CmdSpin.addSpin(matchState, playerModel, SPIN_INC, self)

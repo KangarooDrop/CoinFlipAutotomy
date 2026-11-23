@@ -28,5 +28,5 @@ func onBeforeTurnSkipped(matchState : MatchState) -> bool:
 	var coinPieceModel : CoinPieceModel = getCoinPieceModel()
 	if not matchState.getActivePlayerModel() == coinPieceModel.getPlayerModel():
 		return false
-	await CmdSeal.removeSeal(matchState, coinPieceModel)
+	await CmdSeal.removeSeal(matchState, coinPieceModel, self)
 	return true

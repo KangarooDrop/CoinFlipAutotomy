@@ -34,5 +34,5 @@ func onBeforeTurnSkipped(matchState : MatchState) -> bool:
 		return false
 	
 	popNode()
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), randomNonSeal)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), randomNonSeal, self)
 	return true

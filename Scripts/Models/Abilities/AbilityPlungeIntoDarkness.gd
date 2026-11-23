@@ -26,13 +26,16 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityPlungeIntoDarkness.activate")
+		return
 	if abilityContext.targets.size() > 0:
 		push_error("ERROR: Invalid num targets given to AbilityPlungeIntoDarkness.activate: " + str(abilityContext.targets.size()) + " > 0.")
 		return
 	
 	for playerModel : PlayerModel in matchState.getAllPlayerModels():
-		await CmdSpin.addSpin(matchState, playerModel, -SPIN_DEC)
+		await CmdSpin.addSpin(matchState, playerModel, -SPIN_DEC, self)
 	
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	var coinPieceModelToRemove : CoinPieceModel = await matchState.getTarget(Entities.TargetType.SEAL_ANY, playerModel)
@@ -40,12 +43,12 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		return
 	
 	var isOwned : bool = coinPieceModelToRemove.getPlayerModel() == playerModel
-	await CmdSeal.removeSeal(matchState, coinPieceModelToRemove)
+	await CmdSeal.removeSeal(matchState, coinPieceModelToRemove, self)
 	
 	if isOwned:
-		await CmdSpin.addSpin(matchState, playerModel, SPIN_INC)
+		await CmdSpin.addSpin(matchState, playerModel, SPIN_INC, self)
 	else:
 		coinPieceModelToRemove = await matchState.getTarget(Entities.TargetType.SEAL_ANY, playerModel)
 		if coinPieceModelToRemove == null:
 			return
-		await CmdSeal.removeSeal(matchState, coinPieceModelToRemove)
+		await CmdSeal.removeSeal(matchState, coinPieceModelToRemove, self)

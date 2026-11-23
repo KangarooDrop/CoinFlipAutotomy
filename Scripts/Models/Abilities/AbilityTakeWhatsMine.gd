@@ -37,7 +37,10 @@ func getAllCoinPiecesWithSealToBreak(matchState : MatchState) -> Array[CoinPiece
 				rtn.append(coinPieceModel)
 	return rtn
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityTakeWhatsMine.activate")
+		return
 	if abilityContext.targets.size() != 0:
 		push_error("ERROR: Invalid num targets given to AbilityTakeWhatsMine.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
@@ -45,6 +48,6 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	var spinInc : int = getSpinInc(matchState)
 	for coinPieceToBreak : CoinPieceModel in getAllCoinPiecesWithSealToBreak(matchState):
 		if coinPieceToBreak.getSealModel() is SealAquaFortis:
-			await CmdSeal.removeSeal(matchState, coinPieceToBreak)
+			await CmdSeal.removeSeal(matchState, coinPieceToBreak, self)
 	for playerModel : PlayerModel in matchState.getAllPlayerModels():
-		await CmdSpin.addSpin(matchState, playerModel, spinInc)
+		await CmdSpin.addSpin(matchState, playerModel, spinInc, self)

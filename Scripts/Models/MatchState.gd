@@ -304,25 +304,25 @@ func getOtherPlayerModel(playerModelFrom : PlayerModel) -> PlayerModel:
 	else:
 		return _playerModelUser
 
-func setSpin(playerModel : PlayerModel, amount : int) -> Pointer:
+func setSpin(playerModel : PlayerModel, amount : int, source : RefCounted) -> Pointer:
 	var originalAmount : int = getSpin(playerModel)
 	var amountChangedPointer : Pointer = Pointer.new(amount - originalAmount)
-	await TriggerHandler.onBeforeSpinChanged(self, playerModel, amountChangedPointer)
+	await TriggerHandler.onBeforeSpinChanged(self, playerModel, amountChangedPointer, source)
 	if playerModel == _playerModelUser:
 		await _setSpinUserInternal(originalAmount + amountChangedPointer.val)
 	elif playerModel == _playerModelOpponent:
 		await _setSpinOpponentInternal(originalAmount + amountChangedPointer.val)
 	else:
 		push_error("ERROR: Unknown player model given to /setSpinByPlayerModel")
-	await TriggerHandler.onAfterSpinChanged(self, playerModel, amountChangedPointer)
+	await TriggerHandler.onAfterSpinChanged(self, playerModel, amountChangedPointer.val, source)
 	return amountChangedPointer
-func setSpinUser(amount : int) -> Pointer:
-	return await setSpin(_playerModelUser, amount)
-func setSpinOpponent(amount : int) -> Pointer:
-	return await setSpin(_playerModelOpponent, amount)
+func setSpinUser(amount : int, source : RefCounted) -> Pointer:
+	return await setSpin(_playerModelUser, amount, source)
+func setSpinOpponent(amount : int, source : RefCounted) -> Pointer:
+	return await setSpin(_playerModelOpponent, amount, source)
 
-func addSpin(playerModel : PlayerModel, amount : int) -> Pointer:
-	return await setSpin(playerModel, getSpin(playerModel) + amount)
+func addSpin(playerModel : PlayerModel, amount : int, source : RefCounted) -> Pointer:
+	return await setSpin(playerModel, getSpin(playerModel) + amount, source)
 
 func getSpin(playerModel : PlayerModel) -> int:
 	if playerModel == _playerModelUser:
@@ -400,15 +400,16 @@ func onAfterTriggerCondition() -> void:
 
 func activateAbilityScript(abilityScript : Script, context : AbilityContext) -> void:
 	var ability : Ability = ModelDB.getAbility(abilityScript)
-	await TriggerHandler.onBeforeAbilityCheck(self, ability, context)
+	ability.abilityContext = context
+	await TriggerHandler.onBeforeAbilityCheck(self, ability)
 	if context.isCountered:
-		await TriggerHandler.onBeforeAbilityCountered(self, ability, context)
+		await TriggerHandler.onBeforeAbilityCountered(self, ability)
 	if not context.isCountered:
-		await TriggerHandler.onBeforeAbilityActivated(self, ability, context)
-		await ability.activate(self, context)
-		await TriggerHandler.onAfterAbilityActivated(self, ability, context)
+		await TriggerHandler.onBeforeAbilityActivated(self, ability)
+		await ability.activate(self)
+		await TriggerHandler.onAfterAbilityActivated(self, ability)
 	else:
-		await TriggerHandler.onAfterAbilityCountered(self, ability, context)
+		await TriggerHandler.onAfterAbilityCountered(self, ability)
 
 func activateAbilityScriptFromSource(abilityScript : Script, source : Variant, isCopy : bool = false) -> bool:
 	var targetType : Entities.TargetType = ModelDB.getAbilitySingleton(abilityScript).targetType

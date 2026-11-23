@@ -33,7 +33,7 @@ func onBeforeTurnEnd(matchState : MatchState) -> bool:
 	_canActivate = false
 	return true
 
-func onAfterAbilityActivated(matchState : MatchState, ability : Ability, _context : AbilityContext) -> bool:
+func onAfterAbilityActivated(matchState : MatchState, ability : Ability) -> bool:
 	if not _canActivate:
 		return false
 	if getPlayerModel() != matchState.getActivePlayerModel():
@@ -41,15 +41,15 @@ func onAfterAbilityActivated(matchState : MatchState, ability : Ability, _contex
 	
 	popNode()
 	_canActivate = false
-	await CmdMatch.copyAbilityScript(matchState, ability.get_script(), self)
+	await CmdMatch.copyAbilityScriptNewContext(matchState, ability.get_script(), self)
 	return true
 
-func onBeforeAbilityCheck(matchState : MatchState, _ability : Ability, context : AbilityContext) -> bool:
+func onBeforeAbilityCheck(matchState : MatchState, ability : Ability) -> bool:
 	if matchState.currentTurnNumber <= matchState.NUM_TURNS_MAX - 2:
 		return false
 	if getPlayerModel() != matchState.getActivePlayerModel():
 		return false
 	
 	popNode()
-	context.isCountered = true
+	ability.abilityContext.isCountered = true
 	return true

@@ -23,12 +23,15 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityHesitance.activate")
+		return
 	if abilityContext.targets.size() != 1:
-		push_error("ERROR: Invalid num targets given to AbilityAtrophy.activate: " + str(abilityContext.targets.size()) + " != 1.")
+		push_error("ERROR: Invalid num targets given to AbilityHesitance.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
 	if not abilityContext.targets[0] is CoinPieceModel:
-		push_error("ERROR: Invalid target given to AbilityAtrophy.activate: " + str(abilityContext.targets[0]) + ".")
+		push_error("ERROR: Invalid target given to AbilityHesitance.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealQuicksilver), abilityContext.targets[0])
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealQuicksilver), abilityContext.targets[0], self)

@@ -9,6 +9,8 @@ const PIECE_TYPE_KEY : String = "piece_type"
 var targetType : Entities.TargetType = Entities.TargetType.NONE
 var coinPieceType : Entities.CoinPieceType = Entities.CoinPieceType.NONE
 
+var abilityContext : AbilityContext = null
+
 ####################################################################################################
 
 func getLocID() -> String: return "ABILITY."
@@ -40,7 +42,7 @@ func deserialize(data : Dictionary) -> Serializable:
 	super.deserialize(data)
 	return self
 
-@abstract func activate(matchState : MatchState, abilityContext : AbilityContext) -> void
+@abstract func activate(matchState : MatchState) -> void
 
 func getTooltipString() -> String:
 	return getLocalizedString("name") + ": " + getLocalizedString("desc")

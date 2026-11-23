@@ -23,7 +23,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityPlayWithYourFood.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityPlayWithYourFood.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -38,6 +41,6 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		return
 	var adjacentTarget : CoinPieceModel = RNG.getRandomAdjacentNonSeal(matchState, targetCoinPieceModel)
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), targetCoinPieceModel)
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealCrystallization), targetCoinPieceModel, self)
 	if adjacentTarget != null:
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), adjacentTarget)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), adjacentTarget, self)

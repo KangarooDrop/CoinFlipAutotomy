@@ -33,27 +33,27 @@ func onBeforeTurnSkipped(_matchState : MatchState) -> bool:
 	return false
 
 #	Spin Change Triggers	#
-func onBeforeSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> bool:
+func onBeforeSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer, _source : RefCounted) -> bool:
 	return false
-func onAfterSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amountPointer : Pointer) -> bool:
+func onAfterSpinChanged(_matchState : MatchState, _playerModel : PlayerModel, _amount : int, _source : RefCounted) -> bool:
 	return false
 
 #	Ability Triggers	#
-func onBeforeAbilityCheck(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+func onBeforeAbilityCheck(_matchState : MatchState, _ability : Ability) -> bool:
 	return false
-func onBeforeAbilityActivated(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+func onBeforeAbilityActivated(_matchState : MatchState, _ability : Ability) -> bool:
 	return false
-func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+func onAfterAbilityActivated(_matchState : MatchState, _ability : Ability) -> bool:
 	return false
-func onBeforeAbilityCountered(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+func onBeforeAbilityCountered(_matchState : MatchState, _ability : Ability) -> bool:
 	return false
-func onAfterAbilityCountered(_matchState : MatchState, _ability : Ability, _context : AbilityContext) -> bool:
+func onAfterAbilityCountered(_matchState : MatchState, _ability : Ability) -> bool:
 	return false
 
 #	Seal Triggers	#
-func onBeforeSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _newSealModelPointer : Pointer) -> bool:
+func onBeforeSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _newSealModelPointer : Pointer, _source : RefCounted) -> bool:
 	return false
-func onAfterSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _oldSealModel : SealModel) -> bool:
+func onAfterSealChanged(_matchState : MatchState, _coinPieceModel : CoinPieceModel, _oldSealModel : SealModel, _source : RefCounted) -> bool:
 	return false
 
 #	Finger Ring Triggers	#

@@ -25,7 +25,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityDevour.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityDevour.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -35,6 +38,6 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	
 	var targetCoinPiece : CoinPieceModel = abilityContext.targets[0]
 	if targetCoinPiece.hasSeal():
-		await CmdSeal.removeSeal(matchState, targetCoinPiece)
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPiece)
-	await CmdSpin.addSpin(matchState, abilityContext.getPlayerModel(), SPIN_INC)
+		await CmdSeal.removeSeal(matchState, targetCoinPiece, self)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), targetCoinPiece, self)
+	await CmdSpin.addSpin(matchState, abilityContext.getPlayerModel(), SPIN_INC, self)

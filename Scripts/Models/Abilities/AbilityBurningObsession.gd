@@ -26,22 +26,25 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityBurningObsession.activate")
+		return
 	if abilityContext.targets.size() > 0:
 		push_error("ERROR: Invalid num targets given to AbilityBurningObsession.activate: " + str(abilityContext.targets.size()) + " > 0.")
 		return
 	
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	var spinIncBase : int = int(matchState.getSpin(playerModel) * SPIN_MULT)
-	var actualIncPointer : Pointer = await CmdSpin.addSpin(matchState, playerModel, spinIncBase)
+	var actualIncPointer : Pointer = await CmdSpin.addSpin(matchState, playerModel, spinIncBase, self)
 	
 	if actualIncPointer.val >= SPIN_REQ and not abilityContext.isCopy:
 		var copyTarget : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.COIN_PIECE_ANY, playerModel)
 		if copyTarget == null:
 			return
-		await CmdMatch.copyAbilityScript(matchState, copyTarget.abilityScript, abilityContext)
+		await CmdMatch.copyAbilityScriptNewContext(matchState, copyTarget.abilityScript, abilityContext)
 	else:
 		var sealTarget : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.NON_SEAL_ANY, playerModel)
 		if sealTarget == null:
 			return
-		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), sealTarget)
+		await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealAquaFortis), sealTarget, self)

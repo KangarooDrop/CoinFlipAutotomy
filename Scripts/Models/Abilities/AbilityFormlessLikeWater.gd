@@ -25,7 +25,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityFormlessLikeWater.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityFormlessLikeWater.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -38,9 +41,9 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	var targetPlayerModel : PlayerModel = targetCoinPieceModel.getPlayerModel()
 	
 	if targetPlayerModel == abilityPlayerModel:
-		await CmdSeal.removeSeal(matchState, targetCoinPieceModel)
+		await CmdSeal.removeSeal(matchState, targetCoinPieceModel, self)
 	else:
-		await CmdSpin.addSpin(matchState, targetPlayerModel, -SPIN_DEC)
+		await CmdSpin.addSpin(matchState, targetPlayerModel, -SPIN_DEC, self)
 	
 	if not abilityContext.isCopy:
-		await CmdMatch.copyAbilityScript(matchState, targetCoinPieceModel.abilityScript, abilityContext)
+		await CmdMatch.copyAbilityScriptNewContext(matchState, targetCoinPieceModel.abilityScript, abilityContext)

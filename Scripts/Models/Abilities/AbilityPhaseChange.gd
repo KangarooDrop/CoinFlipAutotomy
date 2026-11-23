@@ -25,7 +25,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityPhaseChange.activate")
+		return
 	if abilityContext.targets.size() != 0:
 		push_error("ERROR: Invalid num targets given to AbilityPhaseChange.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
@@ -33,9 +36,9 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	if not abilityContext.isCopy:
 		var opponentModel : PlayerModel = matchState.getOtherPlayerModel(playerModel)
-		await CmdSpin.addSpin(matchState, opponentModel, -SPIN_DEC)
+		await CmdSpin.addSpin(matchState, opponentModel, -SPIN_DEC, self)
 	else:
 		var coinPieceToBreak : CoinPieceModel = await CmdAction.getTarget(matchState, Entities.TargetType.SEAL_ANY, playerModel)
 		if coinPieceToBreak == null:
 			return
-		await CmdSeal.removeSeal(matchState, coinPieceToBreak)
+		await CmdSeal.removeSeal(matchState, coinPieceToBreak, self)

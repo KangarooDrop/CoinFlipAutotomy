@@ -23,7 +23,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityAtrophy.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityAtrophy.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -31,4 +34,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Invalid target given to AbilityAtrophy.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), abilityContext.targets[0])
+	await CmdSeal.addSeal(matchState, ModelDB.getSeal(SealLead), abilityContext.targets[0], self)

@@ -20,7 +20,10 @@ func _getBaseData() -> Dictionary:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityClingToLife.activate")
+		return
 	if abilityContext.targets.size() != 0:
 		push_error("ERROR: Invalid num targets given to AbilityClingToLife.activate: " + str(abilityContext.targets.size()) + " != 0.")
 		return
@@ -28,4 +31,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 	var playerModel : PlayerModel = abilityContext.getPlayerModel()
 	var opponentPlayerModel : PlayerModel = matchState.getOtherPlayerModel(playerModel)
 	var spinDiff : int = abs(matchState.getSpin(opponentPlayerModel) - matchState.getSpin(playerModel))
-	await CmdSpin.addSpin(matchState, opponentPlayerModel, -spinDiff/2)
+	await CmdSpin.addSpin(matchState, opponentPlayerModel, -spinDiff/2, self)

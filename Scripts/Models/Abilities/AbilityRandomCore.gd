@@ -24,5 +24,5 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(_matchState : MatchState, _abilityContext : AbilityContext) -> void:
+func activate(_matchState : MatchState) -> void:
 	pass

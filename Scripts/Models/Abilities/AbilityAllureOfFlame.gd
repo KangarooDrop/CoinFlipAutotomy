@@ -23,7 +23,10 @@ func getTooltipString() -> String:
 
 ####################################################################################################
 
-func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
+func activate(matchState : MatchState) -> void:
+	if abilityContext == null:
+		print("ERROR: No Ability Context given to AbilityAllureOfFlame.activate")
+		return
 	if abilityContext.targets.size() != 1:
 		push_error("ERROR: Invalid num targets given to AbilityAllureOfFlame.activate: " + str(abilityContext.targets.size()) + " != 1.")
 		return
@@ -34,4 +37,4 @@ func activate(matchState : MatchState, abilityContext : AbilityContext) -> void:
 		push_error("ERROR: Coin Node without a seal given to AbilityAllureOfFlame.activate: " + str(abilityContext.targets[0]) + ".")
 		return
 	
-	await CmdSeal.setSeal(matchState, ModelDB.getSeal(SealCopper), abilityContext.targets[0])
+	await CmdSeal.setSeal(matchState, ModelDB.getSeal(SealCopper), abilityContext.targets[0], self)
