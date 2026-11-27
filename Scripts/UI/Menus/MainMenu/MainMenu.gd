@@ -76,8 +76,8 @@ func _getRandomPlayerModel() -> PlayerModel:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.is_pressed() and not event.is_echo():
-		checkRNGDecision()
-		return
+		#checkRNGDecision()
+		#return
 		checkDecisionSpeed()
 
 func checkDecisionSpeed() -> void:
@@ -87,15 +87,71 @@ func checkDecisionSpeed() -> void:
 	matchState.setPlayerModels(playerModelUser, playerModelOpponent)
 	
 	
-	var usecs : int = Time.get_ticks_usec()
-	var n : int = 1000
+	var usecs : int = 0
+	var n : int = 3000
+	var decisions : Array[MatchStateDecision] = []
+	var data : Dictionary = matchState.serialize()
+	
+	usecs = Time.get_ticks_usec()
+	for i in range(n):
+		var decision : MatchStateDecision = MatchStateDecision.new()
+		decisions.append(decision)
+	for decision : MatchStateDecision in decisions:
+		decision.deserialize(data)
+	decisions = []
+	print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+	
+	
+	
+	usecs = Time.get_ticks_usec()
+	for i in range(n):
+		var decision : MatchStateDecision = Pooler.fetch(MatchStateDecision)
+		decisions.append(decision)
+	for decision : MatchStateDecision in decisions:
+		decision.deserialize(data)
+	for decision : MatchStateDecision in decisions:
+		Pooler.release(decision, MatchStateDecision)
+	decisions = []
+	print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+	
+	
+	
+	usecs = Time.get_ticks_usec()
+	for i in range(n):
+		var decision : MatchStateDecision = Pooler.fetch(MatchStateDecision)
+		decisions.append(decision)
+	for decision : MatchStateDecision in decisions:
+		decision.deserialize(data)
+	for decision : MatchStateDecision in decisions:
+		Pooler.release(decision, MatchStateDecision)
+	decisions = []
+	print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+	
+	print("Total Pooled MSD: ", Pooler.getSize(MatchStateDecision))
+	print("Total Untracked MSD: ", Pooler.getUntracked(MatchStateDecision))
+	
+	
+	usecs = Time.get_ticks_usec()
+	for i in range(n):
+		var decision : MatchStateDecision = MatchStateDecision.new()
+	print("Finised ", n, " match state creations in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+	
+	usecs = Time.get_ticks_usec()
+	for i in range(n):
+		var decision : MatchStateDecision = Pooler.fetch(MatchStateDecision)
+	print("Finised ", n, " match state creations in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
+	
+	"""
+	
+	usecs = Time.get_ticks_usec()
 	for i in range(n):
 		var data : Dictionary = matchState.serialize()
-		var decision : MatchStateDecision = MatchStateDecision.new()
+		var decision : MatchStateDecision = Pooler.fetch(MatchStateDecision)
 		decision.deserialize(data)
+		Pooler.release(decision)
 	print("Finised ", n, " match state clones in ", (Time.get_ticks_usec() - usecs)/1_000_000.0, " seconds.")
-	Tracker.printTimes()
-	Tracker.clear()
+	
+	"""
 
 func onStartRNGAccumulator() -> void:
 	pass

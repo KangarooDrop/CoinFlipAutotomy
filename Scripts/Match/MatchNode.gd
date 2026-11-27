@@ -68,7 +68,8 @@ func _initMatch():
 	_matchState.phaseHandler.iterPhaseDeferred()
 
 func getRandomOpponentPlayerModel() -> PlayerModel:
-	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(DemonGluttony).getStarterData().createPlayerModel()
+	var opponentClass : Script = DemonLust
+	var playerModelOpponent : PlayerModel = ModelDB.getDemonSingleton(opponentClass).getStarterData().createPlayerModel()
 	#playerModelOpponent.isControlledCPU = true
 	return playerModelOpponent
 

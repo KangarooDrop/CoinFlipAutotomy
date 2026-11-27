@@ -15,17 +15,18 @@ func setForceKill(val : bool) -> void:
 
 ####################################################################################################
 
-#Input vars
-#Base information source of the source to call its function in the cloned match state
-var testSource : Array = []		#[model source, "function name", [parameters]
-#List of targets given since the source was activated
-#e.g. [Ability -> Target -> Second Target late in exectution]
-#If the depth if less than testTargetQueue.size(), then choose testTargetQueue[depth] as the target. Otherwise, recur
 var targetQueueSerialized : Array[Array] = []
 var targetDepth : int = 0
 var _perspectiveIndex : int = 0
 
 ####################################################################################################
+
+var parent : WeakRef = null
+func getRoot() -> MatchStateDecision:
+	if parent == null:
+		return self
+	else:
+		return parent.get_ref().getRoot()
 
 var baseData : Dictionary = {}
 func setBaseData(data : Dictionary) -> void:
@@ -39,9 +40,6 @@ var hasChecked : bool = false
 
 var isInActivation : bool = false
 var targetingInterupted : bool = false
-
-#var hasInitialized : bool = false
-#var hasCheckedDecisions : bool = false
 
 ####################################################################################################
 
@@ -65,6 +63,22 @@ func deserialize(data : Dictionary) -> Serializable:
 		targetQueueSerialized = data[TARGET_QUEUE_SERIALIZED_KEY]
 	setBaseData(data)
 	return self
+
+func release() -> void:
+	for list : Array in targetToDecisionList.values():
+		for child : MatchStateDecision in list:
+			child.release()
+	forceKill = false
+	targetQueueSerialized = []
+	targetDepth = 0
+	_perspectiveIndex = 0
+	baseData = {}
+	validTargets = []
+	targetToDecisionList = {}
+	hasTargeted = false
+	hasChecked = false
+	parent = null
+	Pooler.release(self, MatchStateDecision)
 
 func getPerspectivePlayerModel(perspective : int) -> PlayerModel:
 	return _playerModelUser if perspective == 0 else _playerModelOpponent
@@ -142,14 +156,10 @@ func iterDecision() -> void:
 				lastDecision = currentDecision
 				var serializedData : Dictionary = baseData.duplicate(true)
 				serializedData[TARGET_QUEUE_SERIALIZED_KEY] = childTargetQueueSerialized
-				if childTargetQueueSerialized.size() == 1 and childTargetQueueSerialized[0] == [1, 1, 2]:
-					pass
-				currentDecision = MatchStateDecision.new(serializedData)
+				currentDecision = Pooler.fetch(MatchStateDecision)
+				currentDecision.parent = weakref(self)
+				currentDecision.deserialize(serializedData)
 				currentDecision.initDecision()
-				if targetUsesRNG and not rngAccumulationFinished:
-#					decision.baseData = decision.serialize()
-#					decision.targetQueueSerialized = []
-					pass
 				if not targetUsesRNG or not rngAccumulationFinished:
 					targetToDecisionList[target].append(currentDecision)
 				if not targetUsesRNG or rngAccumulationFinished:
@@ -273,23 +283,48 @@ func equals(other : MatchStateDecision) -> bool:
 				return false
 	return true
 
+static func isDecisionListMatch(list0 : Array, list1 : Array) -> bool:
+	if list0.size() != list1.size():
+		return false
+	list0 = list0.duplicate()
+	list1 = list1.duplicate()
+	for i in range(list0.size()-1, -1, -1):
+		for j in range(list1.size()-1, -1, -1):
+			if list0[i].equals(list1[j]):
+				list0.remove_at(i)
+				list1.remove_at(j)
+				break
+	return list0.size() == 0
+
 func reduce() -> void:
 	if not hasChecked:
 		return
-	"""
-	var index : int = 0
-	while index < validTargets.size():
-		var target : RefCounted = validTargets[index]
-		for j in range(validTargets.size()-1, index, -1):
-			var otherTarget : RefCounted = validTargets[j]
-			if targetToDecision[target].equals(targetToDecision[otherTarget]):
-				targetToDecision.erase(validTargets[j])
-				validTargets.remove_at(j)
-				pass
-				#print("Found reducable target @", self, ": ", index, " == ", j)
-				#validTargets.remove_at(j)
-		index += 1
-	"""
+	reduceAt(getRoot())
+
+func reduceAt(other : MatchStateDecision) -> void:
+	if targetQueueSerialized.size() < other.targetQueueSerialized.size():
+		return
+	if not other.hasChecked:
+		return
+	if other == self:
+		return
+	
+	#Removes targets that can be reached from an earlier state
+	for i in range(validTargets.size()-1, -1, -1):
+		var foundMatch : bool = false
+		for j in range(other.validTargets.size()):
+			foundMatch = isDecisionListMatch(targetToDecisionList[validTargets[i]], other.targetToDecisionList[other.validTargets[j]])
+			if foundMatch:
+				break
+		if foundMatch:
+			for msd : MatchStateDecision in targetToDecisionList[validTargets[i]]:
+				msd.release()
+			targetToDecisionList.erase(validTargets[i])
+			validTargets.remove_at(i)
+			#print("Found reducable target @", self, ": ", target)
+	
+	for otherChildDecision : MatchStateDecision in other.getAllChildDecisions():
+		reduceAt(otherChildDecision)
 
 func getTotalNumDecisions() -> int:
 	var total : int = 1

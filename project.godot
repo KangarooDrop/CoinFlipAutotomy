@@ -36,6 +36,7 @@ TriggerHandler="*uid://m5a8rwpbqsqu"
 RNG="*uid://bl1i2xt8c5fx5"
 RunManager="*uid://dxrfymggifyv1"
 Tracker="*uid://ca4a4nq3ufqeo"
+Pooler="*uid://bdat5i8qfmrq0"
 
 [debug]
 

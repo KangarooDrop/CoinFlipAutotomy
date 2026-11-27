@@ -3,7 +3,7 @@ extends RefCounted
 class_name CPUDecider
 
 const USE_THREADS : bool = true
-const MAX_MS_THRESHOLD : int = 20_000
+const MAX_MS_THRESHOLD : int = 30_000
 
 var cpuTargetThread : Thread = null
 var oldTargetThread : Thread = null
@@ -42,7 +42,8 @@ func initCPUTarget() -> Array[int]:
 	var serializedData : Dictionary = _matchState.serialize()
 	serializedData[MatchStateDecision.PERSPECTIVE_INDEX_KEY] = 0 if _matchState.getActivePlayerModel() == _matchState.getPlayerModelUser() else 1
 	serializedData[MatchStateDecision.TARGET_QUEUE_SERIALIZED_KEY] = targetQueueSerialized
-	currentDecision = MatchStateDecision.new(serializedData)
+	currentDecision = Pooler.fetch(MatchStateDecision)
+	currentDecision.deserialize(serializedData)
 	currentDecision.initDecision()
 	"""
 	if currentDecision == null:
@@ -59,7 +60,7 @@ func initCPUTarget() -> Array[int]:
 
 func _initCPUTargetInternal() -> void:
 	if USE_THREADS:
-		if oldTargetThread != null:
+		if oldTargetThread != null and oldTargetThread.is_started():
 			oldTargetThread.wait_to_finish()
 		if cpuTargetThread != null:
 			oldTargetThread = cpuTargetThread
@@ -85,6 +86,9 @@ func _iterCPUTarget() -> void:
 	if isTimeExceeded():
 		print("Current time exceeded. Ending.")
 		call_deferred("emitBestTargetSerialized")
+		currentDecision.release()
+		print("Total Pooled MSD: ", Pooler.getSize(MatchStateDecision))
+		print("Total Untracked MSD: ", Pooler.getUntracked(MatchStateDecision))
 		return
 	
 	_initCPUTargetInternal()
